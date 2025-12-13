@@ -1,20 +1,20 @@
 package model;
 
-import java.time.LocalDate;
+import java.sql.Timestamp;
 
 public class Preventivo {
 
     private int idPreventivo;
     private int idUtente;   // cliente
     private int idAuto;     // auto richiesta
-    private LocalDate dataPreventivo;
+    private Timestamp dataPreventivo;
     private String note;
     private String stato; // "inviato", "in lavorazione", "respinto", "accettato"
 
     public Preventivo() {}
 
     public Preventivo(int idPreventivo, int idUtente, int idAuto,
-                      LocalDate dataPreventivo, String note, String stato) {
+                      Timestamp dataPreventivo, String note, String stato) {
         this.idPreventivo = idPreventivo;
         this.idUtente = idUtente;
         this.idAuto = idAuto;
@@ -47,11 +47,11 @@ public class Preventivo {
         this.idAuto = idAuto;
     }
 
-    public LocalDate getDataPreventivo() {
+    public Timestamp getDataPreventivo() {
         return dataPreventivo;
     }
 
-    public void setDataPreventivo(LocalDate dataPreventivo) {
+    public void setDataPreventivo(Timestamp dataPreventivo) {
         this.dataPreventivo = dataPreventivo;
     }
 

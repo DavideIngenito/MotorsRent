@@ -1,20 +1,20 @@
 package dao;
 
-
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
+
 public class DbConnection {
 
-    private static final String URL = "jdbc:mysql://localhost:3306/motorsrent?useSSL=false&serverTimezone=UTC";
-    private static final String USER = "root";  // <-- metti il tuo username
-    private static final String PASSWORD = "password"; // <-- metti la tua password
+    private static final String URL = "jdbc:mysql://localhost:3306/motorsrent";
+    private static final String USER = "root";
+    private static final String PASSWORD = "Lucabomber10";
 
     private static Connection connection = null;
 
     // Costruttore privato → Singleton
-    private DBConnection() {}
+    private DbConnection() {}
 
     // Restituisce una connessione attiva
     public static Connection getConnection() {

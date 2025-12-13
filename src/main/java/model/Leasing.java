@@ -1,6 +1,6 @@
 package model;
 
-import java.time.LocalDate;
+import java.sql.Timestamp;
 
 public class Leasing {
 
@@ -10,14 +10,14 @@ public class Leasing {
     private int durataMesi;
     private double anticipo;
     private int kmAnnui;
-    private LocalDate dataLeasing;
+    private Timestamp dataLeasing;
     private String stato; // "in valutazione", "approvato", "respinto"
 
     public Leasing() {}
 
     public Leasing(int idLeasing, int idUtente, int idAuto,
                    int durataMesi, double anticipo, int kmAnnui,
-                   LocalDate dataLeasing, String stato) {
+                   Timestamp dataLeasing, String stato) {
         this.idLeasing = idLeasing;
         this.idUtente = idUtente;
         this.idAuto = idAuto;
@@ -76,11 +76,11 @@ public class Leasing {
         this.kmAnnui = kmAnnui;
     }
 
-    public LocalDate getDataLeasing() {
+    public Timestamp getDataLeasing() {
         return dataLeasing;
     }
 
-    public void setDataLeasing(LocalDate dataLeasing) {
+    public void setDataLeasing(Timestamp dataLeasing) {
         this.dataLeasing = dataLeasing;
     }
 

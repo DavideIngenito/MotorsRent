@@ -19,7 +19,7 @@ public class PreventivoDAO {
         PreparedStatement ps = connection.prepareStatement(sql);
         ps.setInt(1, p.getIdUtente());
         ps.setInt(2, p.getIdAuto());
-        ps.setString(3, p.getDataPreventivo());
+        ps.setTimestamp(3, p.getDataPreventivo());
         ps.setString(4, p.getNote());
         ps.setString(5, p.getStato());
         ps.executeUpdate();
@@ -37,7 +37,7 @@ public class PreventivoDAO {
                     rs.getInt("idPreventivo"),
                     rs.getInt("idUtente"),
                     rs.getInt("idAuto"),
-                    rs.getString("dataPreventivo"),
+                    rs.getTimestamp("dataPreventivo"),
                     rs.getString("note"),
                     rs.getString("stato")
             ));
@@ -57,7 +57,7 @@ public class PreventivoDAO {
                     rs.getInt("idPreventivo"),
                     rs.getInt("idUtente"),
                     rs.getInt("idAuto"),
-                    rs.getString("dataPreventivo"),
+                    rs.getTimestamp("dataPreventivo"),
                     rs.getString("note"),
                     rs.getString("stato")
             ));

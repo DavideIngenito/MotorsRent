@@ -21,9 +21,9 @@ public class LeasingDAO {
         ps.setInt(1, l.getIdUtente());
         ps.setInt(2, l.getIdAuto());
         ps.setInt(3, l.getDurataMesi());
-        ps.setInt(4, l.getAnticipo());
+        ps.setDouble(4, l.getAnticipo());
         ps.setInt(5, l.getKmAnnui());
-        ps.setString(6, l.getDataLeasing());
+        ps.setString(6, String.valueOf(l.getDataLeasing()));
         ps.setString(7, l.getStato());
 
         ps.executeUpdate();
@@ -44,7 +44,7 @@ public class LeasingDAO {
                     rs.getInt("durataMesi"),
                     rs.getInt("anticipo"),
                     rs.getInt("kmAnnui"),
-                    rs.getString("dataLeasing"),
+                    rs.getTimestamp("dataLeasing"),
                     rs.getString("stato")
             ));
         }
@@ -66,7 +66,7 @@ public class LeasingDAO {
                     rs.getInt("durataMesi"),
                     rs.getInt("anticipo"),
                     rs.getInt("kmAnnui"),
-                    rs.getString("dataLeasing"),
+                    rs.getTimestamp("dataLeasing"),
                     rs.getString("stato")
             ));
         }
