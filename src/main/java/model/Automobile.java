@@ -102,7 +102,7 @@ public class Automobile {
         this.immagine = immagine;
     }
 
-    public boolean isDisponibilita() {
+    public boolean getDisponibilita() {
         return disponibilita;
     }
 
