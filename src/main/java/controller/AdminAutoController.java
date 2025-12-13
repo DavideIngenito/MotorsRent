@@ -34,7 +34,7 @@ public class AdminAutoController extends HttpServlet {
         // 1. SICUREZZA: Solo Admin
         HttpSession session = request.getSession();
         Utente u = (Utente) session.getAttribute("utente");
-        if (u == null || !u.getRuolo().equalsIgnoreCase("ADMIN")) {
+        if (u == null || !u.getRuolo().equalsIgnoreCase("AMMINISTRATORE")) {
             response.sendRedirect("login.jsp");
             return;
         }

@@ -57,11 +57,11 @@ public class LoginServlet extends HttpServlet {
                         response.sendRedirect("dashboardCliente.jsp");
                         break;
                     case "VENDITORE":
-                        response.sendRedirect("dashboardVenditore.jsp");
+                        response.sendRedirect("venditoreDashboard.jsp");
                         break;
                     case "ADMIN":
                     case "AMMINISTRATORE": // Gestisco entrambi i casi per sicurezza
-                        response.sendRedirect("dashboardAdmin.jsp");
+                        response.sendRedirect("adminDashboard.jsp");
                         break;
                     default:
                         response.sendRedirect("home.jsp"); // Fallback

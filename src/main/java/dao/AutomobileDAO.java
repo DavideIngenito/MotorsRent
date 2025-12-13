@@ -15,7 +15,7 @@ public class AutomobileDAO {
     }
 
     public void insert(Automobile a) throws SQLException {
-        String sql = "INSERT INTO AUTO (modello, marca, anno, prezzo, chilometraggio, stato, descrizione, immagine, disponibilita) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO AUTOMOBILE (modello, marca, anno, prezzo, chilometraggio, stato, descrizione, immagine, disponibilita) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
         // Uso il try-with-resources per chiudere automaticamente lo statement
         try (PreparedStatement ps = connection.prepareStatement(sql)) {
@@ -34,7 +34,7 @@ public class AutomobileDAO {
 
     public Automobile getById(int id) throws SQLException {
         // CORRETTO: Aggiunto l'asterisco * mancante!
-        String sql = "SELECT * FROM AUTO WHERE idAuto = ?";
+        String sql = "SELECT * FROM AUTOMOBILE WHERE idAuto = ?";
 
         try (PreparedStatement ps = connection.prepareStatement(sql)) {
             ps.setInt(1, id);
@@ -50,7 +50,7 @@ public class AutomobileDAO {
 
     public List<Automobile> getAll() throws SQLException {
         List<Automobile> list = new ArrayList<>();
-        String sql = "SELECT * FROM AUTO";
+        String sql = "SELECT * FROM AUTOMOBILE";
 
         try (Statement st = connection.createStatement();
              ResultSet rs = st.executeQuery(sql)) {
@@ -63,7 +63,7 @@ public class AutomobileDAO {
     }
 
     public void update(Automobile a) throws SQLException {
-        String sql = "UPDATE AUTO SET modello=?, marca=?, anno=?, prezzo=?, chilometraggio=?, stato=?, descrizione=?, immagine=?, disponibilita=? WHERE idAuto=?";
+        String sql = "UPDATE AUTOMOBILE SET modello=?, marca=?, anno=?, prezzo=?, chilometraggio=?, stato=?, descrizione=?, immagine=?, disponibilita=? WHERE idAuto=?";
 
         try (PreparedStatement ps = connection.prepareStatement(sql)) {
             ps.setString(1, a.getModello());
@@ -82,7 +82,7 @@ public class AutomobileDAO {
     }
 
     public void delete(int id) throws SQLException {
-        String sql = "DELETE FROM AUTO WHERE idAuto = ?";
+        String sql = "DELETE FROM AUTOMOBILE WHERE idAuto = ?";
         try (PreparedStatement ps = connection.prepareStatement(sql)) {
             ps.setInt(1, id);
             ps.executeUpdate();
