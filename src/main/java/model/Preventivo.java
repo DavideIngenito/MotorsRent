@@ -23,6 +23,51 @@ public class Preventivo {
         this.stato = stato;
     }
 
-    // getter e setter...
+    public int getIdPreventivo() {
+        return idPreventivo;
+    }
 
+    public void setIdPreventivo(int idPreventivo) {
+        this.idPreventivo = idPreventivo;
+    }
+
+    public int getIdUtente() {
+        return idUtente;
+    }
+
+    public void setIdUtente(int idUtente) {
+        this.idUtente = idUtente;
+    }
+
+    public int getIdAuto() {
+        return idAuto;
+    }
+
+    public void setIdAuto(int idAuto) {
+        this.idAuto = idAuto;
+    }
+
+    public LocalDate getDataPreventivo() {
+        return dataPreventivo;
+    }
+
+    public void setDataPreventivo(LocalDate dataPreventivo) {
+        this.dataPreventivo = dataPreventivo;
+    }
+
+    public String getNote() {
+        return note;
+    }
+
+    public void setNote(String note) {
+        this.note = note;
+    }
+
+    public String getStato() {
+        return stato;
+    }
+
+    public void setStato(String stato) {
+        this.stato = stato;
+    }
 }
