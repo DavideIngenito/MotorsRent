@@ -1,10 +1,13 @@
 package controller;
 
 
+import dao.DbConnection;
 import jakarta.servlet.*;
 import jakarta.servlet.http.*;
 import jakarta.servlet.annotation.*;
 import java.io.IOException;
+import java.sql.Connection;
+import java.sql.SQLException;
 
 import dao.AutomobileDAO;
 import model.Automobile;
@@ -12,19 +15,24 @@ import model.Automobile;
 @WebServlet("/admin/auto/modifica")
 public class ModificaAutoServlet extends HttpServlet {
 
-    private Automobile autoDAO = new AutomobileDAO();
-
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
         int idAuto = Integer.parseInt(request.getParameter("id"));
-        Automobile auto = autoDAO.findById(idAuto);
 
-        request.setAttribute("auto", auto);
-        RequestDispatcher rd =
-                request.getRequestDispatcher("/jsp/admin/modificaAuto.jsp");
-        rd.forward(request, response);
+        try (Connection conn = DbConnection.getConnection()) {
+
+            AutomobileDAO autoDAO = new AutomobileDAO(conn);
+            Automobile auto = autoDAO.getById(idAuto);
+
+            request.setAttribute("auto", auto);
+            request.getRequestDispatcher("/jsp/admin/modificaAuto.jsp")
+                    .forward(request, response);
+
+        } catch (SQLException e) {
+            throw new ServletException(e);
+        }
     }
 
     @Override
@@ -40,8 +48,16 @@ public class ModificaAutoServlet extends HttpServlet {
         auto.setChilometraggio(Integer.parseInt(request.getParameter("chilometraggio")));
         auto.setStato(request.getParameter("stato"));
 
-        autoDAO.update(auto);
+        try (Connection conn = DbConnection.getConnection()) {
 
-        response.sendRedirect(request.getContextPath() + "/admin/auto/lista");
+            AutomobileDAO autoDAO = new AutomobileDAO(conn);
+            autoDAO.update(auto);
+
+            response.sendRedirect(request.getContextPath() + "/admin/auto/lista");
+
+        } catch (SQLException e) {
+            throw new ServletException(e);
+        }
     }
 }
+

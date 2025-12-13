@@ -2,10 +2,13 @@ package controller;
 
 
 
+import dao.DbConnection;
 import jakarta.servlet.*;
 import jakarta.servlet.http.*;
 import jakarta.servlet.annotation.*;
 import java.io.IOException;
+import java.sql.Connection;
+import java.sql.SQLException;
 
 import dao.AutomobileDAO;
 import model.Automobile;
@@ -13,15 +16,12 @@ import model.Automobile;
 @WebServlet("/admin/auto/inserisci")
 public class InserisciAutoServlet extends HttpServlet {
 
-    private AutomobileDAO autoDAO = new AutomobileDAO();
-
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        RequestDispatcher rd =
-                request.getRequestDispatcher("/jsp/admin/inserisciAuto.jsp");
-        rd.forward(request, response);
+        request.getRequestDispatcher("/jsp/admin/inserisciAuto.jsp")
+                .forward(request, response);
     }
 
     @Override
@@ -36,8 +36,16 @@ public class InserisciAutoServlet extends HttpServlet {
         auto.setChilometraggio(Integer.parseInt(request.getParameter("chilometraggio")));
         auto.setStato("Disponibile");
 
-        autoDAO.insert(auto);
+        try (Connection conn = DbConnection.getConnection()) {
 
-        response.sendRedirect(request.getContextPath() + "/admin/auto/lista");
+            AutomobileDAO autoDAO = new AutomobileDAO(conn);
+            autoDAO.insert(auto);
+
+            response.sendRedirect(request.getContextPath() + "/admin/auto/lista");
+
+        } catch (SQLException e) {
+            throw new ServletException(e);
+        }
     }
 }
+

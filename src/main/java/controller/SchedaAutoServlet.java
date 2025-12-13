@@ -1,17 +1,18 @@
 package controller;
 
 import dao.AutomobileDAO;
-import jakarta.servlet.;
+import dao.DbConnection;
+import jakarta.servlet.*;
 import jakarta.servlet.annotation.WebServlet;
-import jakarta.servlet.http.;
+import jakarta.servlet.http.*;
 import model.Automobile;
 
 import java.io.IOException;
+import java.sql.Connection;
+import java.sql.SQLException;
 
 @WebServlet("/schedaAuto")
 public class SchedaAutoServlet extends HttpServlet {
-
-    private AutomobileDAO autoDAO = new AutomobileDAO();
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -19,10 +20,17 @@ public class SchedaAutoServlet extends HttpServlet {
 
         int idAuto = Integer.parseInt(request.getParameter("id"));
 
-        Automobile auto = autoDAO.getById(int id);
-        request.setAttribute("auto", auto);
+        try (Connection conn = DbConnection.getConnection()) {
 
-        RequestDispatcher dispatcher = request.getRequestDispatcher("schedaAuto.jsp");
-        dispatcher.forward(request, response);
+            AutomobileDAO autoDAO = new AutomobileDAO(conn);
+            Automobile auto = autoDAO.getById(idAuto);
+
+            request.setAttribute("auto", auto);
+            request.getRequestDispatcher("schedaAuto.jsp")
+                    .forward(request, response);
+
+        } catch (SQLException e) {
+            throw new ServletException(e);
+        }
     }
 }
