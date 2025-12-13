@@ -36,7 +36,7 @@
     <section class="form-section">
         <h2>Risposta Preventivo</h2>
 
-        <form action="inviaPreventivo" method="post">
+        <form action="gestisciPreventivo" method="post">
             <input type="hidden" name="idPreventivo" value="${preventivo.idPreventivo}">
 
             <label>Importo Offerto (€):</label>

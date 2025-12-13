@@ -13,82 +13,41 @@ public class Leasing {
     private Timestamp dataLeasing;
     private String stato; // "in valutazione", "approvato", "respinto"
 
+    // NUOVI CAMPI (Fondamentali per le JSP del venditore)
+    private Utente cliente;
+    private Automobile auto;
+
     public Leasing() {}
 
-    public Leasing(int idLeasing, int idUtente, int idAuto,
-                   int durataMesi, double anticipo, int kmAnnui,
-                   Timestamp dataLeasing, String stato) {
-        this.idLeasing = idLeasing;
-        this.idUtente = idUtente;
-        this.idAuto = idAuto;
-        this.durataMesi = durataMesi;
-        this.anticipo = anticipo;
-        this.kmAnnui = kmAnnui;
-        this.dataLeasing = dataLeasing;
-        this.stato = stato;
-    }
+    // ... I tuoi getter e setter esistenti per i campi base ...
+    public int getIdLeasing() { return idLeasing; }
+    public void setIdLeasing(int idLeasing) { this.idLeasing = idLeasing; }
 
-    public int getIdLeasing() {
-        return idLeasing;
-    }
+    public int getIdUtente() { return idUtente; }
+    public void setIdUtente(int idUtente) { this.idUtente = idUtente; }
 
-    public void setIdLeasing(int idLeasing) {
-        this.idLeasing = idLeasing;
-    }
+    public int getIdAuto() { return idAuto; }
+    public void setIdAuto(int idAuto) { this.idAuto = idAuto; }
 
-    public int getIdUtente() {
-        return idUtente;
-    }
+    public int getDurataMesi() { return durataMesi; }
+    public void setDurataMesi(int durataMesi) { this.durataMesi = durataMesi; }
 
-    public void setIdUtente(int idUtente) {
-        this.idUtente = idUtente;
-    }
+    public double getAnticipo() { return anticipo; }
+    public void setAnticipo(double anticipo) { this.anticipo = anticipo; }
 
-    public int getIdAuto() {
-        return idAuto;
-    }
+    public int getKmAnnui() { return kmAnnui; }
+    public void setKmAnnui(int kmAnnui) { this.kmAnnui = kmAnnui; }
 
-    public void setIdAuto(int idAuto) {
-        this.idAuto = idAuto;
-    }
+    public Timestamp getDataLeasing() { return dataLeasing; }
+    public void setDataLeasing(Timestamp dataLeasing) { this.dataLeasing = dataLeasing; }
 
-    public int getDurataMesi() {
-        return durataMesi;
-    }
+    public String getStato() { return stato; }
+    public void setStato(String stato) { this.stato = stato; }
 
-    public void setDurataMesi(int durataMesi) {
-        this.durataMesi = durataMesi;
-    }
+    // NUOVI GETTER/SETTER PER GLI OGGETTI ANNIDATI
+    public Utente getCliente() { return cliente; }
+    public void setCliente(Utente cliente) { this.cliente = cliente; }
 
-    public double getAnticipo() {
-        return anticipo;
-    }
-
-    public void setAnticipo(double anticipo) {
-        this.anticipo = anticipo;
-    }
-
-    public int getKmAnnui() {
-        return kmAnnui;
-    }
-
-    public void setKmAnnui(int kmAnnui) {
-        this.kmAnnui = kmAnnui;
-    }
-
-    public Timestamp getDataLeasing() {
-        return dataLeasing;
-    }
-
-    public void setDataLeasing(Timestamp dataLeasing) {
-        this.dataLeasing = dataLeasing;
-    }
-
-    public String getStato() {
-        return stato;
-    }
-
-    public void setStato(String stato) {
-        this.stato = stato;
-    }
+    public Automobile getAuto() { return auto; }
+    public void setAuto(Automobile auto) { this.auto = auto; }
 }

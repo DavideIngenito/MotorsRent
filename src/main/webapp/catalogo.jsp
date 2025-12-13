@@ -13,8 +13,7 @@
 <div class="container">
     <h1>Catalogo Auto</h1>
 
-    <!-- FILTRI -->
-    <form action="CatalogoServlet" method="get" class="filters">
+    <form action="catalogo" method="get" class="filters">
         <label>Marca:</label>
         <input type="text" name="marca">
 
@@ -25,20 +24,25 @@
     </form>
 
     <div class="catalogo-grid">
-        <c:forEach var="auto" items="${listaAuto}">
+        <c:forEach var="auto" items="${autoList}">
 
             <div class="auto-card">
-                <img src="${auto.immagine}" alt="${auto.modello}">
+                <img src="${auto.immagine}" alt="${auto.modello}" style="width:100%; max-width:300px;">
+
                 <h3>${auto.marca} ${auto.modello}</h3>
                 <p>Anno: ${auto.anno}</p>
                 <p>Prezzo: € ${auto.prezzo}</p>
 
-                <a class="btn" href="SchedaAutoServlet?id=${auto.idAuto}">
+                <a class="btn" href="dettaglio?id=${auto.idAuto}">
                     Visualizza dettagli
                 </a>
             </div>
 
         </c:forEach>
+
+        <c:if test="${empty autoList}">
+            <p>Nessuna auto disponibile al momento.</p>
+        </c:if>
     </div>
 
 </div>

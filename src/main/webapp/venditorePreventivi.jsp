@@ -31,12 +31,15 @@
     <c:forEach var="p" items="${listaPreventivi}">
       <tr>
         <td>${p.idPreventivo}</td>
-        <td>${p.clienteNome} ${p.clienteCognome}</td>
-        <td>${p.autoMarca} ${p.autoModello}</td>
+
+        <td>${p.cliente.nome} ${p.cliente.cognome}</td>
+
+        <td>${p.auto.marca} ${p.auto.modello}</td>
+
         <td>${p.dataPreventivo}</td>
         <td>${p.stato}</td>
         <td>
-          <a href="venditoreDettaglioPreventivo?id=${p.idPreventivo}" class="btn-small">Apri</a>
+          <a href="gestisciPreventivo?id=${p.idPreventivo}" class="btn-small">Apri</a>
         </td>
       </tr>
     </c:forEach>

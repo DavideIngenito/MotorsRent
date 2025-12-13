@@ -1,4 +1,3 @@
-
 <%@ page contentType="text/html;charset=UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
@@ -14,27 +13,59 @@
 
 <div class="container">
 
-    <div class="scheda-auto">
+    <div class="scheda-auto" style="display: flex; gap: 20px; margin-top: 20px;">
 
-        <img class="auto-img" src="${auto.immagine}" alt="${auto.modello}">
+        <div class="auto-img-box" style="flex: 1;">
+            <img class="auto-img" src="${auto.immagine}" alt="${auto.modello}" style="width: 100%; border-radius: 8px;">
+        </div>
 
-        <div class="auto-info">
+        <div class="auto-info" style="flex: 1;">
             <h1>${auto.marca} ${auto.modello}</h1>
+            <h3 style="color: #2c3e50;">€ ${auto.prezzo}</h3>
 
-            <p><b>Anno:</b> ${auto.anno}</p>
-            <p><b>Prezzo:</b> € ${auto.prezzo}</p>
-            <p><b>Chilometraggio:</b> ${auto.chilometraggio} km</p>
-            <p><b>Descrizione:</b> ${auto.descrizione}</p>
+            <ul style="list-style: none; padding: 0; margin-top: 20px;">
+                <li><b>Anno:</b> ${auto.anno}</li>
+                <li><b>Chilometraggio:</b> ${auto.chilometraggio} km</li>
+                <li><b>Stato:</b> ${auto.stato}</li>
+                <li><b>Disponibilità:</b>
+                    <c:choose>
+                        <c:when test="${auto.disponibilita}">
+                            <span style="color: green; font-weight: bold;">Disponibile</span>
+                        </c:when>
+                        <c:otherwise>
+                            <span style="color: red; font-weight: bold;">Non Disponibile</span>
+                        </c:otherwise>
+                    </c:choose>
+                </li>
+            </ul>
+
+            <p style="margin-top: 20px;"><b>Descrizione:</b><br> ${auto.descrizione}</p>
         </div>
     </div>
 
-    <hr>
+    <hr style="margin: 40px 0;">
 
-    <h2>Richieste</h2>
+    <div class="actions" style="text-align: center;">
 
-    <div class="actions">
-        <a class="btn" href="login.jsp">Richiedi Preventivo</a>
-        <a class="btn" href="login.jsp">Richiedi Leasing</a>
+        <c:if test="${not empty sessionScope.utente && sessionScope.utente.ruolo == 'CLIENTE'}">
+            <h2 style="margin-bottom: 20px;">Sei interessato?</h2>
+
+            <a class="btn" href="richiestaPreventivo?idAuto=${auto.idAuto}">Richiedi Preventivo</a>
+            <a class="btn btn-secondary" href="richiestaLeasing?idAuto=${auto.idAuto}" style="background-color: #555;">Richiedi Leasing</a>
+        </c:if>
+
+        <c:if test="${empty sessionScope.utente}">
+            <div class="login-prompt" style="background-color: #f8f9fa; padding: 20px; border-radius: 8px;">
+                <h3>Vuoi richiedere un preventivo?</h3>
+                <p>Accedi o registrati per contattare la concessionaria.</p>
+                <a class="btn" href="login.jsp">Accedi per continuare</a>
+            </div>
+        </c:if>
+
+        <c:if test="${sessionScope.utente.ruolo == 'ADMIN' || sessionScope.utente.ruolo == 'VENDITORE'}">
+            <a class="btn" href="adminModificaAuto.jsp?id=${auto.idAuto}" style="background-color: orange;">Modifica Auto</a>
+        </c:if>
+
     </div>
 
 </div>

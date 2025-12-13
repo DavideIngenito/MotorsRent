@@ -1,4 +1,3 @@
-
 <%@ page contentType="text/html;charset=UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
@@ -10,7 +9,7 @@
 
 <body>
 
-<jsp:include page="navbarVenditore.jsp"/>
+<jsp:include page="header.jsp"/>
 
 <div class="container">
     <h1>Richieste di Leasing</h1>
@@ -23,7 +22,7 @@
             <th>Auto</th>
             <th>Durata</th>
             <th>Stato</th>
-            <th>Apri</th>
+            <th>Azione</th>
         </tr>
         </thead>
 
@@ -31,19 +30,31 @@
         <c:forEach var="l" items="${listaLeasing}">
             <tr>
                 <td>${l.idLeasing}</td>
-                <td>${l.clienteNome} ${l.clienteCognome}</td>
-                <td>${l.autoMarca} ${l.autoModello}</td>
+
+                <td>${l.cliente.nome} ${l.cliente.cognome}</td>
+                <td>${l.auto.marca} ${l.auto.modello}</td>
+
                 <td>${l.durataMesi} mesi</td>
-                <td>${l.stato}</td>
+
                 <td>
-                    <a href="venditoreDettaglioLeasing?id=${l.idLeasing}" class="btn-small">Apri</a>
+                    <span class="status ${l.stato}">${l.stato}</span>
+                </td>
+
+                <td>
+                    <a href="gestisciLeasing?id=${l.idLeasing}" class="btn-small">Gestisci</a>
                 </td>
             </tr>
         </c:forEach>
         </tbody>
     </table>
 
+    <c:if test="${empty listaLeasing}">
+        <p>Non ci sono richieste di leasing al momento.</p>
+    </c:if>
+
 </div>
+
+<jsp:include page="footer.jsp"/>
 
 </body>
 </html>

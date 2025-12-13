@@ -1,43 +1,62 @@
 package controller;
 
-
-
-import jakarta.servlet.ServletException;
-import jakarta.servlet.annotation.WebServlet;
+import dao.DbConnection;
+import dao.LeasingDAO;
+import jakarta.servlet.*;
+import jakarta.servlet.annotation.*;
 import jakarta.servlet.http.*;
+import model.Leasing;
+import model.Utente;
 
 import java.io.IOException;
-
-import dao.LeasingDAO;
-import model.Leasing;
+import java.sql.Connection;
 
 @WebServlet("/gestisciLeasing")
 public class GestisciLeasingServlet extends HttpServlet {
-
-    private LeasingDAO leasingDAO = new LeasingDAO();
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        int idLeasing = Integer.parseInt(request.getParameter("id"));
+        String idStr = request.getParameter("id");
+        if(idStr == null) {
+            response.sendRedirect("dashboardVenditore");
+            return;
+        }
 
-        Leasing leasing = leasingDAO.getLeasingById(idLeasing);
+        try {
+            Connection conn = DbConnection.getInstance().getConnection();
+            LeasingDAO leasingDAO = new LeasingDAO(conn);
 
-        request.setAttribute("leasing", leasing);
-        request.getRequestDispatcher("/jsp/venditore/gestisciLeasing.jsp")
-                .forward(request, response);
+            // Metodo corretto del DAO
+            Leasing leasing = leasingDAO.getByIdCompleto(Integer.parseInt(idStr));
+
+            request.setAttribute("leasing", leasing);
+            // Assicurati che il path sia giusto
+            request.getRequestDispatcher("venditoreDettaglioLeasing.jsp").forward(request, response);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        int idLeasing = Integer.parseInt(request.getParameter("id"));
+        int idLeasing = Integer.parseInt(request.getParameter("idLeasing")); // name nel form hidden
         String stato = request.getParameter("stato");
 
-        leasingDAO.aggiornaStatoLeasing(idLeasing, stato);
+        try {
+            Connection conn = DbConnection.getInstance().getConnection();
+            LeasingDAO leasingDAO = new LeasingDAO(conn);
 
-        response.sendRedirect("dashboardVenditore");
+            leasingDAO.updateStato(idLeasing, stato);
+
+            response.sendRedirect("venditoreLeasing?msg=Leasing aggiornato"); // Torna alla lista leasing (o dashboard)
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }
