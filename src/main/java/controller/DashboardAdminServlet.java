@@ -7,7 +7,7 @@ import model.Utente;
 
 import java.io.IOException;
 
-@WebServlet("/admin/dashboard")
+@WebServlet("/dashboardAdmin")
 public class DashboardAdminServlet extends HttpServlet {
 
     @Override
@@ -18,7 +18,7 @@ public class DashboardAdminServlet extends HttpServlet {
         HttpSession session = request.getSession(false);
         Utente u = (session != null) ? (Utente) session.getAttribute("utente") : null;
 
-        if (u == null || !u.getRuolo().equalsIgnoreCase("ADMIN")) {
+        if (u == null || !u.getRuolo().equalsIgnoreCase("AMMINISTRATORE")) {
             // Se non è admin, lo spedisco al login
             response.sendRedirect(request.getContextPath() + "/login.jsp");
             return;
@@ -30,7 +30,7 @@ public class DashboardAdminServlet extends HttpServlet {
 
         // 3. Forward alla JSP (Verifica il percorso!)
         // Se adminDashboard.jsp è dentro webapp/jsp/admin/
-        RequestDispatcher rd = request.getRequestDispatcher("/jsp/admin/adminDashboard.jsp");
+        RequestDispatcher rd = request.getRequestDispatcher("adminDashboard.jsp");
         rd.forward(request, response);
     }
 }

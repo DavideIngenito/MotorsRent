@@ -29,7 +29,7 @@
                     Gestisci le richieste di preventivo e leasing dei clienti.
                 </p>
             </c:when>
-            <c:when test="${sessionScope.utente.ruolo == 'ADMIN'}">
+            <c:when test="${sessionScope.utente.ruolo == 'AMMINISTRATORE'}">
                 <h1 class="display-5 fw-bold">Amministrazione Sistema</h1>
                 <p class="col-md-8 fs-4 mx-auto">
                     Gestione completa del parco auto e degli utenti registrati.
@@ -62,10 +62,8 @@
                 </c:when>
 
                 <%-- CASO 4: ADMIN --%>
-                <c:when test="${sessionScope.utente.ruolo == 'ADMIN'}">
-                    <a class="btn btn-danger btn-lg me-2" href="admin/dashboard">Dashboard Admin</a>
-                    <a class="btn btn-outline-danger btn-lg me-2" href="AdminAutoController?action=list">Gestione Auto</a>
-                    <a class="btn btn-outline-danger btn-lg" href="AdminUtentiController?action=listVenditori">Gestione Venditori</a>
+                <c:when test="${sessionScope.utente.ruolo == 'AMMINISTRATORE'}">
+                    <a class="btn btn-danger btn-lg me-2" href="dashboardAdmin">Dashboard Admin</a>
                 </c:when>
             </c:choose>
 
