@@ -1,80 +1,43 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
-<%-- Se usi Tomcat 10/11 usa jakarta, altrimenti java.sun.com --%>
-<%@ taglib uri="jakarta.tags.core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MotorsRent - Home</title>
+
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
 
 <jsp:include page="header.jsp" />
 
-<div class="container mt-5">
+<main class="container mt-5">
 
-    <div class="p-5 mb-4 bg-light rounded-3 text-center">
+    <div class="hero-card p-5 mb-4 text-center">
+        <h1 class="display-5 fw-bold">Benvenuto su MotorsRent</h1>
+        <p class="fs-4 mx-auto">
+            La soluzione migliore per il noleggio e l'acquisto della tua prossima auto.<br>
+            Esplora il catalogo, richiedi un preventivo o simula un leasing in pochi click.
+        </p>
 
-        <%-- TITOLO DINAMICO --%>
-        <c:choose>
-            <c:when test="${empty sessionScope.utente}">
-                <h1 class="display-5 fw-bold">Benvenuto su MotorsRent</h1>
-                <p class="col-md-8 fs-4 mx-auto">
-                    La soluzione migliore per il noleggio e l'acquisto della tua prossima auto.
-                    Esplora il catalogo, richiedi un preventivo o simula un leasing in pochi click.
-                </p>
-            </c:when>
-            <c:when test="${sessionScope.utente.ruolo == 'CLIENTE'}">
-                <h1 class="display-5 fw-bold">Bentornato, ${sessionScope.utente.nome}!</h1>
-                <p class="col-md-8 fs-4 mx-auto">
-                    Pronto a trovare la tua prossima auto? Controlla le tue richieste o sfoglia il catalogo.
-                </p>
-            </c:when>
-            <c:when test="${sessionScope.utente.ruolo == 'VENDITORE'}">
-                <h1 class="display-5 fw-bold">Pannello Venditore</h1>
-                <p class="col-md-8 fs-4 mx-auto">
-                    Gestisci le richieste di preventivo e leasing dei clienti.
-                </p>
-            </c:when>
-            <c:when test="${sessionScope.utente.ruolo == 'AMMINISTRATORE'}">
-                <h1 class="display-5 fw-bold">Amministrazione Sistema</h1>
-                <p class="col-md-8 fs-4 mx-auto">
-                    Gestione completa del parco auto e degli utenti registrati.
-                </p>
-            </c:when>
-        </c:choose>
-
-        <%-- AZIONI DINAMICHE (PULSANTI) --%>
         <div class="actions mt-4">
+            <a class="btn btn-primary btn-lg" href="catalogo.jsp">Vai al Catalogo</a>
 
-            <c:choose>
-                <%-- CASO 1: OSPITE (Non loggato) --%>
-                <c:when test="${empty sessionScope.utente}">
-                    <a class="btn btn-primary btn-lg me-2" href="catalogo">Vai al Catalogo</a>
-                    <a class="btn btn-outline-primary btn-lg me-2" href="login.jsp">Login</a>
-                    <a class="btn btn-warning btn-lg" href="registrazione.jsp">Registrati</a>
-                </c:when>
-
-                <%-- CASO 2: CLIENTE --%>
-                <c:when test="${sessionScope.utente.ruolo == 'CLIENTE'}">
-                    <a class="btn btn-primary btn-lg me-2" href="catalogo">Sfoglia Catalogo</a>
-                    <a class="btn btn-success btn-lg" href="dashboardCliente">La mia Area Personale</a>
-                </c:when>
-
-                <%-- CASO 3: VENDITORE --%>
-                <c:when test="${sessionScope.utente.ruolo == 'VENDITORE'}">
-                    <a class="btn btn-primary btn-lg me-2" href="dashboardVenditore">Dashboard Principale</a>
-                    <a class="btn btn-outline-dark btn-lg me-2" href="venditorePreventivi">Richieste Preventivi</a>
-                    <a class="btn btn-outline-dark btn-lg" href="venditoreLeasing">Richieste Leasing</a>
-                </c:when>
-
-                <%-- CASO 4: ADMIN --%>
-                <c:when test="${sessionScope.utente.ruolo == 'AMMINISTRATORE'}">
-                    <a class="btn btn-danger btn-lg me-2" href="dashboardAdmin">Dashboard Admin</a>
-                </c:when>
-            </c:choose>
-
+            <c:if test="${empty sessionScope.utente}">
+                <a class="btn btn-outline btn-lg" href="login.jsp">Login</a>
+                <a class="btn btn-dark btn-lg" href="registrazione.jsp">Registrati</a>
+            </c:if>
         </div>
     </div>
 
-    <hr class="my-5">
+    <hr class="my-5 divider">
 
-    <%-- SEZIONI COMUNI A TUTTI --%>
-    <div class="row">
-        <div class="col-md-6" id="chisiamo">
+    <div class="row info-section">
+        <div class="col-md-6 info-box" id="chisiamo">
             <h2>Chi Siamo</h2>
             <p>
                 MotorsRent nasce con l’obiettivo di digitalizzare e rendere più efficiente la gestione di una concessionaria automobilistica.
@@ -82,7 +45,7 @@
             </p>
         </div>
 
-        <div class="col-md-6" id="contatti">
+        <div class="col-md-6 info-box" id="contatti">
             <h2>Contatti</h2>
             <ul class="list-unstyled">
                 <li><strong>Email:</strong> info@motorsrent.it</li>
@@ -92,6 +55,9 @@
         </div>
     </div>
 
-</div>
+</main>
 
 <jsp:include page="footer.jsp" />
+
+</body>
+</html>
