@@ -44,8 +44,9 @@
                     </c:when>
 
                     <%-- CASO 4: ADMIN --%>
-                    <c:when test="${sessionScope.utente.ruolo == 'ADMIN'}">
-                        <li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/admin/dashboard">Admin Panel</a></li>
+                    <c:when test="${sessionScope.utente.ruolo == 'AMMINISTRATORE'}">
+                        <li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}AdminUtentiController">Venditori</a></li>
+                        <li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}#">Statistiche</a></li>
                         <li class="nav-item"><a class="nav-link text-danger" href="${pageContext.request.contextPath}/logout">Logout</a></li>
                     </c:when>
 

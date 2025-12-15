@@ -32,7 +32,7 @@ public class AdminUtentiController extends HttpServlet {
 
         HttpSession session = request.getSession();
         Utente u = (Utente) session.getAttribute("utente");
-        if (u == null || !u.getRuolo().equalsIgnoreCase("ADMIN")) {
+        if (u == null || !u.getRuolo().equalsIgnoreCase("AMMINISTRATORE")) {
             response.sendRedirect("login.jsp");
             return;
         }
@@ -69,7 +69,7 @@ public class AdminUtentiController extends HttpServlet {
                     // Assicurati di avere il metodo findVenditori() nel DAO!
                     List<Utente> list = utenteDAO.findVenditori();
                     request.setAttribute("listaVenditori", list);
-                    request.getRequestDispatcher("/jsp/admin/adminGestioneUtenti.jsp").forward(request, response);
+                    request.getRequestDispatcher("adminGestioneUtenti.jsp").forward(request, response);
                     break;
             }
         } catch (SQLException ex) {
