@@ -47,16 +47,6 @@
                     <%-- Controllo sia ADMIN che AMMINISTRATORE per sicurezza --%>
                     <c:when test="${sessionScope.utente.ruolo == 'ADMIN' || sessionScope.utente.ruolo == 'AMMINISTRATORE'}">
 
-                        <%-- Link alla Dashboard principale --%>
-                        <li class="nav-item">
-                            <a class="nav-link" href="${pageContext.request.contextPath}/admin/dashboard">Dashboard</a>
-                        </li>
-
-                        <%-- Link Gestione Auto --%>
-                        <li class="nav-item">
-                            <a class="nav-link" href="${pageContext.request.contextPath}/AdminAutoController?action=list">Auto</a>
-                        </li>
-
                         <%-- Link Gestione Venditori (Aggiunto parametro action=listVenditori) --%>
                         <li class="nav-item">
                             <a class="nav-link" href="${pageContext.request.contextPath}/AdminUtentiController?action=listVenditori">Venditori</a>
