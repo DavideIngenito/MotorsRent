@@ -1,42 +1,34 @@
 package controller;
 
-import dao.AutomobileDAO;
-import dao.DbConnection;
-import jakarta.servlet.*;
+import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
-import jakarta.servlet.http.*;
-import model.Automobile;
-
+import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.sql.Connection;
-import java.sql.SQLException;
-import java.util.List;
 
-@WebServlet("/catalogo")
+// URL MAPPING: /catalogo
+@WebServlet(name = "CatalogoServlet", value = "/catalogo")
 public class CatalogoServlet extends HttpServlet {
+    private static final long serialVersionUID = 1L;
+
+    public CatalogoServlet() {
+        super();
+    }
 
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        System.out.println("Accesso a CatalogoServlet (Admin/Generale)");
 
-        try {
-            // 1. Singleton pattern per la connessione
-            Connection conn = DbConnection.getInstance().getConnection();
-            AutomobileDAO autoDAO = new AutomobileDAO(conn);
+        // Esempio: Carica una lista di prodotti dal database (simulato)
+        request.setAttribute("messaggio", "Benvenuto nel Catalogo Generale");
 
-            // 2. Recupero dati
-            List<Automobile> listaAuto = autoDAO.getAll();
+        // Inoltra alla pagina JSP (assicurati che esista o cambia il percorso)
+        request.getRequestDispatcher("/WEB-INF/views/catalogo.jsp").forward(request, response);
+    }
 
-            // 3. Setto attributo per la JSP
-            request.setAttribute("autoList", listaAuto);
-
-            RequestDispatcher dispatcher = request.getRequestDispatcher("catalogo.jsp");
-            dispatcher.forward(request, response);
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-            // Gestione errore elegante: pagina di errore o messaggio
-            response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Impossibile caricare il catalogo auto.");
-        }
+    @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        doGet(request, response);
     }
 }

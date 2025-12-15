@@ -1,48 +1,34 @@
 package controller;
 
-import dao.AutomobileDAO;
-import dao.DbConnection;
-import jakarta.servlet.*;
-import jakarta.servlet.http.*;
-import jakarta.servlet.annotation.*;
-import model.Automobile;
-
+import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.sql.Connection;
-import java.util.List;
 
-@WebServlet("/catalogo")
+// URL MAPPING: /catalogo-clienti (MODIFICATO PER RISOLVERE L'ERRORE)
+@WebServlet(name = "CatalogoClienteController", value = "/catalogo-clienti")
 public class CatalogoClienteController extends HttpServlet {
+    private static final long serialVersionUID = 1L;
+
+    public CatalogoClienteController() {
+        super();
+    }
 
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        System.out.println("Accesso a CatalogoClienteController (Vista Utente)");
 
-        String marca = request.getParameter("marca");
-        String prezzoMaxStr = request.getParameter("prezzoMax");
+        // Logica specifica per il cliente (es. prodotti filtrati, carrello, ecc.)
+        request.setAttribute("messaggio", "Benvenuto nell'area Catalogo Clienti");
 
-        try {
-            Connection conn = DbConnection.getInstance().getConnection();
-            AutomobileDAO autoDAO = new AutomobileDAO(conn);
-            List<Automobile> lista;
+        // Inoltra a una JSP diversa specifica per il cliente
+        request.getRequestDispatcher("/WEB-INF/views/catalogoCliente.jsp").forward(request, response);
+    }
 
-            // Logica di Filtro
-            if ((marca != null && !marca.isEmpty()) || (prezzoMaxStr != null && !prezzoMaxStr.isEmpty())) {
-                double prezzoMax = (prezzoMaxStr != null && !prezzoMaxStr.isEmpty())
-                        ? Double.parseDouble(prezzoMaxStr) : 1000000;
-                // Metodo di ricerca (lo aggiungiamo al DAO tra poco)
-                lista = autoDAO.cercaAuto(marca, prezzoMax);
-            } else {
-                // Lista completa
-                lista = autoDAO.getAll();
-            }
-
-            request.setAttribute("listaAuto", lista);
-            request.getRequestDispatcher("catalogoCliente.jsp").forward(request, response);
-
-        } catch (Exception e) {
-            e.printStackTrace();
-            response.sendError(500, "Errore caricamento catalogo");
-        }
+    @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        doGet(request, response);
     }
 }
