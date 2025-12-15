@@ -1,46 +1,70 @@
 package controller;
 
+import dao.AutomobileDAO;
+import dao.DbConnection;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-import java.io.IOException;
-import java.util.ArrayList; // Immagina che qui ci siano i tuoi modelli
+import model.Automobile;
+import model.Utente;
 
-// Unico punto di accesso per il catalogo
+import java.io.IOException;
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.util.List;
+
 @WebServlet(name = "CatalogoServlet", value = "/catalogo")
 public class CatalogoServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-        // 1. Recupero la sessione per capire chi è collegato
-        HttpSession session = request.getSession(false); // false = non crearne una nuova se non esiste
+        // 1. RECUPERO AUTO DAL DATABASE (Per tutti: admin, clienti e ospiti)
+        try {
+            Connection conn = DbConnection.getInstance().getConnection();
+            AutomobileDAO autoDAO = new AutomobileDAO(conn);
 
-        // Qui dovresti avere il tuo oggetto Utente salvato in sessione al login
-        // String ruolo = (session != null && session.getAttribute("ruolo") != null) ? (String) session.getAttribute("ruolo") : "GUEST";
+            // Se ci sono parametri di filtro (dalla JSP catalogo.jsp)
+            String marca = request.getParameter("marca");
+            String prezzoStr = request.getParameter("prezzoMax");
 
-        // ESEMPIO SEMPLIFICATO PER IL TEST:
-        String ruolo = "CLIENTE"; // Cambia questo in "ADMIN" per testare l'altro caso
+            List<Automobile> veicoli;
 
-        System.out.println("Utente loggato come: " + ruolo);
+            if ((marca != null && !marca.isEmpty()) || (prezzoStr != null && !prezzoStr.isEmpty())) {
+                // Se l'utente sta filtrando
+                double prezzo = (prezzoStr != null && !prezzoStr.isEmpty()) ? Double.parseDouble(prezzoStr) : 1000000;
+                veicoli = autoDAO.cercaAuto(marca, prezzo);
+            } else {
+                // Lista completa standard
+                veicoli = autoDAO.getAll();
+            }
 
-        // 2. Recupero i dati (Auto/Moto) dal Service/Database
-        // List<Auto> listaVeicoli = service.getVeicoliDisponibili();
-        // request.setAttribute("veicoli", listaVeicoli);
+            // --- PUNTO CRITICO: Il nome deve essere "autoList" per corrispondere alla tua JSP ---
+            request.setAttribute("autoList", veicoli);
 
-        request.setAttribute("messaggio", "Lista caricata dal database...");
+        } catch (SQLException e) {
+            e.printStackTrace();
+            request.setAttribute("errore", "Impossibile caricare il catalogo.");
+        } catch (NumberFormatException e) {
+            // Gestione errore se il prezzo non è un numero
+        }
 
-        // 3. LOGICA DI SMISTAMENTO (ROUTING)
-        if ("AMMINISTRATORE".equals(ruolo)) {
-            // L'admin NON vede il catalogo commerciale, ma la gestione
-            System.out.println("Reindirizzo Admin alla dashboard di gestione");
-            request.getRequestDispatcher("adminGestioneAuto.jsp").forward(request, response);
+        // 2. CONTROLLO RUOLO UTENTE
+        HttpSession session = request.getSession(false);
+        Utente utente = (session != null) ? (Utente) session.getAttribute("utente") : null;
+        String ruolo = (utente != null) ? utente.getRuolo() : "GUEST";
+
+        // 3. INDIRIZZAMENTO (ROUTING)
+        if ("ADMIN".equalsIgnoreCase(ruolo) || "AMMINISTRATORE".equalsIgnoreCase(ruolo)) {
+            // L'admin non vede il catalogo visuale, ma la tabella di gestione
+            // Nota: nella tua AdminAutoController usi "listaAuto", qui dobbiamo stare attenti.
+            // Se mandi l'admin alla JSP di gestione, meglio fare un redirect al controller admin
+            response.sendRedirect("AdminAutoController?action=list");
         } else {
-            // Il cliente (o utente non loggato) vede il catalogo per noleggiare
-            System.out.println("Mostro il catalogo al cliente");
+            // Cliente e Ospite vedono il catalogo visivo
             request.getRequestDispatcher("catalogo.jsp").forward(request, response);
         }
     }
