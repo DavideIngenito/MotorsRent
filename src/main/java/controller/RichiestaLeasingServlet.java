@@ -59,7 +59,7 @@ public class RichiestaLeasingServlet extends HttpServlet {
             l.setDurataMesi(durata);
             l.setAnticipo(anticipo);
             l.setKmAnnui(kmAnnui);
-            l.setDataLeasing(new Timestamp(System.currentTimeMillis()));
+            l.setDataRichiesta(new Timestamp(System.currentTimeMillis()));
             l.setStato("IN VALUTAZIONE");
 
             // Salvataggio

@@ -18,7 +18,7 @@ public class LeasingDAO {
 
     // Inserimento Richiesta (Lato Cliente)
     public void insert(Leasing l) throws SQLException {
-        String sql = "INSERT INTO LEASING (idUtente, idAuto, durataMesi, anticipo, kmAnnui, dataLeasing, stato) VALUES (?, ?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO LEASING (idUtente, idAuto, durataMesi, anticipo, kmAnnui, dataRichiesta, stato) VALUES (?, ?, ?, ?, ?, ?, ?)";
 
         try (PreparedStatement ps = connection.prepareStatement(sql)) {
             ps.setInt(1, l.getIdUtente());
@@ -26,7 +26,7 @@ public class LeasingDAO {
             ps.setInt(3, l.getDurataMesi());
             ps.setDouble(4, l.getAnticipo());
             ps.setInt(5, l.getKmAnnui());
-            ps.setTimestamp(6, l.getDataLeasing()); // Usa setTimestamp, non setString!
+            ps.setTimestamp(6, l.getDataRichiesta()); // Usa setTimestamp, non setString!
             ps.setString(7, l.getStato());
             ps.executeUpdate();
         }
@@ -108,7 +108,7 @@ public class LeasingDAO {
         l.setDurataMesi(rs.getInt("durataMesi"));
         l.setAnticipo(rs.getDouble("anticipo")); // Occhio: Double, non Int
         l.setKmAnnui(rs.getInt("kmAnnui"));
-        l.setDataLeasing(rs.getTimestamp("dataLeasing"));
+        l.setDataRichiesta(rs.getTimestamp("dataRichiesta"));
         l.setStato(rs.getString("stato"));
 
         // Popola Cliente
