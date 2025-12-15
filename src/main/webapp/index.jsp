@@ -2,39 +2,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
 <jsp:include page="header.jsp" />
-    <head>
-        <title>Home</title>
 
-        <link rel="stylesheet" href="css/reset.css">
-        <link rel="stylesheet" href="css/body.css">
-        <link rel="stylesheet" href="css/header.css">
-        <link rel="stylesheet" href="css/buttons.css">
-        <link rel="stylesheet" href="css/footer.css">
-    </head>
-
-    <body>
-
-    <header>
-        <h1>Sito</h1>
-        <nav>
-            <a href="home.jsp">Home</a>
-            <a href="login.jsp">Login</a>
-        </nav>
-    </header>
-
-    <div class="container">
-        <h2>Benvenuto</h2>
-        <button>Scopri di più</button>
-    </div>
-
-    <footer>
-        © 2024
-    </footer>
-
-    </body>
-    </html>
-
-</head>
 <div class="container mt-5">
 
     <div class="p-5 mb-4 bg-light rounded-3 text-center">
