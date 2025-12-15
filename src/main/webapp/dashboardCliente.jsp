@@ -13,7 +13,7 @@
 </head>
 <body>
 
-<jsp:include page="navbarCliente.jsp"/>
+<jsp:include page="header.jsp"/>
 
 <div class="container" style="padding: 20px;">
 

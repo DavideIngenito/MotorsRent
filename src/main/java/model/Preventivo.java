@@ -7,7 +7,7 @@ public class Preventivo {
     private int idPreventivo;
     private int idUtente;
     private int idAuto;
-    private Timestamp dataPreventivo;
+    private Timestamp dataRichiesta;
     private String note;
     private String stato;
 
@@ -27,8 +27,8 @@ public class Preventivo {
     public int getIdAuto() { return idAuto; }
     public void setIdAuto(int idAuto) { this.idAuto = idAuto; }
 
-    public Timestamp getDataPreventivo() { return dataPreventivo; }
-    public void setDataPreventivo(Timestamp dataPreventivo) { this.dataPreventivo = dataPreventivo; }
+    public Timestamp getDataRichiesta() { return dataRichiesta; }
+    public void setDataRichiesta(Timestamp dataRichiesta) { this.dataRichiesta = dataRichiesta; }
 
     public String getNote() { return note; }
     public void setNote(String note) { this.note = note; }

@@ -67,7 +67,7 @@ public class RichiestaPreventivoServlet extends HttpServlet {
             p.setIdUtente(utente.getIdUtente()); // Fondamentale!
             p.setIdAuto(idAuto);
             p.setNote(note);
-            p.setDataPreventivo(new Timestamp(System.currentTimeMillis()));
+            p.setDataRichiesta(new Timestamp(System.currentTimeMillis()));
             p.setStato("NUOVA"); // Impostiamo lo stato iniziale (come da tua classe String)
 
             // 4. Salvataggio tramite DAO e Singleton

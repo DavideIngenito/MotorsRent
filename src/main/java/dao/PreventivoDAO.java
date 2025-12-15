@@ -22,12 +22,12 @@ public class PreventivoDAO {
      * Salva una nuova richiesta nel database.
      */
     public void insert(Preventivo p) throws SQLException {
-        String sql = "INSERT INTO PREVENTIVO (idUtente, idAuto, dataPreventivo, note, stato) VALUES (?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO PREVENTIVO (idUtente, idAuto, dataRichiesta, note, stato) VALUES (?, ?, ?, ?, ?)";
 
         try (PreparedStatement ps = connection.prepareStatement(sql)) {
             ps.setInt(1, p.getIdUtente());
             ps.setInt(2, p.getIdAuto());
-            ps.setTimestamp(3, p.getDataPreventivo());
+            ps.setTimestamp(3, p.getDataRichiesta());
             ps.setString(4, p.getNote());
             ps.setString(5, p.getStato()); // Es. "NUOVA"
             ps.executeUpdate();
@@ -47,7 +47,7 @@ public class PreventivoDAO {
                 "FROM PREVENTIVO p " +
                 "JOIN UTENTE u ON p.idUtente = u.idUtente " +
                 "JOIN AUTOMOBILE a ON p.idAuto = a.idAuto " +
-                "ORDER BY p.dataPreventivo DESC";
+                "ORDER BY p.dataRichiesta DESC";
 
         try (Statement st = connection.createStatement();
              ResultSet rs = st.executeQuery(sql)) {
@@ -69,7 +69,7 @@ public class PreventivoDAO {
                 "JOIN UTENTE u ON p.idUtente = u.idUtente " +
                 "JOIN AUTOMOBILE a ON p.idAuto = a.idAuto " +
                 "WHERE p.idUtente = ? " +
-                "ORDER BY p.dataPreventivo DESC";
+                "ORDER BY p.dataRichiesta DESC";
 
         List<Preventivo> list = new ArrayList<>();
         try (PreparedStatement ps = connection.prepareStatement(sql)) {
@@ -134,7 +134,7 @@ public class PreventivoDAO {
         p.setIdPreventivo(rs.getInt("idPreventivo"));
         p.setIdUtente(rs.getInt("idUtente"));
         p.setIdAuto(rs.getInt("idAuto"));
-        p.setDataPreventivo(rs.getTimestamp("dataPreventivo"));
+        p.setDataRichiesta(rs.getTimestamp("dataPreventivo"));
         p.setNote(rs.getString("note"));
         p.setStato(rs.getString("stato"));
 

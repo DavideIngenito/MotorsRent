@@ -40,7 +40,7 @@ public class LeasingDAO {
                 "FROM LEASING l " +
                 "JOIN UTENTE u ON l.idUtente = u.idUtente " +
                 "JOIN AUTOMOBILE a ON l.idAuto = a.idAuto " +
-                "ORDER BY l.dataLeasing DESC";
+                "ORDER BY l.dataRichiesta DESC";
 
         try (Statement st = connection.createStatement();
              ResultSet rs = st.executeQuery(sql)) {
@@ -76,7 +76,7 @@ public class LeasingDAO {
                 "FROM LEASING l " +
                 "JOIN UTENTE u ON l.idUtente = u.idUtente " +
                 "JOIN AUTOMOBILE a ON l.idAuto = a.idAuto " +
-                "WHERE l.idUtente = ? ORDER BY l.dataLeasing DESC";
+                "WHERE l.idUtente = ? ORDER BY l.dataRichiesta DESC";
 
         List<Leasing> list = new ArrayList<>();
         try (PreparedStatement ps = connection.prepareStatement(sql)) {
