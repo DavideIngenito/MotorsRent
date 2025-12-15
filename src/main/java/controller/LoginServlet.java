@@ -54,7 +54,7 @@ public class LoginServlet extends HttpServlet {
 
                 switch (ruolo) {
                     case "CLIENTE":
-                        response.sendRedirect("dashboardCliente.jsp");
+                        response.sendRedirect("index.jsp");
                         break;
                     case "VENDITORE":
                         response.sendRedirect("venditoreDashboard.jsp");

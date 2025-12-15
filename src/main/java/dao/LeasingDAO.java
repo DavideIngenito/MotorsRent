@@ -39,7 +39,7 @@ public class LeasingDAO {
         String sql = "SELECT l.*, u.nome, u.cognome, u.email, a.marca, a.modello, a.prezzo " +
                 "FROM LEASING l " +
                 "JOIN UTENTE u ON l.idUtente = u.idUtente " +
-                "JOIN AUTO a ON l.idAuto = a.idAuto " +
+                "JOIN AUTOMOBILE a ON l.idAuto = a.idAuto " +
                 "ORDER BY l.dataLeasing DESC";
 
         try (Statement st = connection.createStatement();
@@ -56,7 +56,7 @@ public class LeasingDAO {
         String sql = "SELECT l.*, u.nome, u.cognome, u.email, a.marca, a.modello, a.prezzo " +
                 "FROM LEASING l " +
                 "JOIN UTENTE u ON l.idUtente = u.idUtente " +
-                "JOIN AUTO a ON l.idAuto = a.idAuto " +
+                "JOIN AUTOMOBILE a ON l.idAuto = a.idAuto " +
                 "WHERE l.idLeasing = ?";
 
         try (PreparedStatement ps = connection.prepareStatement(sql)) {
@@ -75,7 +75,7 @@ public class LeasingDAO {
         String sql = "SELECT l.*, u.nome, u.cognome, u.email, a.marca, a.modello, a.prezzo " +
                 "FROM LEASING l " +
                 "JOIN UTENTE u ON l.idUtente = u.idUtente " +
-                "JOIN AUTO a ON l.idAuto = a.idAuto " +
+                "JOIN AUTOMOBILE a ON l.idAuto = a.idAuto " +
                 "WHERE l.idUtente = ? ORDER BY l.dataLeasing DESC";
 
         List<Leasing> list = new ArrayList<>();

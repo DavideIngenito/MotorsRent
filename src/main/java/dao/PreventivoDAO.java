@@ -46,7 +46,7 @@ public class PreventivoDAO {
         String sql = "SELECT p.*, u.nome, u.cognome, u.email, a.marca, a.modello, a.prezzo " +
                 "FROM PREVENTIVO p " +
                 "JOIN UTENTE u ON p.idUtente = u.idUtente " +
-                "JOIN AUTO a ON p.idAuto = a.idAuto " +
+                "JOIN AUTOMOBILE a ON p.idAuto = a.idAuto " +
                 "ORDER BY p.dataPreventivo DESC";
 
         try (Statement st = connection.createStatement();
@@ -67,7 +67,7 @@ public class PreventivoDAO {
         String sql = "SELECT p.*, u.nome, u.cognome, u.email, a.marca, a.modello, a.prezzo " +
                 "FROM PREVENTIVO p " +
                 "JOIN UTENTE u ON p.idUtente = u.idUtente " +
-                "JOIN AUTO a ON p.idAuto = a.idAuto " +
+                "JOIN AUTOMOBILE a ON p.idAuto = a.idAuto " +
                 "WHERE p.idUtente = ? " +
                 "ORDER BY p.dataPreventivo DESC";
 
@@ -92,7 +92,7 @@ public class PreventivoDAO {
         String sql = "SELECT p.*, u.nome, u.cognome, u.email, a.marca, a.modello, a.prezzo " +
                 "FROM PREVENTIVO p " +
                 "JOIN UTENTE u ON p.idUtente = u.idUtente " +
-                "JOIN AUTO a ON p.idAuto = a.idAuto " +
+                "JOIN AUTOMOBILE a ON p.idAuto = a.idAuto " +
                 "WHERE p.idPreventivo = ?";
 
         try (PreparedStatement ps = connection.prepareStatement(sql)) {
