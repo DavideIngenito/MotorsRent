@@ -34,7 +34,9 @@ public class AdminAutoController extends HttpServlet {
         // 1. SICUREZZA: Solo Admin
         HttpSession session = request.getSession();
         Utente u = (Utente) session.getAttribute("utente");
-        if (u == null || !u.getRuolo().equalsIgnoreCase("AMMINISTRATORE")) {
+
+        // ATTENZIONE: Controlla se nel tuo DB hai scritto "ADMIN" o "AMMINISTRATORE"
+        if (u == null || !u.getRuolo().equalsIgnoreCase("ADMIN")) {
             response.sendRedirect("login.jsp");
             return;
         }
@@ -49,7 +51,7 @@ public class AdminAutoController extends HttpServlet {
 
             switch (action) {
                 case "addForm": // Mostra il form vuoto
-                    request.getRequestDispatcher("/jsp/admin/adminAggiungiAuto.jsp").forward(request, response);
+                    showAddForm(request, response);
                     break;
                 case "add": // Esegue l'inserimento
                     insertAuto(request, response, autoDAO);
@@ -74,19 +76,26 @@ public class AdminAutoController extends HttpServlet {
         }
     }
 
-    // --- METODI PRIVATI DI SUPPORTO ---
+    // --- METODI PRIVATI DI SUPPORTO (Gestiscono i Path corretti) ---
 
     private void listAuto(HttpServletRequest request, HttpServletResponse response, AutomobileDAO dao)
             throws SQLException, ServletException, IOException {
         List<Automobile> listAuto = dao.getAll();
         request.setAttribute("listaAuto", listAuto);
-        request.getRequestDispatcher("/jsp/admin/adminGestioneAuto.jsp").forward(request, response);
+
+        // CORRETTO: Punta direttamente al file nella cartella principale
+        request.getRequestDispatcher("adminGestioneAuto.jsp").forward(request, response);
+    }
+
+    private void showAddForm(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        // CORRETTO
+        request.getRequestDispatcher("adminAggiungiAuto.jsp").forward(request, response);
     }
 
     private void insertAuto(HttpServletRequest request, HttpServletResponse response, AutomobileDAO dao)
             throws SQLException, IOException {
         Automobile a = new Automobile();
-        // Recupero parametri dai name="" della JSP adminAggiungiAuto.jsp
         a.setMarca(request.getParameter("marca"));
         a.setModello(request.getParameter("modello"));
         a.setAnno(Integer.parseInt(request.getParameter("anno")));
@@ -94,8 +103,10 @@ public class AdminAutoController extends HttpServlet {
         a.setChilometraggio(Integer.parseInt(request.getParameter("chilometraggio")));
         a.setDescrizione(request.getParameter("descrizione"));
         a.setImmagine(request.getParameter("immagine"));
+
+        // Gestione disponibilità: se arriva "1" diventa true
+        a.setDisponibilita("1".equals(request.getParameter("disponibilita")));
         a.setStato("Disponibile");
-        a.setDisponibilita(true);
 
         dao.insert(a);
         response.sendRedirect("AdminAutoController?action=list");
@@ -106,7 +117,9 @@ public class AdminAutoController extends HttpServlet {
         int id = Integer.parseInt(request.getParameter("id"));
         Automobile auto = dao.getById(id);
         request.setAttribute("auto", auto);
-        request.getRequestDispatcher("/jsp/admin/adminModificaAuto.jsp").forward(request, response);
+
+        // CORRETTO
+        request.getRequestDispatcher("adminModificaAuto.jsp").forward(request, response);
     }
 
     private void updateAuto(HttpServletRequest request, HttpServletResponse response, AutomobileDAO dao)
@@ -120,7 +133,7 @@ public class AdminAutoController extends HttpServlet {
         a.setChilometraggio(Integer.parseInt(request.getParameter("chilometraggio")));
         a.setDescrizione(request.getParameter("descrizione"));
         a.setImmagine(request.getParameter("immagine"));
-        // Gestione select: value="1" -> true
+
         boolean disp = "1".equals(request.getParameter("disponibilita"));
         a.setDisponibilita(disp);
         a.setStato(disp ? "Disponibile" : "Non Disponibile");
@@ -131,8 +144,11 @@ public class AdminAutoController extends HttpServlet {
 
     private void deleteAuto(HttpServletRequest request, HttpServletResponse response, AutomobileDAO dao)
             throws SQLException, IOException {
-        int id = Integer.parseInt(request.getParameter("id"));
-        dao.delete(id);
+        String idStr = request.getParameter("id");
+        if(idStr != null && !idStr.isEmpty()){
+            int id = Integer.parseInt(idStr);
+            dao.delete(id);
+        }
         response.sendRedirect("AdminAutoController?action=list");
     }
 }
