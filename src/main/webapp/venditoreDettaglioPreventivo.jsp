@@ -10,7 +10,7 @@
 
 <body>
 
-<jsp:include page="navbarVenditore.jsp"/>
+<jsp:include page="header.jsp"/>
 
 <div class="container">
     <h1>Dettaglio Preventivo #${preventivo.idPreventivo}</h1>

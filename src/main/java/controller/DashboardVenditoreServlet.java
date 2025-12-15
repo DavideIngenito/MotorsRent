@@ -1,11 +1,12 @@
 package controller;
 
 import dao.DbConnection;
+import dao.LeasingDAO;     // Togli il commento qui
 import dao.PreventivoDAO;
-// import dao.LeasingDAO; // Decommenta quando hai il LeasingDAO pronto
 import jakarta.servlet.*;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.*;
+import model.Leasing;      // Aggiungi questo import
 import model.Preventivo;
 import model.Utente;
 
@@ -24,41 +25,38 @@ public class DashboardVenditoreServlet extends HttpServlet {
         HttpSession session = request.getSession();
         Utente u = (Utente) session.getAttribute("utente");
 
-        // Verifica null e ruolo (case insensitive per sicurezza)
         if (u == null || !"VENDITORE".equalsIgnoreCase(u.getRuolo())) {
             response.sendRedirect("login.jsp");
             return;
         }
-
         try {
             Connection conn = DbConnection.getInstance().getConnection();
             PreventivoDAO preventivoDAO = new PreventivoDAO(conn);
-            // LeasingDAO leasingDAO = new LeasingDAO(conn);
+            LeasingDAO leasingDAO = new LeasingDAO(conn); // Ora attiviamo il DAO
 
-            // 2. Recupero Liste
-            // CORREZIONE QUI: Usa il metodo che esiste nel tuo DAO attuale!
+            // 2. Recupero Liste Complete
             List<Preventivo> tuttiPreventivi = preventivoDAO.getAllCompleti();
-
-            // List<Leasing> tuttiLeasing = leasingDAO.getAllCompleti();
+            List<Leasing> tuttiLeasing = leasingDAO.getAllCompleti(); // Carichiamo i leasing
 
             // 3. Calcolo i numeri per la Dashboard
             long preventiviInAttesa = tuttiPreventivi.stream()
-                    // Assicurati che nel DB lo stato sia scritto esattamente "NUOVA" o usa equalsIgnoreCase
                     .filter(p -> "NUOVA".equalsIgnoreCase(p.getStato()))
                     .count();
 
-            // long leasingInAttesa = tuttiLeasing.stream().filter(...).count();
+            // Calcoliamo i leasing in attesa (Stato: "IN VALUTAZIONE")
+            long leasingInAttesa = tuttiLeasing.stream()
+                    .filter(l -> "IN VALUTAZIONE".equalsIgnoreCase(l.getStato()))
+                    .count();
 
             // 4. Invio i dati alla JSP
             request.setAttribute("numPreventiviInAttesa", preventiviInAttesa);
-            request.setAttribute("numLeasingInAttesa", 0); // Placeholder
+            request.setAttribute("numLeasingInAttesa", leasingInAttesa); // Mettiamo il numero vero!
 
             RequestDispatcher dispatcher = request.getRequestDispatcher("venditoreDashboard.jsp");
             dispatcher.forward(request, response);
 
         } catch (Exception e) {
             e.printStackTrace();
-            // È buona norma dare un feedback visivo o loggare l'errore
             response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Errore caricamento dashboard.");
         }
     }

@@ -10,7 +10,7 @@
 
 <body>
 
-<jsp:include page="navbarVenditore.jsp"/>
+<jsp:include page="header.jsp"/>
 
 <div class="container">
   <h1>Richieste di Preventivo</h1>
@@ -36,7 +36,7 @@
 
         <td>${p.auto.marca} ${p.auto.modello}</td>
 
-        <td>${p.dataPreventivo}</td>
+        <td>${p.dataRichiesta}</td>
         <td>${p.stato}</td>
         <td>
           <a href="gestisciPreventivo?id=${p.idPreventivo}" class="btn-small">Apri</a>
