@@ -44,10 +44,32 @@
                     </c:when>
 
                     <%-- CASO 4: ADMIN --%>
-                    <c:when test="${sessionScope.utente.ruolo == 'AMMINISTRATORE'}">
-                        <li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}AdminUtentiController">Venditori</a></li>
-                        <li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}#">Statistiche</a></li>
-                        <li class="nav-item"><a class="nav-link text-danger" href="${pageContext.request.contextPath}/logout">Logout</a></li>
+                    <%-- Controllo sia ADMIN che AMMINISTRATORE per sicurezza --%>
+                    <c:when test="${sessionScope.utente.ruolo == 'ADMIN' || sessionScope.utente.ruolo == 'AMMINISTRATORE'}">
+
+                        <%-- Link alla Dashboard principale --%>
+                        <li class="nav-item">
+                            <a class="nav-link" href="${pageContext.request.contextPath}/admin/dashboard">Dashboard</a>
+                        </li>
+
+                        <%-- Link Gestione Auto --%>
+                        <li class="nav-item">
+                            <a class="nav-link" href="${pageContext.request.contextPath}/AdminAutoController?action=list">Auto</a>
+                        </li>
+
+                        <%-- Link Gestione Venditori (Aggiunto parametro action=listVenditori) --%>
+                        <li class="nav-item">
+                            <a class="nav-link" href="${pageContext.request.contextPath}/AdminUtentiController?action=listVenditori">Venditori</a>
+                        </li>
+
+                        <%-- Link Statistiche (Punta alla nuova Servlet che creeremo sotto) --%>
+                        <li class="nav-item">
+                            <a class="nav-link" href="${pageContext.request.contextPath}/AdminStatisticheServlet">Statistiche</a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link text-danger" href="${pageContext.request.contextPath}/logout">Logout</a>
+                        </li>
                     </c:when>
 
                 </c:choose>

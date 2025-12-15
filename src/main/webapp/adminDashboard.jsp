@@ -20,20 +20,25 @@
         <div class="card">
             <h3>Gestione Auto</h3>
             <p>Visualizza, aggiungi, modifica o rimuovi veicoli dal catalogo.</p>
-            <a href="AdminAutoController?action=list" class="btn">Apri</a>
+            <%-- Link corretto al Controller delle Auto --%>
+            <a href="AdminAutoController?action=list" class="btn">Gestisci Auto</a>
         </div>
 
         <div class="card">
             <h3>Gestione Venditori</h3>
             <p>Aggiungi nuovi venditori o gestisci quelli esistenti.</p>
-            <a href="AdminUtentiController?action=listVenditori" class="btn">Apri</a>
+            <%-- Link corretto al Controller Utenti con action specifica --%>
+            <a href="AdminUtentiController?action=listVenditori" class="btn">Gestisci Venditori</a>
         </div>
 
         <div class="card">
             <h3>Statistiche</h3>
             <p>Visualizza analisi di utilizzo del sistema.</p>
-            <a href="#" class="btn disabled">Disponibile se implementato</a>
+            <%-- Ora punta alla Servlet delle Statistiche --%>
+            <a href="AdminStatisticheServlet" class="btn" style="background-color: #6f42c1;">Visualizza Report</a>
         </div>
+
+    </div>
 
     </div>
 </div>
