@@ -62,7 +62,7 @@
     <div class="form-group">
       <label>Disponibilità:</label>
       <select name="disponibilita" class="form-control">
-        <option value="1" ${auto.disponibilita ? 'selected' : ''}>Disponibile al noleggio</option>
+        <option value="1" ${auto.disponibilita ? 'selected' : ''}>Disponibile</option>
 
         <option value="0" ${!auto.disponibilita ? 'selected' : ''}>Attualmente non disponibile</option>
       </select>
