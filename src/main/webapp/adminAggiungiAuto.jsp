@@ -35,6 +35,12 @@
     <label>URL immagine:</label>
     <input type="text" name="immagine" required>
 
+    <label>Condizione:</label>
+    <select name="stato">
+        <option value="Nuova">Nuova</option>
+        <option value="Usata">Usata</option>
+    </select>
+
     <label>Disponibilità:</label>
     <select name="disponibilita">
         <option value="1">Disponibile</option>

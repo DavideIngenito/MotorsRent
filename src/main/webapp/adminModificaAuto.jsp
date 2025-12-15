@@ -37,6 +37,12 @@
   <label>URL immagine:</label>
   <input type="text" name="immagine" value="${auto.immagine}" required>
 
+  <label>Condizione:</label>
+  <select name="stato">
+    <option value="Nuova" ${auto.stato == 'Nuova' ? 'selected' : ''}>Nuova</option>
+    <option value="Usata" ${auto.stato == 'Usata' ? 'selected' : ''}>Usata</option>
+  </select>
+
   <label>Disponibilità:</label>
   <select name="disponibilita">
     <option value="1" ${auto.disponibilita==1?'selected':''}>Disponibile</option>
