@@ -36,7 +36,7 @@ public class AdminAutoController extends HttpServlet {
         Utente u = (Utente) session.getAttribute("utente");
 
         // ATTENZIONE: Controlla se nel tuo DB hai scritto "ADMIN" o "AMMINISTRATORE"
-        if (u == null || !u.getRuolo().equalsIgnoreCase("ADMIN")) {
+        if (u == null || !u.getRuolo().equalsIgnoreCase("AMMINISTRATORE")) {
             response.sendRedirect("login.jsp");
             return;
         }

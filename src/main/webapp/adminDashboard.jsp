@@ -30,7 +30,7 @@
         </div>
 
         <div class="card">
-            <h3>Statistiche (opzionale)</h3>
+            <h3>Statistiche</h3>
             <p>Visualizza analisi di utilizzo del sistema.</p>
             <a href="#" class="btn disabled">Disponibile se implementato</a>
         </div>
