@@ -1,0 +1,153 @@
+/* --- VARIABILI PALETTE --- */
+:root {
+    --black: #121212;       /* Testi principali, Bottoni primari */
+    --bg-page: #EBEBEB;     /* Sfondo pagina */
+    --silver: #C0C0C0;      /* Bordi, Linee divisorie */
+    --grey-light: #919191;  /* Testi secondari */
+    --grey-dark: #545454;   /* Testi paragrafi, Bottoni secondari */
+    --white: #FFFFFF;       /* Sfondo Card */
+}
+
+/* --- RESET & BASE --- */
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+    font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    background-color: var(--bg-page);
+    color: var(--black);
+    line-height: 1.6;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+main { flex: 1; } /* Spinge il footer in basso */
+
+a { text-decoration: none; color: inherit; }
+ul { list-style: none; }
+
+/* --- LAYOUT UTILS (Simili a Bootstrap ma custom) --- */
+.container {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.mt-5 { margin-top: 3rem; }
+.mb-4 { margin-bottom: 1.5rem; }
+.my-5 { margin-top: 3rem; margin-bottom: 3rem; }
+.text-center { text-align: center; }
+.mx-auto { margin-left: auto; margin-right: auto; }
+
+/* --- HERO SECTION (Il box di benvenuto) --- */
+.hero-card {
+    background-color: var(--white);
+    padding: 3rem;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.05); /* Ombra leggerissima */
+    border: 1px solid var(--silver);
+}
+
+.hero-card h1 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: var(--black);
+    margin-bottom: 1rem;
+}
+
+.hero-card p {
+    font-size: 1.2rem;
+    color: var(--grey-dark); /* #545454 */
+    max-width: 700px;
+}
+
+/* --- BOTTONI --- */
+.actions {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    flex-wrap: wrap;
+}
+
+.btn {
+    display: inline-block;
+    padding: 12px 24px;
+    font-size: 1rem;
+    font-weight: 600;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    border: 2px solid transparent;
+}
+
+/* Bottone Primario (Catalogo): Nero pieno */
+.btn-primary {
+    background-color: var(--black);
+    color: var(--white);
+}
+.btn-primary:hover {
+    background-color: #333; /* Un po' più chiaro al passaggio */
+    transform: translateY(-2px);
+}
+
+/* Bottone Outline (Login): Bordo nero, sfondo trasparente */
+.btn-outline {
+    background-color: transparent;
+    color: var(--black);
+    border-color: var(--black);
+}
+.btn-outline:hover {
+    background-color: var(--black);
+    color: var(--white);
+}
+
+/* Bottone Dark (Registrati): Grigio scuro per distinguerlo */
+.btn-dark {
+    background-color: var(--grey-dark); /* #545454 */
+    color: var(--white);
+}
+.btn-dark:hover {
+    background-color: var(--black);
+}
+
+/* --- SEPARATORI --- */
+.divider {
+    border: 0;
+    height: 1px;
+    background-color: var(--silver); /* #C0C0C0 */
+    margin: 40px 0;
+}
+
+/* --- SEZIONE CHI SIAMO / CONTATTI --- */
+.row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 30px;
+}
+
+.col-md-6 {
+    flex: 1;
+    min-width: 300px; /* Per mobile */
+}
+
+.info-section h2 {
+    font-size: 1.8rem;
+    margin-bottom: 15px;
+    color: var(--black);
+    border-bottom: 2px solid var(--silver); /* Linea sotto i titoli */
+    padding-bottom: 10px;
+    display: inline-block;
+}
+
+.info-box p, .info-box li {
+    color: var(--grey-dark);
+    font-size: 1.05rem;
+    margin-bottom: 10px;
+}
+
+.info-box strong {
+    color: var(--black);
+    font-weight: 600;
+}
