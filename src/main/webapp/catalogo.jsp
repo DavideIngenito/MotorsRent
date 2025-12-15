@@ -33,7 +33,7 @@
                 <p>Anno: ${auto.anno}</p>
                 <p>Prezzo: € ${auto.prezzo}</p>
 
-                <a class="btn" href="dettaglio?id=${auto.idAuto}">
+                <a class="btn" href="schedaAuto?id=${auto.idAuto}">
                     Visualizza dettagli
                 </a>
             </div>
