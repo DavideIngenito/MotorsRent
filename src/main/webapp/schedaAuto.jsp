@@ -62,7 +62,7 @@
             </div>
         </c:if>
 
-        <c:if test="${sessionScope.utente.ruolo == 'ADMIN' || sessionScope.utente.ruolo == 'VENDITORE'}">
+        <c:if test="${sessionScope.utente.ruolo == 'AMMINISTRATORE'}">
             <a class="btn" href="adminModificaAuto.jsp?id=${auto.idAuto}" style="background-color: orange;">Modifica Auto</a>
         </c:if>
 
