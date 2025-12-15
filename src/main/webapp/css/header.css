@@ -1,0 +1,24 @@
+header {
+    background-color: #121212;
+    color: #EBEBEB;
+    padding: 20px;
+}
+
+header h1 {
+    font-size: 22px;
+}
+
+nav {
+    margin-top: 10px;
+}
+
+nav a {
+    color: #EBEBEB;
+    margin-right: 20px;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+nav a:hover {
+    color: #C0C0C0;
+}
