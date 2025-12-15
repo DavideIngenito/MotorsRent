@@ -57,6 +57,8 @@
                 <%-- CASO 3: VENDITORE --%>
                 <c:when test="${sessionScope.utente.ruolo == 'VENDITORE'}">
                     <a class="btn btn-primary btn-lg me-2" href="dashboardVenditore">Dashboard Principale</a>
+                    <a class="btn btn-outline-dark btn-lg me-2" href="venditorePreventivi">Richieste Preventivi</a>
+                    <a class="btn btn-outline-dark btn-lg" href="venditoreLeasing">Richieste Leasing</a>
                 </c:when>
 
                 <%-- CASO 4: ADMIN --%>
