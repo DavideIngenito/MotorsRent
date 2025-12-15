@@ -10,7 +10,7 @@ public class Leasing {
     private int durataMesi;
     private double anticipo;
     private int kmAnnui;
-    private Timestamp dataLeasing;
+    private Timestamp dataRichiesta;
     private String stato; // "in valutazione", "approvato", "respinto"
 
     // NUOVI CAMPI (Fondamentali per le JSP del venditore)
@@ -38,8 +38,8 @@ public class Leasing {
     public int getKmAnnui() { return kmAnnui; }
     public void setKmAnnui(int kmAnnui) { this.kmAnnui = kmAnnui; }
 
-    public Timestamp getDataLeasing() { return dataLeasing; }
-    public void setDataLeasing(Timestamp dataLeasing) { this.dataLeasing = dataLeasing; }
+    public Timestamp getDataRichiesta() { return dataRichiesta; }
+    public void setDataRichiesta(Timestamp dataRichiesta) { this.dataRichiesta = dataRichiesta; }
 
     public String getStato() { return stato; }
     public void setStato(String stato) { this.stato = stato; }
