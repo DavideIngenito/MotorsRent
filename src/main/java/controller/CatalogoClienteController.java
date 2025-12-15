@@ -24,7 +24,7 @@ public class CatalogoClienteController extends HttpServlet {
         request.setAttribute("messaggio", "Benvenuto nell'area Catalogo Clienti");
 
         // Inoltra a una JSP diversa specifica per il cliente
-        request.getRequestDispatcher("/WEB-INF/views/catalogoCliente.jsp").forward(request, response);
+        request.getRequestDispatcher("catalogoCliente.jsp").forward(request, response);
     }
 
     @Override

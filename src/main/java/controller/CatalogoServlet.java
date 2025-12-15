@@ -24,7 +24,7 @@ public class CatalogoServlet extends HttpServlet {
         request.setAttribute("messaggio", "Benvenuto nel Catalogo Generale");
 
         // Inoltra alla pagina JSP (assicurati che esista o cambia il percorso)
-        request.getRequestDispatcher("/WEB-INF/views/catalogo.jsp").forward(request, response);
+        request.getRequestDispatcher("catalogo.jsp").forward(request, response);
     }
 
     @Override
