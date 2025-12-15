@@ -104,4 +104,27 @@ public class AutomobileDAO {
                 rs.getBoolean("disponibilita")
         );
     }
+
+    public List<Automobile> cercaAuto(String marca, double prezzoMax) throws SQLException {
+        List<Automobile> list = new ArrayList<>();
+        String sql = "SELECT * FROM AUTOMOBILE WHERE prezzo <= ?";
+
+        if (marca != null && !marca.isEmpty()) {
+            sql += " AND marca LIKE ?";
+        }
+
+        try (PreparedStatement ps = connection.prepareStatement(sql)) {
+            ps.setDouble(1, prezzoMax);
+            if (marca != null && !marca.isEmpty()) {
+                ps.setString(2, "%" + marca + "%");
+            }
+
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    list.add(mapRowToAutomobile(rs)); // Usa il tuo metodo helper esistente
+                }
+            }
+        }
+        return list;
+    }
 }
