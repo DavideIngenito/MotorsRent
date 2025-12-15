@@ -39,7 +39,7 @@
                 <tr>
                     <td>${p.idPreventivo}</td>
                     <td>${p.auto.marca} ${p.auto.modello}</td>
-                    <td>${p.dataPreventivo}</td>
+                    <td>${p.dataRichiesta}</td>
                     <td>${p.note}</td>
                     <td><b>${p.stato}</b></td>
                 </tr>

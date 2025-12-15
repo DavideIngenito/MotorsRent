@@ -134,7 +134,7 @@ public class PreventivoDAO {
         p.setIdPreventivo(rs.getInt("idPreventivo"));
         p.setIdUtente(rs.getInt("idUtente"));
         p.setIdAuto(rs.getInt("idAuto"));
-        p.setDataRichiesta(rs.getTimestamp("dataPreventivo"));
+        p.setDataRichiesta(rs.getTimestamp("dataRichiesta"));
         p.setNote(rs.getString("note"));
         p.setStato(rs.getString("stato"));
 

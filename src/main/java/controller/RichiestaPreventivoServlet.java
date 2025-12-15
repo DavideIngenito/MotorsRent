@@ -78,7 +78,7 @@ public class RichiestaPreventivoServlet extends HttpServlet {
 
             // 5. Successo -> Rimando all'area personale (o lista preventivi)
             // Nota: Assicurati di avere una pagina dashboardCliente.jsp o simile
-            response.sendRedirect("dashboardCliente.jsp?msg=Richiesta inviata con successo");
+            response.sendRedirect("dashboardCliente?msg=Richiesta inviata con successo");
 
         } catch (NumberFormatException e) {
             e.printStackTrace();
@@ -90,4 +90,6 @@ public class RichiestaPreventivoServlet extends HttpServlet {
             request.getRequestDispatcher("richiestaPreventivo.jsp").forward(request, response);
         }
     }
+
+
 }

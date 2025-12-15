@@ -67,7 +67,7 @@ public class RichiestaLeasingServlet extends HttpServlet {
             LeasingDAO dao = new LeasingDAO(conn);
             dao.insert(l);
 
-            response.sendRedirect("statoLeasing?msg=Richiesta inviata");
+            response.sendRedirect("dashboardCliente?msg=Richiesta inviata");
 
         } catch (NumberFormatException | SQLException e) {
             e.printStackTrace();

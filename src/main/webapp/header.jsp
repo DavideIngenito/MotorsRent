@@ -39,7 +39,8 @@
 
                     <%-- CASO 3: VENDITORE --%>
                     <c:when test="${sessionScope.utente.ruolo == 'VENDITORE'}">
-                        <li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/dashboardVenditore">Dashboard Venditore</a></li>
+                        <li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/venditorePreventivi">Richieste Preventivi</a></li>
+                        <li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/venditoreLeasing">Richieste Leasing</a></li>
                         <li class="nav-item"><a class="nav-link text-danger" href="${pageContext.request.contextPath}/logout">Logout</a></li>
                     </c:when>
 
