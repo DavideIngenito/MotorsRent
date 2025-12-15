@@ -105,4 +105,17 @@ public class UtenteDAO {
         }
         return utenti;
     }
+
+
+    public void updateProfilo(Utente u) throws SQLException {
+        String sql = "UPDATE UTENTE SET nome=?, cognome=?, email=?, telefono=? WHERE idUtente=?";
+        try (PreparedStatement ps = connection.prepareStatement(sql)) {
+            ps.setString(1, u.getNome());
+            ps.setString(2, u.getCognome());
+            ps.setString(3, u.getEmail());
+            ps.setString(4, u.getTelefono());
+            ps.setInt(5, u.getIdUtente());
+            ps.executeUpdate();
+        }
+    }
 }
