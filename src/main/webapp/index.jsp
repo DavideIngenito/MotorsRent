@@ -27,7 +27,7 @@
         </p>
 
         <div class="actions">
-            <a class="btn btn-primary" href="catalogo.jsp">
+            <a class="btn btn-primary" href="catalogo">
                 <i class="fa-solid fa-car-side"></i> Vai al Catalogo
             </a>
 
