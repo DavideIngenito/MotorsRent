@@ -15,7 +15,7 @@
 <div class="login-wrapper fade-in">
   <div class="login-card">
 
-    <h1 class="login-title">Bentornato</h1>
+    <h1 class="login-title">Login</h1>
     <p class="login-subtitle">Accedi alla tua area riservata MotorsRent</p>
 
     <c:if test="${not empty errore}">
