@@ -46,7 +46,7 @@
     </div>
 
     <div style="margin-top: 30px;">
-        <a href="dashboardAdmin" class="btn btn-secondary">Torna alla Dashboard</a>
+        <a href="dashboardAdmin" class="btn btn-secondary">Vai alla Dashboard</a>
     </div>
 </div>
 

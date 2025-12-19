@@ -9,7 +9,7 @@
     <title>MotorsRent</title>
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"/>
-    <link href="${pageContext.request.contextPath}/css/style.css" rel="stylesheet"/>
+    <link href="${pageContext.request.contextPath}/css/header.css" rel="stylesheet"/>
 </head>
 <body>
 
@@ -47,6 +47,10 @@
                     <%-- CASO 4: ADMIN --%>
                     <%-- Controllo sia ADMIN che AMMINISTRATORE per sicurezza --%>
                     <c:when test="${sessionScope.utente.ruolo == 'ADMIN' || sessionScope.utente.ruolo == 'AMMINISTRATORE'}">
+
+                        <li class="nav-item">
+                            <a class="nav-link" href="${pageContext.request.contextPath}/dashboardAdmin">Dashboard</a>
+                        </li>
 
                         <%-- Link Gestione Venditori (Aggiunto parametro action=listVenditori) --%>
                         <li class="nav-item">
