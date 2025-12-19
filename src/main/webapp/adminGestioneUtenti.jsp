@@ -1,71 +1,114 @@
-
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
-<html>
+<!DOCTYPE html>
+<html lang="it">
 <head>
+  <meta charset="UTF-8">
   <title>Gestione Venditori - MotorsRent</title>
   <link rel="stylesheet" href="css/adminGestioneUtenti.css">
 </head>
+
 <body>
 
 <jsp:include page="/header.jsp"/>
 
-<h1>Gestione Venditori</h1>
+<!-- =======================
+     WRAPPER PAGINA
+======================= -->
+<div class="admin-users-page">
+  <div class="admin-users-container">
 
-<h2>Aggiungi Nuovo Venditore</h2>
+    <!-- ===== HEADER ===== -->
+    <div class="admin-users-header">
+      <h1>Gestione Venditori</h1>
+      <p>Gestisci i venditori attivi del sistema</p>
+    </div>
 
-<form action="AdminUtentiController?action=addVenditore" method="post">
+    <!-- ===== SEZIONE FORM ===== -->
+    <section class="admin-users-section">
+      <h2>Aggiungi Nuovo Venditore</h2>
 
-  <label>Nome:</label>
-  <input type="text" name="nome" required>
+      <form
+              action="AdminUtentiController?action=addVenditore"
+              method="post"
+              class="admin-users-form"
+      >
 
-  <label>Cognome:</label>
-  <input type="text" name="cognome" required>
+        <div class="admin-users-field">
+          <label>Nome</label>
+          <input type="text" name="nome" required>
+        </div>
 
-  <label>Email:</label>
-  <input type="email" name="email" required>
+        <div class="admin-users-field">
+          <label>Cognome</label>
+          <input type="text" name="cognome" required>
+        </div>
 
-  <label>Password:</label>
-  <input type="password" name="password" required>
+        <div class="admin-users-field">
+          <label>Email</label>
+          <input type="email" name="email" required>
+        </div>
 
-  <button type="submit" class="btn">Crea Venditore</button>
-</form>
+        <div class="admin-users-field">
+          <label>Password</label>
+          <input type="password" name="password" required>
+        </div>
 
-<h2>Venditori Attivi</h2>
+        <button type="submit" class="btn btn-primary">
+          Crea Venditore
+        </button>
 
-<table class="table">
-  <thead>
-  <tr>
-    <th>Nome</th>
-    <th>Email</th>
-    <th>Azioni</th>
-  </tr>
-  </thead>
-  <tbody>
-  <c:forEach var="vend" items="${listaVenditori}">
-    <tr>
-      <td>${vend.nome} ${vend.cognome}</td>
-      <td>${vend.email}</td>
-      <td>
-        <a class="btn-small delete"
-           href="AdminUtentiController?action=deleteVenditore&id=${vend.idUtente}"
-           onclick="return confirm('Eliminare questo venditore?');">
-          Rimuovi
-        </a>
-      </td>
-    </tr>
-  </c:forEach>
-  </tbody>
-</table>
+      </form>
+    </section>
 
-<div style="margin-top: 30px;">
-  <a href="dashboardAdmin" class="btn btn-secondary">Vai alla Dashboard</a>
-</div>
-<div class="admin-users">
-  <section class="admin-section">...</section>
+    <!-- ===== SEZIONE TABELLA ===== -->
+    <section class="admin-users-section">
+      <h2>Venditori Attivi</h2>
+
+      <div class="admin-users-table-wrapper">
+        <table class="admin-users-table">
+          <thead>
+          <tr>
+            <th>Nome</th>
+            <th>Email</th>
+            <th>Azioni</th>
+          </tr>
+          </thead>
+          <tbody>
+          <c:forEach var="vend" items="${listaVenditori}">
+            <tr>
+              <td>${vend.nome} ${vend.cognome}</td>
+              <td>${vend.email}</td>
+              <td>
+                <div class="admin-users-actions">
+                  <a
+                          href="AdminUtentiController?action=deleteVenditore&id=${vend.idUtente}"
+                          class="admin-users-btn-delete"
+                          onclick="return confirm('Eliminare questo venditore?');"
+                  >
+                    Rimuovi
+                  </a>
+                </div>
+              </td>
+            </tr>
+          </c:forEach>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- ===== FOOTER LINK ===== -->
+    <div class="admin-users-footer">
+      <a href="dashboardAdmin" class="btn btn-secondary">
+        Vai alla Dashboard
+      </a>
+    </div>
+
+  </div>
 </div>
 
 <jsp:include page="footer.jsp"/>
+
 </body>
 </html>

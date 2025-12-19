@@ -1,67 +1,173 @@
-/* ================= ADMIN USERS ================= */
+/* ===============================
+   ADMIN – GESTIONE UTENTI
+   (scoped, non globale)
+================================ */
 
-.admin-users {
-    max-width: 1200px;
-    margin: 80px auto;
-    padding: 0 24px;
+.admin-users-page {
+    background-color: #E2E2E2;
+    padding: 80px 20px 120px;
 }
 
-.admin-users h1 {
+.admin-users-container {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/* ===== Titolo Pagina ===== */
+.admin-users-header {
+    margin-bottom: 48px;
+}
+
+.admin-users-header h1 {
     font-family: 'Playfair Display', serif;
     font-size: 2.6rem;
-    margin-bottom: 40px;
+    margin-bottom: 8px;
 }
 
-.admin-section {
-    background: var(--card-bg);
+.admin-users-header p {
+    color: #555;
+    font-size: 1rem;
+}
+
+/* ===== Sezioni ===== */
+.admin-users-section {
+    background-color: #F3F3F3;
     padding: 36px;
-    border-radius: var(--radius);
-    box-shadow: var(--shadow-sm);
+    border-radius: 14px;
+    box-shadow: 0 12px 20px rgba(0,0,0,0.12);
     margin-bottom: 56px;
 }
 
-.admin-section h2 {
-    margin-bottom: 24px;
+/* ===== Sottotitoli ===== */
+.admin-users-section h2 {
+    font-size: 1.4rem;
+    margin-bottom: 28px;
 }
 
-.admin-form {
+/* ===== Form ===== */
+.admin-users-form {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    gap: 24px;
+    gap: 24px 32px;
 }
 
-.admin-form label {
+.admin-users-field {
+    display: flex;
+    flex-direction: column;
+}
+
+.admin-users-field label {
     font-size: 0.75rem;
+    font-weight: 600;
     text-transform: uppercase;
+    letter-spacing: 1px;
     color: #666;
+    margin-bottom: 8px;
 }
 
-.admin-form input {
-    padding: 14px;
+.admin-users-field input {
+    padding: 14px 16px;
     border-radius: 8px;
     border: 1px solid #BBB;
-    background: #FAFAFA;
+    background-color: #FAFAFA;
+    font-size: 0.95rem;
 }
 
-.admin-form button {
+.admin-users-field input:focus {
+    outline: none;
+    border-color: #121212;
+    box-shadow: 0 0 0 3px rgba(18,18,18,0.12);
+}
+
+.admin-users-form .btn {
     grid-column: span 2;
-    margin-top: 12px;
+    margin-top: 16px;
+    justify-self: flex-start;
 }
 
-.admin-table {
+/* ===== Tabella ===== */
+.admin-users-table-wrapper {
+    overflow-x: auto;
+}
+
+.admin-users-table {
     width: 100%;
     border-collapse: collapse;
-    background: #FAFAFA;
+    background-color: #FAFAFA;
+    border-radius: 12px;
+    overflow: hidden;
 }
 
-.admin-table th,
-.admin-table td {
-    padding: 16px;
-    border-bottom: 1px solid #DDD;
+.admin-users-table thead {
+    background-color: #ECECEC;
 }
 
-.admin-table th {
-    text-transform: uppercase;
+.admin-users-table th,
+.admin-users-table td {
+    padding: 16px 20px;
+    text-align: left;
+}
+
+.admin-users-table th {
     font-size: 0.75rem;
-    color: #777;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: #666;
+    border-bottom: 1px solid #D5D5D5;
+}
+
+.admin-users-table tr:not(:last-child) td {
+    border-bottom: 1px solid #E0E0E0;
+}
+
+.admin-users-table tbody tr:hover {
+    background-color: #F0F0F0;
+}
+
+/* ===== Azioni ===== */
+.admin-users-actions {
+    display: flex;
+    gap: 12px;
+}
+
+.admin-users-btn-delete {
+    padding: 8px 18px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    background: transparent;
+    color: #c0392b;
+    border: 1px solid rgba(192,57,43,0.5);
+    cursor: pointer;
+    transition: 0.25s;
+}
+
+.admin-users-btn-delete:hover {
+    background-color: #c0392b;
+    color: #fff;
+    border-color: #c0392b;
+}
+
+/* ===== Footer Link ===== */
+.admin-users-footer {
+    margin-top: 40px;
+}
+
+/* ===============================
+   RESPONSIVE
+================================ */
+@media (max-width: 768px) {
+
+    .admin-users-form {
+        grid-template-columns: 1fr;
+    }
+
+    .admin-users-form .btn {
+        grid-column: span 1;
+        width: 100%;
+    }
+
+    .admin-users-header h1 {
+        font-size: 2.2rem;
+    }
 }

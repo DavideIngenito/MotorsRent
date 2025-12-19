@@ -1,35 +1,44 @@
-/* ================= LOGIN ================= */
+/* ===============================
+   LOGIN PAGE – SCOPED
+================================ */
 
 .login-page {
-    background: var(--bg-page);
+    background-color: #E2E2E2;
     padding: 100px 20px;
+    min-height: calc(100vh - 160px); /* header + footer */
 }
 
 .login-card {
     max-width: 420px;
     margin: 0 auto;
-    background: var(--card-bg);
+    background-color: #F3F3F3;
     padding: 42px;
-    border-radius: var(--radius);
-    box-shadow: var(--shadow-lg);
+    border-radius: 14px;
+    box-shadow: 0 25px 40px rgba(0,0,0,0.18);
 }
 
+/* Titolo */
 .login-title {
     font-family: 'Playfair Display', serif;
-    text-align: center;
     font-size: 2.4rem;
+    text-align: center;
     margin-bottom: 32px;
 }
 
+/* Errore */
 .login-error {
-    background: #fdeaea;
-    border-left: 4px solid var(--danger);
+    background-color: #fdeaea;
+    border-left: 4px solid #c0392b;
     padding: 14px;
     margin-bottom: 28px;
     font-size: 0.9rem;
+    color: #7a1c1c;
 }
 
-.login-form {}
+/* Form */
+.login-form {
+    width: 100%;
+}
 
 .login-field {
     margin-bottom: 26px;
@@ -38,6 +47,7 @@
 .login-field label {
     display: block;
     font-size: 0.75rem;
+    font-weight: 600;
     text-transform: uppercase;
     letter-spacing: 1px;
     color: #666;
@@ -46,24 +56,54 @@
 
 .login-field input {
     width: 100%;
-    padding: 14px;
+    padding: 14px 16px;
     border-radius: 8px;
     border: 1px solid #BBB;
-    background: #FAFAFA;
+    background-color: #FAFAFA;
+    font-size: 0.95rem;
+    transition: border-color 0.2s, box-shadow 0.2s;
 }
 
 .login-field input:focus {
     outline: none;
-    border-color: var(--black);
+    border-color: #121212;
+    box-shadow: 0 0 0 3px rgba(18,18,18,0.12);
 }
 
+/* Bottone */
+.login-form .btn {
+    width: 100%;
+    margin-top: 12px;
+}
+
+/* Footer */
 .login-footer {
     margin-top: 26px;
     text-align: center;
     font-size: 0.9rem;
+    color: #555;
 }
 
 .login-footer a {
     font-weight: 600;
-    border-bottom: 1px solid var(--silver);
+    color: #121212;
+    border-bottom: 1px solid #C0C0C0;
+    text-decoration: none;
+}
+
+.login-footer a:hover {
+    border-bottom-color: #121212;
+}
+
+/* ===============================
+   RESPONSIVE
+================================ */
+@media (max-width: 480px) {
+    .login-card {
+        padding: 32px 24px;
+    }
+
+    .login-title {
+        font-size: 2.1rem;
+    }
 }

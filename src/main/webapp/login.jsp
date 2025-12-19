@@ -40,13 +40,15 @@
 
 <div class="login-page">
   <div class="login-container">
-    ...
+
   </div>
   <div class="login-page">
     <div class="login-card">
-      ...
+      <h1 class="login-title">Login</h1>
+
     </div>
   </div>
+
 
 </div>
 
