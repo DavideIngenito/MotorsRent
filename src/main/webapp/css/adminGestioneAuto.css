@@ -169,3 +169,31 @@ h1 {
     color: var(--black);
     border-bottom-color: var(--black);
 }
+
+.navbar {
+    background-color: #121212 !important;
+    color: #FFFFFF !important;
+}
+
+/* 2. Forza il colore del Brand (MotorsRent) a Bianco */
+.navbar .navbar-brand {
+    color: #FFFFFF !important;
+}
+
+/* 3. Forza i Link di navigazione a Grigio Chiaro */
+.navbar .nav-link {
+    color: #C0C0C0 !important; /* Grigio argento */
+}
+
+/* 4. Hover sui link: Diventano Bianchi */
+.navbar .nav-link:hover,
+.navbar .nav-link.active,
+.navbar .nav-link:focus {
+    color: #FFFFFF !important;
+}
+
+/* 5. Resetta il colore ereditato per eventuali altri testi nella navbar */
+.navbar-collapse,
+.navbar-text {
+    color: #C0C0C0 !important;
+}
