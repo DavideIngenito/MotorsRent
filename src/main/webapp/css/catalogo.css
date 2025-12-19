@@ -1,7 +1,7 @@
 /* --- LAYOUT GRID --- */
 .main-layout {
     display: grid;
-    grid-template-columns: 280px 1fr; /* Sidebar fissa, resto fluido */
+    grid-template-columns: 280px 1fr;
     gap: 40px;
     margin-top: 40px;
     margin-bottom: 60px;
@@ -10,196 +10,176 @@
 
 /* --- SIDEBAR --- */
 .sidebar-filters {
-    background-color: #FAFAFA; /* Grigio chiarissimo del mockup */
-    padding: 30px;
-    border-radius: 8px; /* Un po' meno arrotondato, più tecnico */
-    position: sticky;
-    top: 100px; /* Rimane fissa mentre scorri */
+    background-color: transparent; /* Nel mockup sembra pulito senza sfondo grigio */
+    padding-right: 20px;
+}
+
+.sidebar-title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-bottom: 20px;
+    border-bottom: 1px solid #E0E0E0;
+    padding-bottom: 15px;
+}
+
+/* --- ACCORDION SECTIONS (I blocchi che si aprono/chiudono) --- */
+.filter-section {
+    border-bottom: 1px solid #E0E0E0;
+    padding: 20px 0;
 }
 
 .filter-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 25px;
-    border-bottom: 1px solid #E0E0E0;
-    padding-bottom: 15px;
-}
-
-.filter-header h3 {
-    font-size: 1.1rem;
-    font-weight: 700;
-}
-
-.filter-count {
-    font-size: 0.85rem;
-    color: var(--grey-medium);
-}
-
-.filter-group {
-    margin-bottom: 25px;
-}
-
-.filter-label {
-    display: block;
-    font-size: 0.8rem;
+    cursor: pointer;
+    font-size: 0.9rem;
     font-weight: 800;
-    letter-spacing: 1px;
-    margin-bottom: 10px;
     text-transform: uppercase;
+    color: var(--black);
+    letter-spacing: 0.5px;
+}
+
+.filter-header .icon {
+    transition: transform 0.3s ease;
+}
+
+/* Ruota la freccetta se aperto */
+.filter-section.active .filter-header .icon {
+    transform: rotate(180deg);
+}
+
+.filter-body {
+    display: none; /* Nascosto di default */
+    margin-top: 15px;
+    animation: slideDown 0.3s ease-out;
+}
+
+.filter-section.active .filter-body {
+    display: block; /* Mostra se attivo */
+}
+
+@keyframes slideDown {
+    from { opacity: 0; transform: translateY(-5px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* --- CHECKBOX LIST STYLE (Per Marchio, Anno, Stato) --- */
+.checkbox-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.custom-checkbox-label {
+    display: flex;
+    justify-content: space-between; /* Testo a sx, spunta a dx */
+    align-items: center;
+    cursor: pointer;
+    font-size: 0.95rem;
+    color: var(--grey-text);
+    transition: color 0.2s;
+}
+
+.custom-checkbox-label:hover {
     color: var(--black);
 }
 
-.filter-input {
-    width: 100%;
-    padding: 12px;
-    border: 1px solid #D0D0D0;
-    border-radius: 4px; /* Squadrato come mockup */
-    background: #fff;
-    font-family: 'Inter', sans-serif;
+/* Nascondiamo la checkbox nativa brutta */
+.custom-checkbox-label input[type="checkbox"],
+.custom-checkbox-label input[type="radio"] {
+    display: none;
 }
 
-.btn-filter {
+/* La spunta personalizzata (V) */
+.checkmark {
+    width: 18px;
+    height: 18px;
+    border: 1px solid #C0C0C0;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: transparent; /* Nascosto se non checkato */
+    transition: all 0.2s;
+}
+
+/* Quando è checkato */
+.custom-checkbox-label input:checked + .checkmark {
+    background-color: var(--black); /* Nero MotorsRent */
+    border-color: var(--black);
+    color: #fff; /* Spunta bianca */
+}
+
+.custom-checkbox-label input:checked ~ span {
+    font-weight: 700;
+    color: var(--black);
+}
+
+/* --- RANGE SLIDER (Prezzo & Km) --- */
+.range-container {
+    padding: 10px 0;
+}
+
+.range-slider {
+    -webkit-appearance: none;
+    width: 100%;
+    height: 4px;
+    background: #E0E0E0;
+    border-radius: 5px;
+    outline: none;
+}
+
+.range-slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background: var(--black);
+    cursor: pointer;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+}
+
+.range-values {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 10px;
+    font-weight: 600;
+    font-size: 0.9rem;
+}
+
+/* --- BOTTONE APPLICA --- */
+.btn-filter-apply {
     width: 100%;
     background-color: var(--black);
-    color: var(--white);
-    padding: 14px;
-    font-weight: 600;
-    text-transform: uppercase;
+    color: #fff;
+    padding: 15px;
+    margin-top: 30px;
     border: none;
-    border-radius: 4px;
+    text-transform: uppercase;
+    font-weight: 700;
     cursor: pointer;
-    transition: background 0.3s;
+    border-radius: 0; /* Squadrato come mockup o leggermente round */
 }
 
-.btn-filter:hover {
+.btn-filter-apply:hover {
     background-color: #333;
 }
 
-.reset-link {
-    display: block;
-    text-align: center;
-    margin-top: 15px;
-    font-size: 0.9rem;
-    color: var(--grey-dark);
-    text-decoration: underline;
-}
-
-/* --- GRIGLIA AUTO (Destra) --- */
+/* --- GRIGLIA RISULTATI (Uguale a prima) --- */
 .catalog-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
     gap: 30px;
 }
-
-.auto-card {
-    background: var(--white);
-    border-radius: 12px;
-    overflow: hidden;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    position: relative;
-    display: flex;
-    flex-direction: column;
-}
-
-.auto-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-}
-
-.badge-new {
-    position: absolute;
-    top: 15px;
-    left: 15px;
-    background-color: var(--black);
-    color: white;
-    padding: 4px 10px;
-    font-size: 0.7rem;
-    font-weight: 700;
-    border-radius: 4px;
-    z-index: 10;
-}
-
-.card-img-container {
-    height: 200px;
-    background-color: #f4f4f4;
-    overflow: hidden;
-}
-
-.card-img-container img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    transition: transform 0.5s ease;
-}
-
-.auto-card:hover .card-img-container img {
-    transform: scale(1.05);
-}
-
-.card-content {
-    padding: 20px;
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-}
-
-.card-brand {
-    font-size: 0.9rem;
-    text-transform: uppercase;
-    color: var(--grey-medium);
-    margin-bottom: 4px;
-    font-weight: 700;
-}
-
-.card-model {
-    font-size: 1.2rem;
-    font-weight: 700;
-    margin-bottom: 10px;
-    color: var(--black);
-}
-
-.card-specs {
-    font-size: 0.85rem;
-    color: var(--grey-dark);
-    margin-bottom: 20px;
-    display: flex;
-    gap: 15px;
-}
-
-.card-price {
-    font-size: 1.4rem;
-    font-weight: 700;
-    color: var(--black);
-    margin-top: auto; /* Spinge il prezzo in basso */
-    margin-bottom: 15px;
-}
-
-.btn-details {
-    display: block;
-    text-align: center;
-    background-color: transparent;
-    border: 1px solid var(--black);
-    color: var(--black);
-    padding: 10px;
-    border-radius: 50px;
-    font-weight: 600;
-    font-size: 0.9rem;
-    transition: all 0.3s;
-}
-
-.btn-details:hover {
-    background-color: var(--black);
-    color: var(--white);
-}
-
-/* Responsive per mobile */
-@media (max-width: 768px) {
-    .main-layout {
-        grid-template-columns: 1fr; /* Colonna singola */
-    }
-    .sidebar-filters {
-        position: static; /* Non più sticky */
-    }
-}
+/* ... (Mantenere lo stile delle card auto che ti ho dato prima) ... */
+.auto-card { background: #fff; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.05); }
+.card-img-container { height: 200px; background: #eee; overflow: hidden; }
+.card-img-container img { width: 100%; height: 100%; object-fit: cover; }
+.card-content { padding: 20px; }
+.card-brand { font-size: 0.9rem; color: #919191; font-weight: 700; text-transform: uppercase; }
+.card-model { font-size: 1.2rem; font-weight: 700; margin-bottom: 5px; }
+.card-price { font-size: 1.4rem; font-weight: 700; margin-top: 15px; }
+.btn-details { display: block; text-align: center; border: 1px solid #121212; padding: 10px; border-radius: 50px; margin-top: 15px; color: #121212; font-weight: 600; }
+.btn-details:hover { background: #121212; color: #fff; }
