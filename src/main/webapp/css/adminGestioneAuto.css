@@ -1,0 +1,171 @@
+/* --- PALETTE & GLOBALS (Richiamiamo le variabili base) --- */
+:root {
+    --black: #121212;
+    --bg-page: #EBEBEB;
+    --white: #FFFFFF;
+    --silver: #C0C0C0;
+    --grey-text: #545454;
+    --danger: #cf2e2e; /* Un rosso elegante per l'elimina */
+
+    --radius: 12px;
+    --shadow-card: 0 4px 12px rgba(0,0,0,0.08);
+}
+
+body {
+    background-color: var(--bg-page);
+    font-family: 'Inter', sans-serif;
+    color: var(--black);
+    margin: 0;
+}
+
+/* Container specifico per l'admin per centrare e dare margine */
+.admin-container {
+    max-width: 1200px;
+    margin: 40px auto;
+    padding: 0 20px;
+    min-height: 80vh; /* Assicura che il footer non salga troppo */
+}
+
+/* --- TITOLI --- */
+h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin-bottom: 30px;
+    color: var(--black);
+    border-left: 5px solid var(--black); /* Dettaglio di design a sinistra */
+    padding-left: 20px;
+}
+
+/* --- BOTTONE AGGIUNGI (Floating o in evidenza) --- */
+.btn.add-btn {
+    display: inline-flex;
+    align-items: center;
+    background-color: var(--black);
+    color: var(--white);
+    padding: 12px 24px;
+    border-radius: 50px;
+    text-decoration: none;
+    font-weight: 600;
+    margin-bottom: 25px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.btn.add-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 15px rgba(0,0,0,0.3);
+}
+
+/* --- STILE TABELLA PREMIUM --- */
+.table-wrapper {
+    background: var(--white);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow-card);
+    overflow: hidden; /* Fondamentale per i bordi arrotondati della tabella */
+    border: 1px solid rgba(0,0,0,0.05);
+}
+
+.table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: left;
+}
+
+/* Header Tabella */
+.table thead {
+    background-color: #f8f8f8;
+    border-bottom: 2px solid var(--silver);
+}
+
+.table th {
+    padding: 18px 20px;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--grey-text);
+    font-weight: 600;
+}
+
+/* Body Tabella */
+.table td {
+    padding: 15px 20px;
+    vertical-align: middle;
+    border-bottom: 1px solid #eeeeee;
+    color: var(--black);
+    font-size: 0.95rem;
+}
+
+.table tbody tr {
+    transition: background-color 0.2s ease;
+}
+
+.table tbody tr:hover {
+    background-color: #fcfcfc; /* Highlight molto sottile al passaggio */
+}
+
+/* Ultima riga senza bordo */
+.table tbody tr:last-child td {
+    border-bottom: none;
+}
+
+/* Immagine Anteprima */
+.preview {
+    width: 80px;
+    height: 50px;
+    object-fit: cover;
+    border-radius: 6px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    background-color: #ddd; /* Placeholder background */
+}
+
+/* --- BOTTONI AZIONI (Small) --- */
+.btn-small {
+    display: inline-block;
+    padding: 6px 14px;
+    border-radius: 6px;
+    text-decoration: none;
+    font-size: 0.85rem;
+    font-weight: 500;
+    transition: all 0.2s;
+    margin-right: 5px;
+}
+
+/* Modifica: Outline Nero */
+.btn-small:not(.delete) {
+    border: 1px solid var(--silver);
+    color: var(--black);
+}
+
+.btn-small:not(.delete):hover {
+    border-color: var(--black);
+    background-color: var(--black);
+    color: var(--white);
+}
+
+/* Elimina: Rosso scuro elegante */
+.btn-small.delete {
+    background-color: #fff0f0; /* Sfondo rossino chiarissimo */
+    color: var(--danger);
+    border: 1px solid transparent;
+}
+
+.btn-small.delete:hover {
+    background-color: var(--danger);
+    color: var(--white);
+}
+
+/* --- NAVIGAZIONE SECONDARIA (Torna alla Dashboard) --- */
+.btn-secondary {
+    display: inline-block;
+    color: var(--grey-text);
+    text-decoration: none;
+    font-weight: 500;
+    border-bottom: 1px solid transparent;
+    transition: color 0.2s;
+}
+
+.btn-secondary:hover {
+    color: var(--black);
+    border-bottom-color: var(--black);
+}
