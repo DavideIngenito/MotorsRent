@@ -1,108 +1,151 @@
-/* --- VARIABILI PALETTE MOCKUP --- */
+/* --- VARIABILI PALETTE --- */
 :root {
-    --bg-page: #FDFBF6;       /* Colore crema chiaro di sfondo */
-    --text-black: #000000;    /* Testo nero */
-    --input-border: #E0E0E0;  /* Bordo sottile grigio per i campi */
-    --btn-blue: #132235;      /* Blu scuro per il bottone LOGIN */
+    --black: #121212;
+    --bg-page: #EBEBEB;
     --white: #FFFFFF;
+    --silver: #C0C0C0;
+    --grey-medium: #919191;
+    --grey-dark: #545454;
+    --error-red: #d93025;
 }
 
-/* --- SETUP PAGINA --- */
-body.login-page {
+/* --- BACKGROUND PAGINA --- */
+.login-page {
     background-color: var(--bg-page);
     font-family: 'Inter', sans-serif;
     display: flex;
     flex-direction: column;
     min-height: 100vh;
-    margin: 0;
 }
 
-/* --- CONTENITORE CENTRALE --- */
-.login-container {
+/* --- CONTAINER CENTRALE --- */
+.login-wrapper {
     flex: 1;
     display: flex;
-    flex-direction: column;
     align-items: center;
     justify-content: center;
     padding: 40px 20px;
+}
+
+/* --- CARD BIANCA --- */
+.login-card {
+    background-color: var(--white);
+    width: 100%;
+    max-width: 450px;
+    padding: 50px 40px;
+    border-radius: 16px;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.08);
     text-align: center;
 }
 
-/* --- LOGO --- */
-.logo-img {
-    width: 250px; /* Regola la dimensione come preferisci */
-    height: auto;
-    margin-bottom: 30px;
-}
-
-/* --- TITOLO --- */
+/* --- TITOLI --- */
 .login-title {
-    font-family: 'Inter', sans-serif; /* O il font specifico se ne hai uno */
-    font-size: 2.5rem;
-    font-weight: 700;
-    color: var(--text-black);
-    margin-bottom: 40px;
+    font-family: 'Playfair Display', serif;
+    font-size: 2.2rem;
+    color: var(--black);
+    margin-bottom: 8px;
 }
 
-/* --- FORM E CAMPI --- */
-.form-box {
-    width: 100%;
-    max-width: 400px;
-    text-align: left;
+.login-subtitle {
+    color: var(--grey-medium);
+    font-size: 0.95rem;
+    margin-bottom: 35px;
 }
 
+/* --- BOX ERRORE --- */
+.error-box {
+    background-color: #fff2f2;
+    color: var(--error-red);
+    padding: 12px;
+    border-radius: 8px;
+    border: 1px solid #f8d7da;
+    font-size: 0.85rem;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+/* --- INPUTS --- */
 .input-group {
-    margin-bottom: 25px;
+    text-align: left;
+    margin-bottom: 20px;
 }
 
 .input-group label {
     display: block;
-    font-size: 1rem;
-    font-weight: 600;
-    color: var(--text-black);
-    margin-bottom: 10px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--grey-dark);
+    margin-bottom: 8px;
 }
 
 .form-box input {
     width: 100%;
-    padding: 15px;
-    border: 1px solid var(--input-border);
+    padding: 14px 16px;
+    border: 1px solid var(--silver);
     border-radius: 8px;
     font-size: 1rem;
+    transition: all 0.3s ease;
+    background-color: #fafafa;
+}
+
+.form-box input:focus {
+    outline: none;
+    border-color: var(--black);
     background-color: var(--white);
-    outline: none; /* Rimuove l'outline standard */
+    box-shadow: 0 0 0 4px rgba(18, 18, 18, 0.05);
 }
 
-/* --- LINK "HO DIMENTICATO LA PASSWORD" --- */
-.forgot-password-link {
-    display: block;
-    text-align: center;
-    color: var(--text-black);
-    text-decoration: none;
-    font-size: 1rem;
-    margin-bottom: 25px;
-}
-
-/* --- BOTTONE LOGIN --- */
+/* --- BOTTONE ACCEDI (Pillola come index) --- */
 .btn-login {
     width: 100%;
-    background-color: var(--btn-blue);
+    background-color: var(--black);
     color: var(--white);
-    padding: 15px;
+    padding: 16px;
     border: none;
-    border-radius: 8px;
-    font-size: 1.1rem;
-    font-weight: 700;
+    border-radius: 50px; /* Pill shape */
+    font-size: 1rem;
+    font-weight: 600;
     cursor: pointer;
-    text-transform: uppercase;
-    margin-bottom: 30px;
+    margin-top: 10px;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
 }
 
-/* --- LINK REGISTRAZIONE --- */
-.register-link {
-    display: block;
-    text-align: center;
-    color: var(--text-black);
+.btn-login:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0,0,0,0.25);
+    background-color: #333;
+}
+
+/* --- FOOTER CARD --- */
+.form-footer {
+    margin-top: 25px;
+    font-size: 0.9rem;
+    color: var(--grey-dark);
+}
+
+.form-footer a {
+    color: var(--black);
+    font-weight: 600;
     text-decoration: none;
-    font-size: 1rem;
+    border-bottom: 1px solid var(--silver);
+}
+
+.form-footer a:hover {
+    border-bottom-color: var(--black);
+}
+
+/* --- ANIMAZIONE --- */
+.fade-in {
+    animation: fadeIn 0.6s ease-out;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
 }
