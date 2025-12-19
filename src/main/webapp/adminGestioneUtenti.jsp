@@ -5,7 +5,7 @@
 <html>
 <head>
   <title>Gestione Venditori - MotorsRent</title>
-  <link rel="stylesheet" href="styles/admin.css">
+  <link rel="stylesheet" href="css/adminGestioneUtenti.css">
 </head>
 <body>
 

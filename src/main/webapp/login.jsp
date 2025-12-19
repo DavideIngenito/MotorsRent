@@ -4,7 +4,7 @@
 <html>
 <head>
   <title>Login - MotorsRent</title>
-  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/login.css">
 </head>
 
 <body>
