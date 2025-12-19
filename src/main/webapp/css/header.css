@@ -1,0 +1,96 @@
+/* =========================================
+   HEADER & NAVBAR (Bootstrap Overrides)
+   ========================================= */
+
+/* 1. Sfondo e Spaziatura della Navbar */
+.navbar {
+    background-color: var(--black) !important; /* Sovrascrive bg-dark */
+    padding: 1.2rem 1rem !important; /* Più alta e ariosa */
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1); /* Linea sottile elegante */
+    box-shadow: 0 4px 20px rgba(0,0,0,0.5); /* Ombra profonda */
+}
+
+/* 2. Logo (Brand) */
+.navbar-brand {
+    font-family: 'Playfair Display', serif; /* Lo stesso font dei titoli H1 */
+    font-size: 1.5rem !important;
+    font-weight: 700;
+    letter-spacing: 1px;
+    color: var(--white) !important;
+}
+
+/* 3. Link di Navigazione Standard */
+.navbar-nav .nav-link {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.95rem;
+    font-weight: 500;
+    color: var(--grey-medium) !important; /* Grigio medio per non disturbare */
+    margin: 0 10px;
+    transition: color 0.3s ease, transform 0.3s ease;
+    position: relative;
+}
+
+/* Effetto Hover sui link: Diventano bianchi */
+.navbar-nav .nav-link:hover,
+.navbar-nav .nav-link.active {
+    color: var(--white) !important;
+    transform: translateY(-1px);
+}
+
+/* 4. Bottoni nell'Header (Login / Registrati) */
+/* Sovrascriviamo le classi bootstrap .btn all'interno della navbar */
+.navbar .btn {
+    border-radius: 50px !important; /* Pillola (coerente con index) */
+    padding: 8px 24px !important;
+    font-size: 0.9rem !important;
+    font-weight: 600 !important;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    border: 1px solid transparent;
+    margin-left: 10px; /* Spazio tra i bottoni */
+}
+
+/* Bottone Login (Outline Light modificato) */
+.navbar .btn-outline-light {
+    border-color: rgba(255,255,255,0.3) !important;
+    color: var(--white) !important;
+}
+
+.navbar .btn-outline-light:hover {
+    border-color: var(--white) !important;
+    background-color: transparent !important;
+    box-shadow: 0 0 10px rgba(255,255,255,0.2);
+}
+
+/* Bottone Registrati (Era .btn-warning, lo rendiamo Bianco Premium) */
+.navbar .btn-warning {
+    background-color: var(--white) !important;
+    color: var(--black) !important;
+    border: none !important;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+}
+
+.navbar .btn-warning:hover {
+    background-color: var(--silver) !important; /* Diventa argento */
+    color: var(--black) !important;
+    transform: translateY(-2px);
+}
+
+/* 5. Link Logout (rosso ma elegante) */
+.navbar .text-danger {
+    color: #ff6b6b !important; /* Un rosso più pastello/morbido */
+    font-weight: 600;
+}
+.navbar .text-danger:hover {
+    color: #ff4757 !important;
+    text-shadow: 0 0 8px rgba(255, 71, 87, 0.4);
+}
+
+/* 6. Mobile Toggler (Hamburger Menu) */
+.navbar-toggler {
+    border: none !important;
+    outline: none !important;
+}
+.navbar-toggler:focus {
+    box-shadow: none !important;
+}
