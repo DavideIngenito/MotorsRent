@@ -38,6 +38,19 @@
 
 </div>
 
+<div class="login-page">
+  <div class="login-container">
+    ...
+  </div>
+  <div class="login-page">
+    <div class="login-card">
+      ...
+    </div>
+  </div>
+
+</div>
+
+
 <jsp:include page="footer.jsp" />
 
 </body>

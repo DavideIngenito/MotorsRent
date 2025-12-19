@@ -62,6 +62,10 @@
 <div style="margin-top: 30px;">
   <a href="dashboardAdmin" class="btn btn-secondary">Vai alla Dashboard</a>
 </div>
+<div class="admin-users">
+  <section class="admin-section">...</section>
+</div>
+
 <jsp:include page="footer.jsp"/>
 </body>
 </html>
