@@ -1,0 +1,107 @@
+/* --- VARIABILI GLOBALI (Richiamo alla tua palette) --- */
+:root {
+    --black: #121212;
+    --bg-page: #EBEBEB;
+    --white: #FFFFFF;
+    --silver: #C0C0C0;
+    --grey-text: #545454;
+    --shadow: 0 10px 30px rgba(0,0,0,0.08);
+}
+
+body {
+    background-color: var(--bg-page);
+}
+
+/* --- TITOLI PAGINA --- */
+.page-header {
+    margin-bottom: 40px;
+    text-align: center;
+}
+
+.page-header h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.5rem;
+    color: var(--black);
+    margin-bottom: 10px;
+}
+
+.page-header p {
+    color: var(--grey-text);
+    font-size: 1.1rem;
+}
+
+/* --- GRIGLIA DASHBOARD --- */
+.stat-grid {
+    display: grid;
+    /* Crea colonne automatiche che non scendono sotto i 250px */
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 30px;
+    margin-bottom: 40px;
+}
+
+/* --- STYLE CARD --- */
+.stat-card {
+    background-color: var(--white);
+    border-radius: 12px;
+    padding: 30px;
+    box-shadow: var(--shadow);
+    border: 1px solid rgba(0,0,0,0.05);
+    text-align: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+/* Effetto Hover: la card si alza leggermente */
+.stat-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 35px rgba(0,0,0,0.12);
+}
+
+/* --- ICONE (Cerchio sfumato dietro l'icona) --- */
+.icon-wrapper {
+    width: 60px;
+    height: 60px;
+    background-color: #F4F4F4; /* Grigio chiarissimo */
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 20px auto;
+    color: var(--black);
+    font-size: 1.5rem;
+}
+
+/* --- TESTI CARD --- */
+.stat-card h3 {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--grey-text);
+    margin-bottom: 10px;
+    font-weight: 600;
+}
+
+.stat-number {
+    font-family: 'Inter', sans-serif;
+    font-size: 3rem; /* Numero molto grande */
+    font-weight: 700;
+    color: var(--black);
+    line-height: 1;
+    margin-bottom: 10px;
+}
+
+.stat-desc {
+    font-size: 0.9rem;
+    color: var(--grey-text);
+    border-top: 1px solid #f0f0f0;
+    padding-top: 10px;
+    display: inline-block;
+    width: 100%;
+}
+
+/* Colore specifico per i numeri "verdi" (Attività) reso più elegante */
+.text-success {
+    color: #2e7d32 !important; /* Verde foresta, meno "neon" del verde standard */
+}

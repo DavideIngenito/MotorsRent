@@ -4,46 +4,61 @@
 <html>
 <head>
     <title>Registrazione - MotorsRent</title>
-    <link rel="stylesheet" href="css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <link rel="stylesheet" href="css/registrazione.css">
 </head>
 
-<body>
+<body class="login-page"> <jsp:include page="header.jsp" />
 
-<jsp:include page="header.jsp" />
+<div class="login-wrapper fade-in">
+    <div class="login-card registration-card"> <h1 class="login-title">Crea Account</h1>
+        <p class="login-subtitle">Unisciti al mondo MotorsRent in pochi click</p>
 
-<div class="container">
+        <c:if test="${not empty errore}">
+            <div class="error-box">
+                <i class="fa-solid fa-circle-exclamation"></i> ${errore}
+            </div>
+        </c:if>
 
-    <h1>Registrazione</h1>
+        <form action="registrazione" method="post" class="form-box">
 
-    <c:if test="${not empty errore}">
-        <div class="error-box" style="color: red; border: 1px solid red; padding: 10px;">
-                ${errore}
-        </div>
-    </c:if>
+            <div class="row-inputs">
+                <div class="input-group">
+                    <label>Nome</label>
+                    <input type="text" name="nome" placeholder="Mario" required>
+                </div>
+                <div class="input-group">
+                    <label>Cognome</label>
+                    <input type="text" name="cognome" placeholder="Rossi" required>
+                </div>
+            </div>
 
-    <form action="registrazione" method="post" class="form-box">
+            <div class="input-group">
+                <label>Email</label>
+                <input type="email" name="email" placeholder="nome@esempio.it" required>
+            </div>
 
-        <label>Nome</label>
-        <input type="text" name="nome" required>
+            <div class="input-group">
+                <label>Telefono</label>
+                <input type="tel" name="telefono" placeholder="+39 333 1234567" required>
+            </div>
 
-        <label>Cognome</label>
-        <input type="text" name="cognome" required>
+            <div class="input-group">
+                <label>Password</label>
+                <input type="password" name="password" placeholder="Scegli una password sicura" required>
+            </div>
 
-        <label>Email</label>
-        <input type="email" name="email" required>
+            <button type="submit" class="btn btn-login">Crea Account</button>
 
-        <label>Telefono</label>
-        <input type="text" name="telefono" required>
+            <div class="form-footer">
+                <p>Hai già un account? <a href="login.jsp">Accedi qui</a></p>
+            </div>
 
-        <label>Password</label>
-        <input type="password" name="password" required>
+        </form>
 
-        <button type="submit" class="btn">Crea Account</button>
-
-    </form>
-
-    <p>Hai già un account? <a href="login.jsp">Accedi qui</a></p>
-
+    </div>
 </div>
 
 <jsp:include page="footer.jsp" />
