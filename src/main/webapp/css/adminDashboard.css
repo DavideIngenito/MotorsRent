@@ -1,0 +1,166 @@
+/* ===============================
+   RESET & BASE
+================================ */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+:root {
+    --black: #121212;
+    --bg-page: #EBEBEB;
+    --silver: #C0C0C0;
+    --grey-medium: #919191;
+    --grey-dark: #545454;
+    --white: #FFFFFF;
+
+    --radius: 12px;
+    --shadow-sm: 0 4px 6px rgba(0,0,0,0.05);
+    --shadow-lg: 0 20px 25px -5px rgba(0,0,0,0.1),
+    0 10px 10px -5px rgba(0,0,0,0.04);
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: var(--bg-page);
+    color: var(--black);
+    line-height: 1.6;
+}
+
+/* ===============================
+   DASHBOARD CONTAINER
+================================ */
+.dashboard-container {
+    max-width: 1100px;
+    margin: 80px auto;
+    padding: 0 24px;
+}
+
+/* ===============================
+   HEADER AREA
+================================ */
+.dashboard-container h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.8rem;
+    margin-bottom: 8px;
+}
+
+.dashboard-container p {
+    color: var(--grey-dark);
+    font-size: 1.05rem;
+    margin-bottom: 48px;
+}
+
+/* ===============================
+   CARDS GRID
+================================ */
+.admin-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 32px;
+}
+
+/* ===============================
+   CARD
+================================ */
+.card {
+    background-color: var(--white);
+    padding: 36px;
+    border-radius: var(--radius);
+    border: 1px solid rgba(0,0,0,0.05);
+    box-shadow: var(--shadow-sm);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    transition: all 0.3s ease;
+}
+
+.card:hover {
+    transform: translateY(-6px);
+    box-shadow: var(--shadow-lg);
+    border-color: var(--silver);
+}
+
+/* ===============================
+   CARD CONTENT
+================================ */
+.card h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.6rem;
+    margin-bottom: 12px;
+}
+
+.card p {
+    color: var(--grey-dark);
+    font-size: 1rem;
+    margin-bottom: 32px;
+    flex-grow: 1;
+}
+
+/* ===============================
+   BUTTONS (coerenti index)
+================================ */
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 14px 32px;
+    border-radius: 50px;
+    font-weight: 600;
+    font-size: 0.95rem;
+    text-decoration: none;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    border: 1px solid var(--black);
+    background-color: var(--black);
+    color: var(--white);
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+}
+
+/* Hover */
+.btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+}
+
+/* ===============================
+   VARIANTE SECONDARIA (Statistiche)
+   (sovrascrive inline style)
+================================ */
+.card a.btn[style] {
+    background-color: transparent !important;
+    color: var(--black) !important;
+    border-color: var(--silver);
+    box-shadow: none;
+}
+
+.card a.btn[style]:hover {
+    background-color: var(--black) !important;
+    color: var(--white) !important;
+    border-color: var(--black);
+}
+
+/* ===============================
+   RESPONSIVE
+================================ */
+@media (max-width: 768px) {
+    .dashboard-container {
+        margin: 60px auto;
+    }
+
+    .dashboard-container h1 {
+        font-size: 2.2rem;
+    }
+
+    .admin-cards {
+        gap: 24px;
+    }
+
+    .card {
+        padding: 28px;
+    }
+
+    .btn {
+        width: 100%;
+    }
+}

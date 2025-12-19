@@ -5,7 +5,7 @@
 <html>
 <head>
     <title>MotorsRent - Dashboard Amministratore</title>
-    <link rel="stylesheet" href="styles/admin.css">
+    <link rel="stylesheet" href="css/adminDashboard.css">
 </head>
 <body>
 
