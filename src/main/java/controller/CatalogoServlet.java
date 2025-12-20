@@ -14,6 +14,7 @@ import model.Utente;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 @WebServlet(name = "CatalogoServlet", value = "/catalogo")
@@ -26,86 +27,90 @@ public class CatalogoServlet extends HttpServlet {
             Connection conn = DbConnection.getInstance().getConnection();
             AutomobileDAO autoDAO = new AutomobileDAO(conn);
 
-            // --- 1. RECUPERO PARAMETRI DALLA JSP ---
+            // --- 1. RECUPERO E CONVERSIONE PARAMETRI ---
 
-            // Marca (Stringa)
+            // Marca
             String marca = request.getParameter("marca");
 
-            // Prezzo (Double)
+            // Prezzo
             String prezzoStr = request.getParameter("prezzoMax");
             Double prezzoMax = null;
             if (prezzoStr != null && !prezzoStr.isEmpty()) {
                 try {
                     prezzoMax = Double.parseDouble(prezzoStr);
-                } catch (NumberFormatException e) {
-                    // Se arriva spazzatura, lo ignoriamo lasciandolo null
+                } catch (NumberFormatException e) { /* Ignora errore */ }
+            }
+
+            // Anni (Gestione Multipla)
+            String[] anniStrArray = request.getParameterValues("anno");
+            List<Integer> anniList = new ArrayList<>();
+            if (anniStrArray != null) {
+                for (String s : anniStrArray) {
+                    if (s != null && !s.isEmpty()) {
+                        try {
+                            anniList.add(Integer.parseInt(s));
+                        } catch (NumberFormatException e) { /* Ignora errore */ }
+                    }
                 }
             }
-
-            // Anno (Integer)
-            // Nota: Se ci sono checkbox multiple con lo stesso nome "anno",
-            // request.getParameter prende solo la prima. Per filtri semplici va bene così.
-            String annoStr = request.getParameter("anno");
-            Integer anno = null;
-            if (annoStr != null && !annoStr.isEmpty()) {
-                try {
-                    anno = Integer.parseInt(annoStr);
-                } catch (NumberFormatException e) {}
+            // Se la lista è vuota, la settiamo a null così il DAO non filtra per anno
+            if (anniList.isEmpty()) {
+                anniList = null;
             }
 
-            // Chilometraggio (Integer)
+            // Chilometraggio
             String kmStr = request.getParameter("kmMax");
             Integer kmMax = null;
             if (kmStr != null && !kmStr.isEmpty()) {
                 try {
                     kmMax = Integer.parseInt(kmStr);
-                } catch (NumberFormatException e) {}
+                } catch (NumberFormatException e) { /* Ignora errore */ }
             }
 
-            // Stato (String - "Nuova", "Usata" o null/vuoto)
+            // Stato ("Nuova" o "Usata")
             String stato = request.getParameter("stato");
 
-            // Disponibilità (Boolean)
-            // Le checkbox inviano "true" se selezionate, null se non selezionate
+            // Disponibilità
             String dispStr = request.getParameter("disponibilita");
             Boolean disponibilita = (dispStr != null && dispStr.equals("true"));
 
-            // --- 2. CHIAMATA AL DAO ---
+            // --- 2. LOGICA DI FILTRAGGIO ---
+
             List<Automobile> veicoli;
 
-            // Se almeno uno dei filtri è presente, usiamo la ricerca avanzata
+            // Verifichiamo se l'utente ha impostato almeno un filtro
             boolean filtriAttivi = (marca != null && !marca.isEmpty()) ||
                     prezzoMax != null ||
-                    anno != null ||
+                    anniList != null ||
                     kmMax != null ||
                     (stato != null && !stato.isEmpty()) ||
                     disponibilita;
 
             if (filtriAttivi) {
-                veicoli = autoDAO.ricercaAvanzata(marca, prezzoMax, anno, kmMax, stato, disponibilita);
+                // Chiamata al nuovo metodo DAO con tutti i parametri
+                veicoli = autoDAO.ricercaAvanzata(marca, prezzoMax, anniList, kmMax, stato, disponibilita);
             } else {
-                // Nessun filtro: restituisci tutto
+                // Nessun filtro: mostra tutto
                 veicoli = autoDAO.getAll();
             }
 
-            // --- 3. INVIO DATI ALLA JSP ---
             request.setAttribute("autoList", veicoli);
 
         } catch (SQLException e) {
             e.printStackTrace();
-            request.setAttribute("errore", "Errore nel caricamento del catalogo: " + e.getMessage());
+            request.setAttribute("errore", "Errore nel caricamento del catalogo.");
         }
 
-        // --- 4. GESTIONE UTENTE E REINDIRIZZAMENTO ---
+        // --- 3. REINDIRIZZAMENTO IN BASE AL RUOLO ---
         HttpSession session = request.getSession(false);
         Utente utente = (session != null) ? (Utente) session.getAttribute("utente") : null;
         String ruolo = (utente != null) ? utente.getRuolo() : "GUEST";
 
         if ("ADMIN".equalsIgnoreCase(ruolo) || "AMMINISTRATORE".equalsIgnoreCase(ruolo)) {
-            // L'admin va alla gestione
+            // L'admin viene reindirizzato alla gestione
             response.sendRedirect("AdminAutoController?action=list");
         } else {
-            // Clienti e Ospiti vedono il catalogo
+            // Clienti e ospiti vedono il catalogo JSP
             request.getRequestDispatcher("catalogo.jsp").forward(request, response);
         }
     }
