@@ -17,35 +17,17 @@
 <div class="container main-layout">
 
     <aside class="sidebar-filters">
-        <h2 class="sidebar-title">${autoList.size()} veicoli</h2>
+        <h2 class="sidebar-title">Filtri Ricerca</h2>
 
         <form action="catalogo" method="get" id="filterForm">
 
-            <div class="filter-section active"> <div class="filter-header" onclick="toggleFilter(this)">
-                MARCHIO <i class="fa-solid fa-chevron-down icon"></i>
-            </div>
+            <div class="filter-section active">
+                <div class="filter-header" onclick="toggleFilter(this)">
+                    MARCHIO <i class="fa-solid fa-chevron-down icon"></i>
+                </div>
                 <div class="filter-body">
-                    <div class="checkbox-list">
-                        <label class="custom-checkbox-label">
-                            <span>Audi</span>
-                            <input type="checkbox" name="marca" value="Audi">
-                            <span class="checkmark"><i class="fa-solid fa-check"></i></span>
-                        </label>
-                        <label class="custom-checkbox-label">
-                            <span>BMW</span>
-                            <input type="checkbox" name="marca" value="BMW">
-                            <span class="checkmark"><i class="fa-solid fa-check"></i></span>
-                        </label>
-                        <label class="custom-checkbox-label">
-                            <span>Alfa Romeo</span>
-                            <input type="checkbox" name="marca" value="Alfa Romeo">
-                            <span class="checkmark"><i class="fa-solid fa-check"></i></span>
-                        </label>
-                        <label class="custom-checkbox-label">
-                            <span>Toyota</span>
-                            <input type="checkbox" name="marca" value="Toyota">
-                            <span class="checkmark"><i class="fa-solid fa-check"></i></span>
-                        </label>
+                    <div class="search-input-wrapper">
+                        <input type="text" name="marca" placeholder="Cerca marca (es. Audi)..." class="search-input" value="${param.marca}">
                     </div>
                 </div>
             </div>
@@ -58,22 +40,27 @@
                     <div class="checkbox-list">
                         <label class="custom-checkbox-label">
                             <span>2024</span>
-                            <input type="checkbox" name="anno" value="2024">
+                            <input type="checkbox" name="anno" value="2024" ${param.anno == '2024' ? 'checked' : ''}>
                             <span class="checkmark"><i class="fa-solid fa-check"></i></span>
                         </label>
                         <label class="custom-checkbox-label">
                             <span>2023</span>
-                            <input type="checkbox" name="anno" value="2023">
+                            <input type="checkbox" name="anno" value="2023" ${param.anno == '2023' ? 'checked' : ''}>
                             <span class="checkmark"><i class="fa-solid fa-check"></i></span>
                         </label>
                         <label class="custom-checkbox-label">
                             <span>2022</span>
-                            <input type="checkbox" name="anno" value="2022">
+                            <input type="checkbox" name="anno" value="2022" ${param.anno == '2022' ? 'checked' : ''}>
                             <span class="checkmark"><i class="fa-solid fa-check"></i></span>
                         </label>
                         <label class="custom-checkbox-label">
                             <span>2021</span>
-                            <input type="checkbox" name="anno" value="2021">
+                            <input type="checkbox" name="anno" value="2021" ${param.anno == '2021' ? 'checked' : ''}>
+                            <span class="checkmark"><i class="fa-solid fa-check"></i></span>
+                        </label>
+                        <label class="custom-checkbox-label">
+                            <span>2020</span>
+                            <input type="checkbox" name="anno" value="2020" ${param.anno == '2020' ? 'checked' : ''}>
                             <span class="checkmark"><i class="fa-solid fa-check"></i></span>
                         </label>
                     </div>
@@ -86,10 +73,13 @@
                 </div>
                 <div class="filter-body">
                     <div class="range-container">
-                        <input type="range" min="0" max="100000" step="1000" value="50000" class="range-slider" name="prezzoMax" id="priceRange" oninput="updatePriceLabel(this.value)">
+                        <input type="range" min="0" max="100000" step="1000"
+                               value="${not empty param.prezzoMax ? param.prezzoMax : 100000}"
+                               class="range-slider" name="prezzoMax"
+                               oninput="updatePriceLabel(this.value)">
                         <div class="range-values">
                             <span>€ 0</span>
-                            <span id="priceLabel">€ 50.000</span>
+                            <span id="priceLabel">€ ${not empty param.prezzoMax ? param.prezzoMax : '100.000'}</span>
                         </div>
                     </div>
                 </div>
@@ -101,10 +91,13 @@
                 </div>
                 <div class="filter-body">
                     <div class="range-container">
-                        <input type="range" min="0" max="200000" step="5000" value="100000" class="range-slider" name="kmMax" oninput="updateKmLabel(this.value)">
+                        <input type="range" min="0" max="250000" step="5000"
+                               value="${not empty param.kmMax ? param.kmMax : 250000}"
+                               class="range-slider" name="kmMax"
+                               oninput="updateKmLabel(this.value)">
                         <div class="range-values">
                             <span>0 km</span>
-                            <span id="kmLabel">100.000 km</span>
+                            <span id="kmLabel">${not empty param.kmMax ? param.kmMax : '250.000'} km</span>
                         </div>
                     </div>
                 </div>
@@ -117,13 +110,18 @@
                 <div class="filter-body">
                     <div class="checkbox-list">
                         <label class="custom-checkbox-label">
-                            <span>Nuovo</span>
-                            <input type="radio" name="stato" value="Nuova">
+                            <span>Tutti</span>
+                            <input type="radio" name="stato" value="" ${empty param.stato ? 'checked' : ''}>
                             <span class="checkmark"><i class="fa-solid fa-check"></i></span>
                         </label>
                         <label class="custom-checkbox-label">
-                            <span>Usato</span>
-                            <input type="radio" name="stato" value="Usata">
+                            <span>Nuova</span>
+                            <input type="radio" name="stato" value="Nuova" ${param.stato == 'Nuova' ? 'checked' : ''}>
+                            <span class="checkmark"><i class="fa-solid fa-check"></i></span>
+                        </label>
+                        <label class="custom-checkbox-label">
+                            <span>Usata</span>
+                            <input type="radio" name="stato" value="Usata" ${param.stato == 'Usata' ? 'checked' : ''}>
                             <span class="checkmark"><i class="fa-solid fa-check"></i></span>
                         </label>
                     </div>
@@ -138,7 +136,7 @@
                     <div class="checkbox-list">
                         <label class="custom-checkbox-label">
                             <span>Solo disponibili</span>
-                            <input type="checkbox" name="disponibilita" value="true" checked>
+                            <input type="checkbox" name="disponibilita" value="true" ${param.disponibilita == 'true' ? 'checked' : ''}>
                             <span class="checkmark"><i class="fa-solid fa-check"></i></span>
                         </label>
                     </div>
@@ -166,6 +164,9 @@
                     <div class="card-content">
                         <h3 class="card-brand">${auto.marca}</h3>
                         <h4 class="card-model">${auto.modello}</h4>
+                        <div style="font-size:0.85rem; color:#666; margin-bottom:10px;">
+                                ${auto.anno} • ${auto.chilometraggio} km
+                        </div>
                         <div class="card-price">€ ${auto.prezzo}</div>
                         <a href="schedaAuto?id=${auto.idAuto}" class="btn-details">Dettagli</a>
                     </div>
@@ -174,7 +175,10 @@
         </div>
 
         <c:if test="${empty autoList}">
-            <p style="padding: 20px;">Nessun risultato trovato.</p>
+            <div style="padding: 40px; text-align: center; color: #555;">
+                <h3>Nessun risultato trovato.</h3>
+                <p>Prova a modificare i filtri di ricerca.</p>
+            </div>
         </c:if>
     </section>
 
@@ -183,19 +187,17 @@
 <jsp:include page="footer.jsp" />
 
 <script>
-    // Funzione Accordion
+    // Toggle Accordion
     function toggleFilter(header) {
-        // Trova il genitore .filter-section e aggiungi/rimuovi la classe 'active'
         header.parentElement.classList.toggle('active');
     }
 
-    // Aggiorna etichetta Prezzo
+    // Aggiorna label visiva prezzo
     function updatePriceLabel(val) {
-        // Formatta il numero con i punti (es. 50.000)
         document.getElementById('priceLabel').innerText = '€ ' + parseInt(val).toLocaleString('it-IT');
     }
 
-    // Aggiorna etichetta Km
+    // Aggiorna label visiva KM
     function updateKmLabel(val) {
         document.getElementById('kmLabel').innerText = parseInt(val).toLocaleString('it-IT') + ' km';
     }

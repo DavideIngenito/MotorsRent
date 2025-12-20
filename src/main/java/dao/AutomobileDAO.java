@@ -9,15 +9,18 @@ public class AutomobileDAO {
 
     private Connection connection;
 
-    // Costruttore: riceve la connessione dal Singleton
+    // Costruttore: riceve la connessione dal Singleton o dal chiamante
     public AutomobileDAO(Connection connection) {
         this.connection = connection;
     }
 
+    // --------------------------------------------------------
+    // OPERAZIONI CRUD BASE (Create, Read, Update, Delete)
+    // --------------------------------------------------------
+
     public void insert(Automobile a) throws SQLException {
         String sql = "INSERT INTO AUTOMOBILE (modello, marca, anno, prezzo, chilometraggio, stato, descrizione, immagine, disponibilita) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
-        // Uso il try-with-resources per chiudere automaticamente lo statement
         try (PreparedStatement ps = connection.prepareStatement(sql)) {
             ps.setString(1, a.getModello());
             ps.setString(2, a.getMarca());
@@ -33,7 +36,6 @@ public class AutomobileDAO {
     }
 
     public Automobile getById(int id) throws SQLException {
-        // CORRETTO: Aggiunto l'asterisco * mancante!
         String sql = "SELECT * FROM AUTOMOBILE WHERE idAuto = ?";
 
         try (PreparedStatement ps = connection.prepareStatement(sql)) {
@@ -89,22 +91,13 @@ public class AutomobileDAO {
         }
     }
 
-    // Metodo helper per evitare di riscrivere il mapping 5 volte (DRY)
-    private Automobile mapRowToAutomobile(ResultSet rs) throws SQLException {
-        return new Automobile(
-                rs.getInt("idAuto"),
-                rs.getString("marca"),    // Attenzione all'ordine nel costruttore!
-                rs.getString("modello"),  // Verifica l'ordine in Automobile.java
-                rs.getInt("anno"),
-                rs.getDouble("prezzo"),
-                rs.getInt("chilometraggio"),
-                rs.getString("stato"),
-                rs.getString("descrizione"),
-                rs.getString("immagine"),
-                rs.getBoolean("disponibilita")
-        );
-    }
+    // --------------------------------------------------------
+    // RICERCA E FILTRI
+    // --------------------------------------------------------
 
+    /**
+     * Ricerca semplice (Legacy) per Marca e Prezzo Massimo.
+     */
     public List<Automobile> cercaAuto(String marca, double prezzoMax) throws SQLException {
         List<Automobile> list = new ArrayList<>();
         String sql = "SELECT * FROM AUTOMOBILE WHERE prezzo <= ?";
@@ -121,10 +114,95 @@ public class AutomobileDAO {
 
             try (ResultSet rs = ps.executeQuery()) {
                 while (rs.next()) {
-                    list.add(mapRowToAutomobile(rs)); // Usa il tuo metodo helper esistente
+                    list.add(mapRowToAutomobile(rs));
                 }
             }
         }
         return list;
+    }
+
+    /**
+     * NUOVO METODO: Ricerca Avanzata con tutti i filtri del catalogo.
+     * Gestisce Marca, Prezzo, Anno, Km, Stato e Disponibilità.
+     * I parametri null vengono ignorati.
+     */
+    public List<Automobile> ricercaAvanzata(String marca, Double prezzoMax, Integer anno, Integer kmMax, String stato, Boolean disponibilita) throws SQLException {
+        List<Automobile> list = new ArrayList<>();
+
+        // Costruiamo la query dinamicamente
+        // "WHERE 1=1" è un trucco SQL per poter aggiungere tutti gli altri filtri con "AND ..." senza preoccuparsi se è il primo o no.
+        StringBuilder sql = new StringBuilder("SELECT * FROM AUTOMOBILE WHERE 1=1");
+        List<Object> params = new ArrayList<>();
+
+        // Filtro Marca (Like)
+        if (marca != null && !marca.trim().isEmpty()) {
+            sql.append(" AND marca LIKE ?");
+            params.add("%" + marca + "%");
+        }
+
+        // Filtro Prezzo Max
+        if (prezzoMax != null) {
+            sql.append(" AND prezzo <= ?");
+            params.add(prezzoMax);
+        }
+
+        // Filtro Anno Esatto
+        if (anno != null) {
+            sql.append(" AND anno = ?");
+            params.add(anno);
+        }
+
+        // Filtro Chilometraggio Max
+        if (kmMax != null) {
+            sql.append(" AND chilometraggio <= ?");
+            params.add(kmMax);
+        }
+
+        // Filtro Stato (Nuova/Usata)
+        if (stato != null && !stato.trim().isEmpty()) {
+            sql.append(" AND stato = ?");
+            params.add(stato);
+        }
+
+        // Filtro Disponibilità
+        if (disponibilita != null && disponibilita) {
+            sql.append(" AND disponibilita = ?");
+            params.add(true);
+        }
+
+        // Esecuzione Query
+        try (PreparedStatement ps = connection.prepareStatement(sql.toString())) {
+            // Imposta i parametri nell'ordine corretto
+            for (int i = 0; i < params.size(); i++) {
+                ps.setObject(i + 1, params.get(i));
+            }
+
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    list.add(mapRowToAutomobile(rs));
+                }
+            }
+        }
+        return list;
+    }
+
+    // --------------------------------------------------------
+    // HELPER METHODS
+    // --------------------------------------------------------
+
+    private Automobile mapRowToAutomobile(ResultSet rs) throws SQLException {
+        // Attenzione: l'ordine dei parametri deve corrispondere al costruttore del tuo model Automobile
+        return new Automobile(
+                rs.getInt("idAuto"),
+                rs.getString("marca"),
+                rs.getString("modello"),
+                rs.getInt("anno"),
+                rs.getDouble("prezzo"),
+                rs.getInt("chilometraggio"),
+                rs.getString("stato"),
+                rs.getString("descrizione"),
+                rs.getString("immagine"),
+                rs.getBoolean("disponibilita")
+        );
     }
 }

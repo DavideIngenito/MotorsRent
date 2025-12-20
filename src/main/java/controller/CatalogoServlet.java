@@ -22,49 +22,90 @@ public class CatalogoServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-        // 1. RECUPERO AUTO DAL DATABASE (Per tutti: admin, clienti e ospiti)
         try {
             Connection conn = DbConnection.getInstance().getConnection();
             AutomobileDAO autoDAO = new AutomobileDAO(conn);
 
-            // Se ci sono parametri di filtro (dalla JSP catalogo.jsp)
-            String marca = request.getParameter("marca");
-            String prezzoStr = request.getParameter("prezzoMax");
+            // --- 1. RECUPERO PARAMETRI DALLA JSP ---
 
+            // Marca (Stringa)
+            String marca = request.getParameter("marca");
+
+            // Prezzo (Double)
+            String prezzoStr = request.getParameter("prezzoMax");
+            Double prezzoMax = null;
+            if (prezzoStr != null && !prezzoStr.isEmpty()) {
+                try {
+                    prezzoMax = Double.parseDouble(prezzoStr);
+                } catch (NumberFormatException e) {
+                    // Se arriva spazzatura, lo ignoriamo lasciandolo null
+                }
+            }
+
+            // Anno (Integer)
+            // Nota: Se ci sono checkbox multiple con lo stesso nome "anno",
+            // request.getParameter prende solo la prima. Per filtri semplici va bene così.
+            String annoStr = request.getParameter("anno");
+            Integer anno = null;
+            if (annoStr != null && !annoStr.isEmpty()) {
+                try {
+                    anno = Integer.parseInt(annoStr);
+                } catch (NumberFormatException e) {}
+            }
+
+            // Chilometraggio (Integer)
+            String kmStr = request.getParameter("kmMax");
+            Integer kmMax = null;
+            if (kmStr != null && !kmStr.isEmpty()) {
+                try {
+                    kmMax = Integer.parseInt(kmStr);
+                } catch (NumberFormatException e) {}
+            }
+
+            // Stato (String - "Nuova", "Usata" o null/vuoto)
+            String stato = request.getParameter("stato");
+
+            // Disponibilità (Boolean)
+            // Le checkbox inviano "true" se selezionate, null se non selezionate
+            String dispStr = request.getParameter("disponibilita");
+            Boolean disponibilita = (dispStr != null && dispStr.equals("true"));
+
+            // --- 2. CHIAMATA AL DAO ---
             List<Automobile> veicoli;
 
-            if ((marca != null && !marca.isEmpty()) || (prezzoStr != null && !prezzoStr.isEmpty())) {
-                // Se l'utente sta filtrando
-                double prezzo = (prezzoStr != null && !prezzoStr.isEmpty()) ? Double.parseDouble(prezzoStr) : 1000000;
-                veicoli = autoDAO.cercaAuto(marca, prezzo);
+            // Se almeno uno dei filtri è presente, usiamo la ricerca avanzata
+            boolean filtriAttivi = (marca != null && !marca.isEmpty()) ||
+                    prezzoMax != null ||
+                    anno != null ||
+                    kmMax != null ||
+                    (stato != null && !stato.isEmpty()) ||
+                    disponibilita;
+
+            if (filtriAttivi) {
+                veicoli = autoDAO.ricercaAvanzata(marca, prezzoMax, anno, kmMax, stato, disponibilita);
             } else {
-                // Lista completa standard
+                // Nessun filtro: restituisci tutto
                 veicoli = autoDAO.getAll();
             }
 
-            // --- PUNTO CRITICO: Il nome deve essere "autoList" per corrispondere alla tua JSP ---
+            // --- 3. INVIO DATI ALLA JSP ---
             request.setAttribute("autoList", veicoli);
 
         } catch (SQLException e) {
             e.printStackTrace();
-            request.setAttribute("errore", "Impossibile caricare il catalogo.");
-        } catch (NumberFormatException e) {
-            // Gestione errore se il prezzo non è un numero
+            request.setAttribute("errore", "Errore nel caricamento del catalogo: " + e.getMessage());
         }
 
-        // 2. CONTROLLO RUOLO UTENTE
+        // --- 4. GESTIONE UTENTE E REINDIRIZZAMENTO ---
         HttpSession session = request.getSession(false);
         Utente utente = (session != null) ? (Utente) session.getAttribute("utente") : null;
         String ruolo = (utente != null) ? utente.getRuolo() : "GUEST";
 
-        // 3. INDIRIZZAMENTO (ROUTING)
         if ("ADMIN".equalsIgnoreCase(ruolo) || "AMMINISTRATORE".equalsIgnoreCase(ruolo)) {
-            // L'admin non vede il catalogo visuale, ma la tabella di gestione
-            // Nota: nella tua AdminAutoController usi "listaAuto", qui dobbiamo stare attenti.
-            // Se mandi l'admin alla JSP di gestione, meglio fare un redirect al controller admin
+            // L'admin va alla gestione
             response.sendRedirect("AdminAutoController?action=list");
         } else {
-            // Cliente e Ospite vedono il catalogo visivo
+            // Clienti e Ospiti vedono il catalogo
             request.getRequestDispatcher("catalogo.jsp").forward(request, response);
         }
     }

@@ -10,7 +10,6 @@
 
 /* --- SIDEBAR --- */
 .sidebar-filters {
-    background-color: transparent; /* Nel mockup sembra pulito senza sfondo grigio */
     padding-right: 20px;
 }
 
@@ -22,7 +21,7 @@
     padding-bottom: 15px;
 }
 
-/* --- ACCORDION SECTIONS (I blocchi che si aprono/chiudono) --- */
+/* --- ACCORDION SECTIONS --- */
 .filter-section {
     border-bottom: 1px solid #E0E0E0;
     padding: 20px 0;
@@ -44,27 +43,41 @@
     transition: transform 0.3s ease;
 }
 
-/* Ruota la freccetta se aperto */
 .filter-section.active .filter-header .icon {
     transform: rotate(180deg);
 }
 
 .filter-body {
-    display: none; /* Nascosto di default */
+    display: none;
     margin-top: 15px;
-    animation: slideDown 0.3s ease-out;
 }
 
 .filter-section.active .filter-body {
-    display: block; /* Mostra se attivo */
+    display: block;
 }
 
-@keyframes slideDown {
-    from { opacity: 0; transform: translateY(-5px); }
-    to { opacity: 1; transform: translateY(0); }
+/* --- INPUT TEXT (Per la Marca) --- */
+.search-input-wrapper {
+    position: relative;
 }
 
-/* --- CHECKBOX LIST STYLE (Per Marchio, Anno, Stato) --- */
+.search-input {
+    width: 100%;
+    padding: 12px 12px 12px 12px;
+    border: 1px solid #C0C0C0;
+    border-radius: 6px;
+    font-family: 'Inter', sans-serif;
+    font-size: 0.95rem;
+    color: var(--black);
+    outline: none;
+    transition: border-color 0.3s;
+}
+
+.search-input:focus {
+    border-color: var(--black);
+}
+
+/* --- CHECKBOX & RADIO STYLE (Anno, Stato) --- */
 .checkbox-list {
     display: flex;
     flex-direction: column;
@@ -73,42 +86,40 @@
 
 .custom-checkbox-label {
     display: flex;
-    justify-content: space-between; /* Testo a sx, spunta a dx */
+    justify-content: space-between;
     align-items: center;
     cursor: pointer;
     font-size: 0.95rem;
-    color: var(--grey-text);
-    transition: color 0.2s;
+    color: #545454;
 }
 
 .custom-checkbox-label:hover {
     color: var(--black);
 }
 
-/* Nascondiamo la checkbox nativa brutta */
-.custom-checkbox-label input[type="checkbox"],
-.custom-checkbox-label input[type="radio"] {
+/* Nascondiamo l'input nativo */
+.custom-checkbox-label input {
     display: none;
 }
 
-/* La spunta personalizzata (V) */
+/* La spunta personalizzata (Quadrato a destra) */
 .checkmark {
-    width: 18px;
-    height: 18px;
+    width: 20px;
+    height: 20px;
     border: 1px solid #C0C0C0;
     border-radius: 4px;
     display: flex;
     align-items: center;
     justify-content: center;
-    color: transparent; /* Nascosto se non checkato */
+    color: transparent;
     transition: all 0.2s;
 }
 
-/* Quando è checkato */
+/* Stato Checked */
 .custom-checkbox-label input:checked + .checkmark {
-    background-color: var(--black); /* Nero MotorsRent */
+    background-color: var(--black);
     border-color: var(--black);
-    color: #fff; /* Spunta bianca */
+    color: #fff;
 }
 
 .custom-checkbox-label input:checked ~ span {
@@ -160,26 +171,21 @@
     text-transform: uppercase;
     font-weight: 700;
     cursor: pointer;
-    border-radius: 0; /* Squadrato come mockup o leggermente round */
 }
+.btn-filter-apply:hover { background-color: #333; }
 
-.btn-filter-apply:hover {
-    background-color: #333;
-}
-
-/* --- GRIGLIA RISULTATI (Uguale a prima) --- */
+/* --- GRIGLIA --- */
 .catalog-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
     gap: 30px;
 }
-/* ... (Mantenere lo stile delle card auto che ti ho dato prima) ... */
-.auto-card { background: #fff; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.05); }
-.card-img-container { height: 200px; background: #eee; overflow: hidden; }
+.auto-card { background: #fff; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.05); position: relative; display: flex; flex-direction: column; }
+.card-img-container { height: 200px; background: #eee; }
 .card-img-container img { width: 100%; height: 100%; object-fit: cover; }
-.card-content { padding: 20px; }
+.card-content { padding: 20px; flex: 1; display: flex; flex-direction: column; }
 .card-brand { font-size: 0.9rem; color: #919191; font-weight: 700; text-transform: uppercase; }
 .card-model { font-size: 1.2rem; font-weight: 700; margin-bottom: 5px; }
-.card-price { font-size: 1.4rem; font-weight: 700; margin-top: 15px; }
+.card-price { font-size: 1.4rem; font-weight: 700; margin-top: auto; }
 .btn-details { display: block; text-align: center; border: 1px solid #121212; padding: 10px; border-radius: 50px; margin-top: 15px; color: #121212; font-weight: 600; }
 .btn-details:hover { background: #121212; color: #fff; }
