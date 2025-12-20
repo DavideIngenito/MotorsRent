@@ -16,6 +16,7 @@ public class LeasingDAO {
         this.connection = connection;
     }
 
+    // 1. INSERIMENTO
     public void insert(Leasing l) throws SQLException {
         String sql = "INSERT INTO LEASING (idUtente, idAuto, durataMesi, anticipo, kmAnnui, dataRichiesta, stato) VALUES (?, ?, ?, ?, ?, ?, ?)";
         try (PreparedStatement ps = connection.prepareStatement(sql)) {
@@ -30,6 +31,7 @@ public class LeasingDAO {
         }
     }
 
+    // 2. LISTA COMPLETA
     public List<Leasing> getAllCompleti() throws SQLException {
         List<Leasing> list = new ArrayList<>();
         String sql = "SELECT l.*, u.nome, u.cognome, u.email, u.telefono, a.marca, a.modello, a.prezzo, a.immagine, a.anno " +
@@ -47,7 +49,7 @@ public class LeasingDAO {
         return list;
     }
 
-    // Rinominato in getById per la Servlet
+    // 3. DETTAGLIO SINGOLO (getById)
     public Leasing getById(int id) throws SQLException {
         String sql = "SELECT l.*, u.nome, u.cognome, u.email, u.telefono, a.marca, a.modello, a.prezzo, a.immagine, a.anno " +
                 "FROM LEASING l " +
@@ -66,6 +68,7 @@ public class LeasingDAO {
         return null;
     }
 
+    // 4. LISTA UTENTE
     public List<Leasing> getByUser(int idUtente) throws SQLException {
         String sql = "SELECT l.*, u.nome, u.cognome, u.email, u.telefono, a.marca, a.modello, a.prezzo, a.immagine, a.anno " +
                 "FROM LEASING l " +
@@ -85,6 +88,7 @@ public class LeasingDAO {
         return list;
     }
 
+    // 5. UPDATE STATO
     public void updateStato(int idLeasing, String stato) throws SQLException {
         String sql = "UPDATE LEASING SET stato = ? WHERE idLeasing = ?";
         try (PreparedStatement ps = connection.prepareStatement(sql)) {
@@ -94,6 +98,7 @@ public class LeasingDAO {
         }
     }
 
+    // --- HELPER MAPPING (Corretto con setUtente) ---
     private Leasing mapRowToLeasingCompleto(ResultSet rs) throws SQLException {
         Leasing l = new Leasing();
         l.setIdLeasing(rs.getInt("idLeasing"));
@@ -105,14 +110,16 @@ public class LeasingDAO {
         l.setDataRichiesta(rs.getTimestamp("dataRichiesta"));
         l.setStato(rs.getString("stato"));
 
-        // Popola Cliente
+        // Popola Utente
         Utente u = new Utente();
         u.setIdUtente(rs.getInt("idUtente"));
         u.setNome(rs.getString("nome"));
         u.setCognome(rs.getString("cognome"));
         u.setEmail(rs.getString("email"));
-        u.setTelefono(rs.getString("telefono")); // Aggiunto
-        l.setCliente(u);
+        u.setTelefono(rs.getString("telefono")); // Campo nuovo
+
+        // CORREZIONE FONDAMENTALE:
+        l.setUtente(u); // Prima era setCliente(u)
 
         // Popola Auto
         Automobile a = new Automobile();
@@ -120,8 +127,8 @@ public class LeasingDAO {
         a.setMarca(rs.getString("marca"));
         a.setModello(rs.getString("modello"));
         a.setPrezzo(rs.getDouble("prezzo"));
-        a.setImmagine(rs.getString("immagine")); // Aggiunto
-        a.setAnno(rs.getInt("anno"));            // Aggiunto
+        a.setImmagine(rs.getString("immagine")); // Campo nuovo
+        a.setAnno(rs.getInt("anno"));            // Campo nuovo
         l.setAuto(a);
 
         return l;

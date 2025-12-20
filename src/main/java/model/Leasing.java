@@ -3,7 +3,6 @@ package model;
 import java.sql.Timestamp;
 
 public class Leasing {
-
     private int idLeasing;
     private int idUtente;
     private int idAuto;
@@ -11,15 +10,15 @@ public class Leasing {
     private double anticipo;
     private int kmAnnui;
     private Timestamp dataRichiesta;
-    private String stato; // "in valutazione", "approvato", "respinto"
+    private String stato;
 
-    // NUOVI CAMPI (Fondamentali per le JSP del venditore)
-    private Utente cliente;
+    // OGGETTI ANNIDATI
+    private Utente utente;      // <--- Importante
     private Automobile auto;
 
     public Leasing() {}
 
-    // ... I tuoi getter e setter esistenti per i campi base ...
+    // Getter e Setter campi semplici...
     public int getIdLeasing() { return idLeasing; }
     public void setIdLeasing(int idLeasing) { this.idLeasing = idLeasing; }
 
@@ -44,9 +43,9 @@ public class Leasing {
     public String getStato() { return stato; }
     public void setStato(String stato) { this.stato = stato; }
 
-    // NUOVI GETTER/SETTER PER GLI OGGETTI ANNIDATI
-    public Utente getCliente() { return cliente; }
-    public void setCliente(Utente cliente) { this.cliente = cliente; }
+    // GETTER E SETTER OGGETTI COMPLESSI
+    public Utente getUtente() { return utente; } // <--- Fondamentale
+    public void setUtente(Utente utente) { this.utente = utente; }
 
     public Automobile getAuto() { return auto; }
     public void setAuto(Automobile auto) { this.auto = auto; }

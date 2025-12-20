@@ -3,7 +3,6 @@ package model;
 import java.sql.Timestamp;
 
 public class Preventivo {
-
     private int idPreventivo;
     private int idUtente;
     private int idAuto;
@@ -11,10 +10,11 @@ public class Preventivo {
     private String note;
     private String stato;
 
-    // CAMPI AGGIUNTI PER LA VISUALIZZAZIONE
-    private Utente cliente;
-    private Automobile auto;
+    // OGGETTI ANNIDATI (Fondamentali per il dettaglio)
+    private Utente utente;      // <--- Deve chiamarsi 'utente' per funzionare con ${richiesta.utente}
+    private Automobile auto;    // <--- Deve chiamarsi 'auto'
 
+    // Costruttori
     public Preventivo() {}
 
     // Getter e Setter standard
@@ -36,9 +36,9 @@ public class Preventivo {
     public String getStato() { return stato; }
     public void setStato(String stato) { this.stato = stato; }
 
-    // GETTER E SETTER PER GLI OGGETTI (FONDAMENTALI PER LA JSP)
-    public Utente getCliente() { return cliente; }
-    public void setCliente(Utente cliente) { this.cliente = cliente; }
+    // GETTER E SETTER OGGETTI COMPLESSI
+    public Utente getUtente() { return utente; }  // <--- Questo è il metodo che cercava la JSP!
+    public void setUtente(Utente utente) { this.utente = utente; }
 
     public Automobile getAuto() { return auto; }
     public void setAuto(Automobile auto) { this.auto = auto; }

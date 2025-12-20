@@ -32,7 +32,7 @@ public class PreventivoDAO {
     // 2. LISTA COMPLETA (Dashboard Admin/Venditore)
     public List<Preventivo> getAllCompleti() throws SQLException {
         List<Preventivo> list = new ArrayList<>();
-        // Aggiunti campi mancanti: a.immagine, a.anno, u.telefono
+        // Query completa con i campi aggiunti (telefono, immagine, anno)
         String sql = "SELECT p.*, u.nome, u.cognome, u.email, u.telefono, a.marca, a.modello, a.prezzo, a.immagine, a.anno " +
                 "FROM PREVENTIVO p " +
                 "JOIN UTENTE u ON p.idUtente = u.idUtente " +
@@ -50,7 +50,6 @@ public class PreventivoDAO {
 
     // 3. LISTA UTENTE (Dashboard Cliente)
     public List<Preventivo> getByUser(int idUtente) throws SQLException {
-        // Aggiunti campi mancanti
         String sql = "SELECT p.*, u.nome, u.cognome, u.email, u.telefono, a.marca, a.modello, a.prezzo, a.immagine, a.anno " +
                 "FROM PREVENTIVO p " +
                 "JOIN UTENTE u ON p.idUtente = u.idUtente " +
@@ -70,10 +69,8 @@ public class PreventivoDAO {
         return list;
     }
 
-    // 4. DETTAGLIO SINGOLO (Per la Servlet DettaglioRichiesta)
-    // Rinominato in getById per compatibilità con la Servlet
+    // 4. DETTAGLIO SINGOLO (Per Servlet DettaglioRichiesta)
     public Preventivo getById(int id) throws SQLException {
-        // Aggiunti campi mancanti
         String sql = "SELECT p.*, u.nome, u.cognome, u.email, u.telefono, a.marca, a.modello, a.prezzo, a.immagine, a.anno " +
                 "FROM PREVENTIVO p " +
                 "JOIN UTENTE u ON p.idUtente = u.idUtente " +
@@ -101,7 +98,7 @@ public class PreventivoDAO {
         }
     }
 
-    // HELPER MAPPING (Popola Utente e Auto dentro Preventivo)
+    // --- HELPER MAPPING (Corretto con setUtente) ---
     private Preventivo mapRowToPreventivoCompleto(ResultSet rs) throws SQLException {
         Preventivo p = new Preventivo();
         p.setIdPreventivo(rs.getInt("idPreventivo"));
@@ -117,8 +114,10 @@ public class PreventivoDAO {
         u.setNome(rs.getString("nome"));
         u.setCognome(rs.getString("cognome"));
         u.setEmail(rs.getString("email"));
-        u.setTelefono(rs.getString("telefono")); // Aggiunto
-        p.setCliente(u);
+        u.setTelefono(rs.getString("telefono")); // Campo nuovo
+
+        // CORREZIONE FONDAMENTALE PER LA JSP:
+        p.setUtente(u); // Prima era setCliente(u)
 
         // Popola Auto
         Automobile a = new Automobile();
@@ -126,8 +125,8 @@ public class PreventivoDAO {
         a.setMarca(rs.getString("marca"));
         a.setModello(rs.getString("modello"));
         a.setPrezzo(rs.getDouble("prezzo"));
-        a.setImmagine(rs.getString("immagine")); // Fondamentale per il dettaglio
-        a.setAnno(rs.getInt("anno"));            // Fondamentale per il dettaglio
+        a.setImmagine(rs.getString("immagine")); // Campo nuovo
+        a.setAnno(rs.getInt("anno"));            // Campo nuovo
         p.setAuto(a);
 
         return p;

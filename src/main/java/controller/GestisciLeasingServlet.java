@@ -29,7 +29,7 @@ public class GestisciLeasingServlet extends HttpServlet {
             LeasingDAO leasingDAO = new LeasingDAO(conn);
 
             // Metodo corretto del DAO
-            Leasing leasing = leasingDAO.getByIdCompleto(Integer.parseInt(idStr));
+            Leasing leasing = leasingDAO.getById(Integer.parseInt(idStr));
 
             request.setAttribute("leasing", leasing);
             // Assicurati che il path sia giusto

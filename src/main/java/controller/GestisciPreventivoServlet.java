@@ -33,7 +33,7 @@ public class GestisciPreventivoServlet extends HttpServlet {
 
             // 3. Recupero il preventivo COMPLETO (con dati utente e auto)
             // Questo metodo l'abbiamo aggiunto al DAO poco fa
-            Preventivo p = preventivoDAO.getByIdCompleto(Integer.parseInt(idStr));
+            Preventivo p = preventivoDAO.getById(Integer.parseInt(idStr));
 
             if (p == null) {
                 response.sendRedirect("venditorePreventivi");
