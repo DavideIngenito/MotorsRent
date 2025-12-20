@@ -1,0 +1,123 @@
+/* --- CONFIGURAZIONE GENERALE --- */
+:root {
+    --black: #121212;
+    --grey-light: #F4F4F4;
+    --grey-text: #545454;
+    --border-color: #E0E0E0;
+    --accent-blue: #0056b3;
+}
+
+body {
+    background-color: #F9F9F9; /* Sfondo leggermente grigio per far risaltare le card */
+}
+
+/* --- INTESTAZIONI --- */
+.dashboard-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.5rem;
+    color: var(--black);
+    margin-bottom: 10px;
+}
+
+.dashboard-subtitle {
+    color: var(--grey-text);
+    font-size: 1.1rem;
+    margin-bottom: 40px;
+}
+
+.section-title {
+    font-size: 1.2rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 20px;
+    border-left: 4px solid var(--black); /* Linea nera decorativa a sinistra */
+    padding-left: 15px;
+}
+
+/* --- TABELLE PREMIUM --- */
+.table-container {
+    background: #FFFFFF;
+    border-radius: 12px;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.05);
+    overflow: hidden; /* Per arrotondare gli angoli della tabella */
+    margin-bottom: 50px;
+}
+
+.premium-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.premium-table th {
+    background-color: var(--black);
+    color: #FFFFFF;
+    padding: 18px;
+    text-align: left;
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 0.85rem;
+    letter-spacing: 0.5px;
+}
+
+.premium-table td {
+    padding: 20px 18px;
+    border-bottom: 1px solid var(--border-color);
+    color: var(--black);
+    vertical-align: middle;
+}
+
+.premium-table tr:last-child td {
+    border-bottom: none;
+}
+
+.premium-table tr:hover td {
+    background-color: #FAFAFA; /* Leggero highlight al passaggio del mouse */
+}
+
+/* --- BADGE STATO (Pillole colorate) --- */
+.status-badge {
+    padding: 6px 12px;
+    border-radius: 50px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    display: inline-block;
+}
+
+.status-approvato { background-color: #d4edda; color: #155724; }
+.status-rifiutato { background-color: #f8d7da; color: #721c24; }
+.status-attesa    { background-color: #fff3cd; color: #856404; }
+
+/* --- BOTTONE VISUALIZZA --- */
+.btn-view {
+    text-decoration: none;
+    color: var(--black);
+    border: 1px solid var(--border-color);
+    padding: 8px 16px;
+    border-radius: 30px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.btn-view:hover {
+    background-color: var(--black);
+    color: #FFFFFF;
+    border-color: var(--black);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+/* --- EMPTY STATE --- */
+.empty-state {
+    padding: 40px;
+    text-align: center;
+    background: #FFFFFF;
+    border-radius: 12px;
+    border: 2px dashed var(--border-color);
+    color: var(--grey-text);
+}

@@ -12,38 +12,28 @@ public class PreventivoDAO {
 
     private Connection connection;
 
-    // Costruttore: riceve la connessione dal Singleton
     public PreventivoDAO(Connection connection) {
         this.connection = connection;
     }
 
-    /**
-     * 1. INSERIMENTO (Lato Cliente)
-     * Salva una nuova richiesta nel database.
-     */
+    // 1. INSERIMENTO (Lato Cliente)
     public void insert(Preventivo p) throws SQLException {
         String sql = "INSERT INTO PREVENTIVO (idUtente, idAuto, dataRichiesta, note, stato) VALUES (?, ?, ?, ?, ?)";
-
         try (PreparedStatement ps = connection.prepareStatement(sql)) {
             ps.setInt(1, p.getIdUtente());
             ps.setInt(2, p.getIdAuto());
             ps.setTimestamp(3, p.getDataRichiesta());
             ps.setString(4, p.getNote());
-            ps.setString(5, p.getStato()); // Es. "NUOVA"
+            ps.setString(5, p.getStato());
             ps.executeUpdate();
         }
     }
 
-    /**
-     * 2. LISTA COMPLETA PER VENDITORE (Dashboard & Lista)
-     * Recupera TUTTI i preventivi facendo una JOIN per avere i nomi di Clienti e Auto.
-     * Risolve l'errore "cannot resolve method getAllCompleti".
-     */
+    // 2. LISTA COMPLETA (Dashboard Admin/Venditore)
     public List<Preventivo> getAllCompleti() throws SQLException {
         List<Preventivo> list = new ArrayList<>();
-
-        // JOIN fondamentale per mostrare "Mario Rossi" e "Fiat Panda" invece di ID numerici
-        String sql = "SELECT p.*, u.nome, u.cognome, u.email, a.marca, a.modello, a.prezzo " +
+        // Aggiunti campi mancanti: a.immagine, a.anno, u.telefono
+        String sql = "SELECT p.*, u.nome, u.cognome, u.email, u.telefono, a.marca, a.modello, a.prezzo, a.immagine, a.anno " +
                 "FROM PREVENTIVO p " +
                 "JOIN UTENTE u ON p.idUtente = u.idUtente " +
                 "JOIN AUTOMOBILE a ON p.idAuto = a.idAuto " +
@@ -51,7 +41,6 @@ public class PreventivoDAO {
 
         try (Statement st = connection.createStatement();
              ResultSet rs = st.executeQuery(sql)) {
-
             while (rs.next()) {
                 list.add(mapRowToPreventivoCompleto(rs));
             }
@@ -59,12 +48,10 @@ public class PreventivoDAO {
         return list;
     }
 
-    /**
-     * 3. LISTA PER UTENTE SINGOLO (Dashboard Cliente)
-     * Recupera solo i preventivi di uno specifico utente (con dettagli auto).
-     */
+    // 3. LISTA UTENTE (Dashboard Cliente)
     public List<Preventivo> getByUser(int idUtente) throws SQLException {
-        String sql = "SELECT p.*, u.nome, u.cognome, u.email, a.marca, a.modello, a.prezzo " +
+        // Aggiunti campi mancanti
+        String sql = "SELECT p.*, u.nome, u.cognome, u.email, u.telefono, a.marca, a.modello, a.prezzo, a.immagine, a.anno " +
                 "FROM PREVENTIVO p " +
                 "JOIN UTENTE u ON p.idUtente = u.idUtente " +
                 "JOIN AUTOMOBILE a ON p.idAuto = a.idAuto " +
@@ -74,7 +61,6 @@ public class PreventivoDAO {
         List<Preventivo> list = new ArrayList<>();
         try (PreparedStatement ps = connection.prepareStatement(sql)) {
             ps.setInt(1, idUtente);
-
             try (ResultSet rs = ps.executeQuery()) {
                 while (rs.next()) {
                     list.add(mapRowToPreventivoCompleto(rs));
@@ -84,12 +70,11 @@ public class PreventivoDAO {
         return list;
     }
 
-    /**
-     * 4. DETTAGLIO SINGOLO (Gestione Venditore)
-     * Recupera un singolo preventivo completo dato il suo ID.
-     */
-    public Preventivo getByIdCompleto(int id) throws SQLException {
-        String sql = "SELECT p.*, u.nome, u.cognome, u.email, a.marca, a.modello, a.prezzo " +
+    // 4. DETTAGLIO SINGOLO (Per la Servlet DettaglioRichiesta)
+    // Rinominato in getById per compatibilità con la Servlet
+    public Preventivo getById(int id) throws SQLException {
+        // Aggiunti campi mancanti
+        String sql = "SELECT p.*, u.nome, u.cognome, u.email, u.telefono, a.marca, a.modello, a.prezzo, a.immagine, a.anno " +
                 "FROM PREVENTIVO p " +
                 "JOIN UTENTE u ON p.idUtente = u.idUtente " +
                 "JOIN AUTOMOBILE a ON p.idAuto = a.idAuto " +
@@ -97,7 +82,6 @@ public class PreventivoDAO {
 
         try (PreparedStatement ps = connection.prepareStatement(sql)) {
             ps.setInt(1, id);
-
             try (ResultSet rs = ps.executeQuery()) {
                 if (rs.next()) {
                     return mapRowToPreventivoCompleto(rs);
@@ -107,13 +91,9 @@ public class PreventivoDAO {
         return null;
     }
 
-    /**
-     * 5. AGGIORNAMENTO STATO (Azione Venditore)
-     * Cambia lo stato (es. da "NUOVA" a "INVIATO").
-     */
+    // 5. UPDATE STATO
     public void updateStato(int idPreventivo, String nuovoStato) throws SQLException {
         String sql = "UPDATE PREVENTIVO SET stato = ? WHERE idPreventivo = ?";
-
         try (PreparedStatement ps = connection.prepareStatement(sql)) {
             ps.setString(1, nuovoStato);
             ps.setInt(2, idPreventivo);
@@ -121,16 +101,9 @@ public class PreventivoDAO {
         }
     }
 
-    // --- METODI PRIVATI DI SUPPORTO (HELPER) ---
-
-    /**
-     * Mappa una riga del database in un oggetto Preventivo popolando anche
-     * gli oggetti annidati Utente (cliente) e Automobile (auto).
-     */
+    // HELPER MAPPING (Popola Utente e Auto dentro Preventivo)
     private Preventivo mapRowToPreventivoCompleto(ResultSet rs) throws SQLException {
         Preventivo p = new Preventivo();
-
-        // Dati diretti del preventivo
         p.setIdPreventivo(rs.getInt("idPreventivo"));
         p.setIdUtente(rs.getInt("idUtente"));
         p.setIdAuto(rs.getInt("idAuto"));
@@ -138,21 +111,24 @@ public class PreventivoDAO {
         p.setNote(rs.getString("note"));
         p.setStato(rs.getString("stato"));
 
-        // Dati Utente (da JOIN)
+        // Popola Utente
         Utente u = new Utente();
         u.setIdUtente(rs.getInt("idUtente"));
         u.setNome(rs.getString("nome"));
         u.setCognome(rs.getString("cognome"));
         u.setEmail(rs.getString("email"));
-        p.setCliente(u); // Popola l'oggetto annidato
+        u.setTelefono(rs.getString("telefono")); // Aggiunto
+        p.setCliente(u);
 
-        // Dati Auto (da JOIN)
+        // Popola Auto
         Automobile a = new Automobile();
         a.setIdAuto(rs.getInt("idAuto"));
         a.setMarca(rs.getString("marca"));
         a.setModello(rs.getString("modello"));
         a.setPrezzo(rs.getDouble("prezzo"));
-        p.setAuto(a); // Popola l'oggetto annidato
+        a.setImmagine(rs.getString("immagine")); // Fondamentale per il dettaglio
+        a.setAnno(rs.getInt("anno"));            // Fondamentale per il dettaglio
+        p.setAuto(a);
 
         return p;
     }

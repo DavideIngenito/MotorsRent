@@ -4,71 +4,84 @@
 <html>
 <head>
     <title>Dashboard Cliente - MotorsRent</title>
-    <link rel="stylesheet" href="css/style.css">
-    <style>
-        .table { width: 100%; border-collapse: collapse; margin-bottom: 30px; }
-        .table th, .table td { border: 1px solid #ddd; padding: 8px; text-align: left; }
-        .table th { background-color: #f2f2f2; }
-    </style>
-</head>
-<body>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/header.css">
+    <link rel="stylesheet" href="css/dashboardCliente.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
+</head>
 <jsp:include page="header.jsp"/>
 
-<div class="container" style="padding: 20px;">
+<div class="container" style="padding: 40px 20px;">
 
-    <h2>Benvenuto, ${sessionScope.utente.nome}</h2>
-    <hr>
+    <h2 style="font-family: 'Playfair Display', serif; font-size: 2rem;">Benvenuto, ${sessionScope.utente.nome}</h2>
+    <p style="color: #919191; margin-bottom: 30px;">Qui puoi gestire le tue richieste.</p>
 
-    <h3>I tuoi Preventivi</h3>
+    <h3 style="margin-bottom: 15px;">I tuoi Preventivi</h3>
 
     <c:if test="${empty listaPreventivi}">
-        <p>Non hai ancora richiesto preventivi.</p>
+        <div style="padding: 20px; background: #f9f9f9; border-radius: 8px;">Non hai ancora richiesto preventivi.</div>
     </c:if>
 
     <c:if test="${not empty listaPreventivi}">
         <table class="table">
             <tr>
-                <th>ID</th>
+                <th>Rif.</th>
                 <th>Auto</th>
                 <th>Data</th>
-                <th>Note</th>
                 <th>Stato</th>
-            </tr>
+                <th>Azioni</th> </tr>
             <c:forEach var="p" items="${listaPreventivi}">
                 <tr>
-                    <td>${p.idPreventivo}</td>
-                    <td>${p.auto.marca} ${p.auto.modello}</td>
+                    <td>#${p.idPreventivo}</td>
+                    <td><strong>${p.auto.marca} ${p.auto.modello}</strong></td>
                     <td>${p.dataRichiesta}</td>
-                    <td>${p.note}</td>
-                    <td><b>${p.stato}</b></td>
+                    <td>
+                        <span style="color: ${p.stato == 'APPROVATO' ? 'green' : (p.stato == 'RIFIUTATO' ? 'red' : 'orange')}">
+                                ${p.stato}
+                        </span>
+                    </td>
+                    <td>
+                        <a href="dettaglioRichiesta?tipo=preventivo&id=${p.idPreventivo}" class="btn-view">
+                            <i class="fa-regular fa-eye"></i> Visualizza
+                        </a>
+                    </td>
                 </tr>
             </c:forEach>
         </table>
     </c:if>
 
-    <h3>Le tue Richieste Leasing</h3>
+    <h3 style="margin-top: 50px; margin-bottom: 15px;">Le tue Richieste Leasing</h3>
 
     <c:if test="${empty listaLeasing}">
-        <p>Non hai richieste di leasing attive.</p>
+        <div style="padding: 20px; background: #f9f9f9; border-radius: 8px;">Non hai richieste di leasing attive.</div>
     </c:if>
 
     <c:if test="${not empty listaLeasing}">
         <table class="table">
             <tr>
-                <th>ID</th>
+                <th>Rif.</th>
                 <th>Auto</th>
                 <th>Durata</th>
                 <th>Anticipo</th>
                 <th>Stato</th>
-            </tr>
+                <th>Azioni</th> </tr>
             <c:forEach var="l" items="${listaLeasing}">
                 <tr>
-                    <td>${l.idLeasing}</td>
-                    <td>${l.auto.marca} ${l.auto.modello}</td>
+                    <td>#${l.idLeasing}</td>
+                    <td><strong>${l.auto.marca} ${l.auto.modello}</strong></td>
                     <td>${l.durataMesi} mesi</td>
                     <td>€ ${l.anticipo}</td>
-                    <td><b>${l.stato}</b></td>
+                    <td>
+                         <span style="color: ${l.stato == 'APPROVATO' ? 'green' : (l.stato == 'RIFIUTATO' ? 'red' : 'orange')}">
+                                 ${l.stato}
+                         </span>
+                    </td>
+                    <td>
+                        <a href="dettaglioRichiesta?tipo=leasing&id=${l.idLeasing}" class="btn-view">
+                            <i class="fa-regular fa-eye"></i> Visualizza
+                        </a>
+                    </td>
                 </tr>
             </c:forEach>
         </table>

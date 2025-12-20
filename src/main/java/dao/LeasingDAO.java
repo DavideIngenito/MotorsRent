@@ -16,27 +16,23 @@ public class LeasingDAO {
         this.connection = connection;
     }
 
-    // Inserimento Richiesta (Lato Cliente)
     public void insert(Leasing l) throws SQLException {
         String sql = "INSERT INTO LEASING (idUtente, idAuto, durataMesi, anticipo, kmAnnui, dataRichiesta, stato) VALUES (?, ?, ?, ?, ?, ?, ?)";
-
         try (PreparedStatement ps = connection.prepareStatement(sql)) {
             ps.setInt(1, l.getIdUtente());
             ps.setInt(2, l.getIdAuto());
             ps.setInt(3, l.getDurataMesi());
             ps.setDouble(4, l.getAnticipo());
             ps.setInt(5, l.getKmAnnui());
-            ps.setTimestamp(6, l.getDataRichiesta()); // Usa setTimestamp, non setString!
+            ps.setTimestamp(6, l.getDataRichiesta());
             ps.setString(7, l.getStato());
             ps.executeUpdate();
         }
     }
 
-    // Lista per il Venditore (Dashboard) con JOIN
     public List<Leasing> getAllCompleti() throws SQLException {
         List<Leasing> list = new ArrayList<>();
-
-        String sql = "SELECT l.*, u.nome, u.cognome, u.email, a.marca, a.modello, a.prezzo " +
+        String sql = "SELECT l.*, u.nome, u.cognome, u.email, u.telefono, a.marca, a.modello, a.prezzo, a.immagine, a.anno " +
                 "FROM LEASING l " +
                 "JOIN UTENTE u ON l.idUtente = u.idUtente " +
                 "JOIN AUTOMOBILE a ON l.idAuto = a.idAuto " +
@@ -51,9 +47,9 @@ public class LeasingDAO {
         return list;
     }
 
-    // Dettaglio singolo per Venditore
-    public Leasing getByIdCompleto(int id) throws SQLException {
-        String sql = "SELECT l.*, u.nome, u.cognome, u.email, a.marca, a.modello, a.prezzo " +
+    // Rinominato in getById per la Servlet
+    public Leasing getById(int id) throws SQLException {
+        String sql = "SELECT l.*, u.nome, u.cognome, u.email, u.telefono, a.marca, a.modello, a.prezzo, a.immagine, a.anno " +
                 "FROM LEASING l " +
                 "JOIN UTENTE u ON l.idUtente = u.idUtente " +
                 "JOIN AUTOMOBILE a ON l.idAuto = a.idAuto " +
@@ -70,9 +66,8 @@ public class LeasingDAO {
         return null;
     }
 
-    // Lista per il Cliente (Area Personale)
     public List<Leasing> getByUser(int idUtente) throws SQLException {
-        String sql = "SELECT l.*, u.nome, u.cognome, u.email, a.marca, a.modello, a.prezzo " +
+        String sql = "SELECT l.*, u.nome, u.cognome, u.email, u.telefono, a.marca, a.modello, a.prezzo, a.immagine, a.anno " +
                 "FROM LEASING l " +
                 "JOIN UTENTE u ON l.idUtente = u.idUtente " +
                 "JOIN AUTOMOBILE a ON l.idAuto = a.idAuto " +
@@ -99,30 +94,34 @@ public class LeasingDAO {
         }
     }
 
-    // Helper per mapping (DRY)
     private Leasing mapRowToLeasingCompleto(ResultSet rs) throws SQLException {
         Leasing l = new Leasing();
         l.setIdLeasing(rs.getInt("idLeasing"));
         l.setIdUtente(rs.getInt("idUtente"));
         l.setIdAuto(rs.getInt("idAuto"));
         l.setDurataMesi(rs.getInt("durataMesi"));
-        l.setAnticipo(rs.getDouble("anticipo")); // Occhio: Double, non Int
+        l.setAnticipo(rs.getDouble("anticipo"));
         l.setKmAnnui(rs.getInt("kmAnnui"));
         l.setDataRichiesta(rs.getTimestamp("dataRichiesta"));
         l.setStato(rs.getString("stato"));
 
         // Popola Cliente
         Utente u = new Utente();
+        u.setIdUtente(rs.getInt("idUtente"));
         u.setNome(rs.getString("nome"));
         u.setCognome(rs.getString("cognome"));
         u.setEmail(rs.getString("email"));
+        u.setTelefono(rs.getString("telefono")); // Aggiunto
         l.setCliente(u);
 
         // Popola Auto
         Automobile a = new Automobile();
+        a.setIdAuto(rs.getInt("idAuto"));
         a.setMarca(rs.getString("marca"));
         a.setModello(rs.getString("modello"));
         a.setPrezzo(rs.getDouble("prezzo"));
+        a.setImmagine(rs.getString("immagine")); // Aggiunto
+        a.setAnno(rs.getInt("anno"));            // Aggiunto
         l.setAuto(a);
 
         return l;
