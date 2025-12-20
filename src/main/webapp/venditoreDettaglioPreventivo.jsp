@@ -1,60 +1,90 @@
-
 <%@ page contentType="text/html;charset=UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
-<html>
+<!DOCTYPE html>
+<html lang="it">
 <head>
     <title>Dettaglio Preventivo - MotorsRent</title>
-    <link rel="stylesheet" href="css/style.css">
-</head>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/header.css">
+     </head>
 
 <body>
 
 <jsp:include page="header.jsp"/>
 
-<div class="container">
-    <h1>Dettaglio Preventivo #${preventivo.idPreventivo}</h1>
+<div class="sheet-wrapper">
+    <div class="detail-sheet">
 
-    <section class="detail-section">
-        <h2>Dati Cliente</h2>
-        <p><b>Nome:</b> ${preventivo.cliente.nome} ${preventivo.cliente.cognome}</p>
-        <p><b>Email:</b> ${preventivo.cliente.email}</p>
-    </section>
+        <div class="sheet-header">
+            <div>
+                <h1 class="doc-title">Valutazione Preventivo</h1>
+                <div class="doc-meta">Rif: #${preventivo.idPreventivo} | Data: ${preventivo.dataRichiesta}</div>
+            </div>
+        </div>
 
-    <section class="detail-section">
-        <h2>Veicolo Richiesto</h2>
-        <p><b>Marca:</b> ${preventivo.auto.marca}</p>
-        <p><b>Modello:</b> ${preventivo.auto.modello}</p>
-        <p><b>Prezzo:</b> € ${preventivo.auto.prezzo}</p>
-    </section>
+        <div class="info-grid">
+            <div class="info-section">
+                <h4>Richiedente</h4>
+                <div class="data-row"><span class="data-label">Nome:</span> ${preventivo.utente.nome} ${preventivo.utente.cognome}</div>
+                <div class="data-row"><span class="data-label">Email:</span> ${preventivo.utente.email}</div>
+                <div class="data-row"><span class="data-label">Telefono:</span> ${preventivo.utente.telefono}</div>
+            </div>
 
-    <section class="detail-section">
-        <h2>Note Cliente</h2>
-        <p>${preventivo.note}</p>
-    </section>
+            <div class="info-section">
+                <h4>Veicolo Oggetto della Richiesta</h4>
+                <div class="car-preview-box">
+                    <img src="${preventivo.auto.immagine}" alt="Auto" class="car-thumb">
+                    <div>
+                        <div class="car-details-text">${preventivo.auto.marca} ${preventivo.auto.modello}</div>
+                        <div>Anno: ${preventivo.auto.anno}</div>
+                        <div style="font-weight:bold; margin-top:5px;">Listino: € ${preventivo.auto.prezzo}</div>
+                    </div>
+                </div>
+            </div>
+        </div>
 
-    <section class="form-section">
-        <h2>Risposta Preventivo</h2>
+        <div class="info-section">
+            <h4>Note dal Cliente</h4>
+            <div class="notes-box">
+                "${preventivo.note}"
+            </div>
+        </div>
 
-        <form action="gestisciPreventivo" method="post">
-            <input type="hidden" name="idPreventivo" value="${preventivo.idPreventivo}">
+        <hr style="margin: 40px 0; border: 0; border-top: 1px solid #eee;">
 
-            <label>Importo Offerto (€):</label>
-            <input type="number" name="importo" required>
+        <div class="info-section" style="background: #f9f9f9; padding: 30px; border-radius: 8px;">
+            <h2 style="font-family:'Playfair Display'; margin-bottom: 20px;">Invia Risposta Commerciale</h2>
 
-            <label>Messaggio al Cliente:</label>
-            <textarea name="messaggio" required></textarea>
+            <form action="gestisciPreventivo" method="post">
+                <input type="hidden" name="idPreventivo" value="${preventivo.idPreventivo}">
 
-            <label>Stato:</label>
-            <select name="stato">
-                <option value="Inviato">Inviato</option>
-                <option value="Rifiutato">Rifiutato</option>
-            </select>
+                <div style="display:grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 20px;">
+                    <div>
+                        <label style="font-weight:bold; display:block; margin-bottom:5px;">Prezzo Finale Offerto (€)</label>
+                        <input type="number" name="importo" required style="width:100%; padding:10px; border:1px solid #ccc; border-radius:4px;">
+                    </div>
+                    <div>
+                        <label style="font-weight:bold; display:block; margin-bottom:5px;">Stato Pratica</label>
+                        <select name="stato" style="width:100%; padding:10px; border:1px solid #ccc; border-radius:4px;">
+                            <option value="INVIATO">Inviato (Offerta Pronta)</option>
+                            <option value="RIFIUTATO">Rifiuta Richiesta</option>
+                            <option value="IN_LAVORAZIONE" selected>In Lavorazione</option>
+                        </select>
+                    </div>
+                </div>
 
-            <button type="submit" class="btn">Invia Preventivo</button>
-        </form>
-    </section>
+                <label style="font-weight:bold; display:block; margin-bottom:5px;">Messaggio per il Cliente</label>
+                <textarea name="messaggio" rows="4" required style="width:100%; padding:10px; border:1px solid #ccc; border-radius:4px;" placeholder="Gentile cliente, ecco la nostra migliore offerta..."></textarea>
+
+                <button type="submit" class="btn" style="margin-top: 20px; width: 100%;">Conferma e Invia</button>
+            </form>
+        </div>
+
+    </div>
 </div>
+
+<jsp:include page="footer.jsp"/>
 
 </body>
 </html>
