@@ -9,15 +9,21 @@ public class AutomobileDAO {
 
     private Connection connection;
 
-    // Costruttore
+    // Costruttore: riceve la connessione dal Singleton
     public AutomobileDAO(Connection connection) {
         this.connection = connection;
     }
 
-    // --- OPERAZIONI CRUD STANDARD ---
+    // =================================================================================
+    //  SEZIONE 1: OPERAZIONI CRUD STANDARD (Create, Read, Update, Delete)
+    // =================================================================================
 
+    /**
+     * Inserisce una nuova auto nel database.
+     */
     public void insert(Automobile a) throws SQLException {
         String sql = "INSERT INTO AUTOMOBILE (modello, marca, anno, prezzo, chilometraggio, stato, descrizione, immagine, disponibilita) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+
         try (PreparedStatement ps = connection.prepareStatement(sql)) {
             ps.setString(1, a.getModello());
             ps.setString(2, a.getMarca());
@@ -32,10 +38,15 @@ public class AutomobileDAO {
         }
     }
 
+    /**
+     * Recupera un'auto tramite il suo ID.
+     */
     public Automobile getById(int id) throws SQLException {
         String sql = "SELECT * FROM AUTOMOBILE WHERE idAuto = ?";
+
         try (PreparedStatement ps = connection.prepareStatement(sql)) {
             ps.setInt(1, id);
+
             try (ResultSet rs = ps.executeQuery()) {
                 if (rs.next()) {
                     return mapRowToAutomobile(rs);
@@ -45,11 +56,16 @@ public class AutomobileDAO {
         return null;
     }
 
+    /**
+     * Recupera tutte le auto presenti nel database (senza filtri).
+     */
     public List<Automobile> getAll() throws SQLException {
         List<Automobile> list = new ArrayList<>();
         String sql = "SELECT * FROM AUTOMOBILE";
+
         try (Statement st = connection.createStatement();
              ResultSet rs = st.executeQuery(sql)) {
+
             while (rs.next()) {
                 list.add(mapRowToAutomobile(rs));
             }
@@ -57,8 +73,12 @@ public class AutomobileDAO {
         return list;
     }
 
+    /**
+     * Aggiorna i dati di un'auto esistente.
+     */
     public void update(Automobile a) throws SQLException {
         String sql = "UPDATE AUTOMOBILE SET modello=?, marca=?, anno=?, prezzo=?, chilometraggio=?, stato=?, descrizione=?, immagine=?, disponibilita=? WHERE idAuto=?";
+
         try (PreparedStatement ps = connection.prepareStatement(sql)) {
             ps.setString(1, a.getModello());
             ps.setString(2, a.getMarca());
@@ -70,10 +90,14 @@ public class AutomobileDAO {
             ps.setString(8, a.getImmagine());
             ps.setBoolean(9, a.getDisponibilita());
             ps.setInt(10, a.getIdAuto());
+
             ps.executeUpdate();
         }
     }
 
+    /**
+     * Elimina un'auto dal database tramite ID.
+     */
     public void delete(int id) throws SQLException {
         String sql = "DELETE FROM AUTOMOBILE WHERE idAuto = ?";
         try (PreparedStatement ps = connection.prepareStatement(sql)) {
@@ -82,66 +106,75 @@ public class AutomobileDAO {
         }
     }
 
-    // --- RICERCA AVANZATA (FILTRI) ---
+    // =================================================================================
+    //  SEZIONE 2: RICERCA AVANZATA E FILTRI
+    // =================================================================================
 
     /**
-     * Metodo per filtrare le auto.
-     * anni: Lista di interi (es. [2023, 2024]) per filtrare con "IN".
+     * Metodo flessibile per filtrare le auto nel catalogo.
+     * Gestisce filtri multipli (es. più anni selezionati) e opzionali (null se non selezionati).
+     * * @param marca        Testo parziale per la marca (LIKE)
+     * @param prezzoMax    Prezzo massimo
+     * @param anni         Lista di anni da includere (es. 2023 e 2024)
+     * @param kmMax        Chilometraggio massimo
+     * @param stato        "Nuova" o "Usata"
+     * @param disponibilita True per vedere solo quelle disponibili
      */
     public List<Automobile> ricercaAvanzata(String marca, Double prezzoMax, List<Integer> anni, Integer kmMax, String stato, Boolean disponibilita) throws SQLException {
         List<Automobile> list = new ArrayList<>();
 
-        // Costruiamo la query dinamicamente.
-        // WHERE 1=1 serve per poter aggiungere tutti gli "AND" successivi senza problemi.
+        // 1. Costruzione Query Dinamica
+        // Usiamo "WHERE 1=1" per poter aggiungere tutti gli "AND" successivi senza preoccuparci se è il primo o no.
         StringBuilder sql = new StringBuilder("SELECT * FROM AUTOMOBILE WHERE 1=1");
         List<Object> params = new ArrayList<>();
 
-        // 1. Filtro Marca
+        // Filtro Marca
         if (marca != null && !marca.trim().isEmpty()) {
             sql.append(" AND marca LIKE ?");
             params.add("%" + marca + "%");
         }
 
-        // 2. Filtro Prezzo
+        // Filtro Prezzo Max
         if (prezzoMax != null) {
             sql.append(" AND prezzo <= ?");
             params.add(prezzoMax);
         }
 
-        // 3. Filtro Anni Multipli (IN Clause)
+        // Filtro Anni Multipli (Gestione complessa per la clausola IN)
         if (anni != null && !anni.isEmpty()) {
             sql.append(" AND anno IN (");
             for (int i = 0; i < anni.size(); i++) {
-                sql.append("?");
+                sql.append("?"); // Aggiunge un punto interrogativo per ogni anno
                 if (i < anni.size() - 1) {
-                    sql.append(","); // Virgola tra i valori
+                    sql.append(","); // Aggiunge la virgola se non è l'ultimo
                 }
-                params.add(anni.get(i));
+                params.add(anni.get(i)); // Salva il valore del parametro
             }
             sql.append(")");
         }
 
-        // 4. Filtro Chilometri
+        // Filtro Chilometraggio Max
         if (kmMax != null) {
             sql.append(" AND chilometraggio <= ?");
             params.add(kmMax);
         }
 
-        // 5. Filtro Stato
+        // Filtro Stato (Nuova/Usata)
         if (stato != null && !stato.trim().isEmpty()) {
             sql.append(" AND stato = ?");
             params.add(stato);
         }
 
-        // 6. Filtro Disponibilità
+        // Filtro Disponibilità
         if (disponibilita != null && disponibilita) {
             sql.append(" AND disponibilita = ?");
             params.add(true);
         }
 
-        // Esecuzione
+        // 2. Esecuzione Query
         try (PreparedStatement ps = connection.prepareStatement(sql.toString())) {
-            // Imposta i parametri
+
+            // Impostiamo i parametri nel PreparedStatement nell'ordine in cui li abbiamo aggiunti alla lista
             for (int i = 0; i < params.size(); i++) {
                 ps.setObject(i + 1, params.get(i));
             }
@@ -155,7 +188,14 @@ public class AutomobileDAO {
         return list;
     }
 
-    // --- HELPER MAPPING ---
+    // =================================================================================
+    //  SEZIONE 3: METODI DI SUPPORTO (HELPER)
+    // =================================================================================
+
+    /**
+     * Metodo privato per mappare una riga del ResultSet in un oggetto Automobile.
+     * Evita di ripetere questo codice in ogni metodo query.
+     */
     private Automobile mapRowToAutomobile(ResultSet rs) throws SQLException {
         return new Automobile(
                 rs.getInt("idAuto"),
