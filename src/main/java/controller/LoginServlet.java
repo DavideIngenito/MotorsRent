@@ -54,16 +54,16 @@ public class LoginServlet extends HttpServlet {
 
                 switch (ruolo) {
                     case "CLIENTE":
-                        response.sendRedirect("index.jsp");
+                        response.sendRedirect("home");
                         break;
                     case "VENDITORE":
-                        response.sendRedirect("index.jsp");
+                        response.sendRedirect("home");
                         break;
                     case "AMMINISTRATORE": // Gestisco entrambi i casi per sicurezza
-                        response.sendRedirect("index.jsp");
+                        response.sendRedirect("home");
                         break;
                     default:
-                        response.sendRedirect("index.jsp"); // Fallback
+                        response.sendRedirect("home"); // Fallback
                 }
             } else {
                 // Login Fallito
