@@ -52,11 +52,9 @@ public class UtenteDAO {
 
     /**
      * Trova tutti gli utenti che hanno ruolo "VENDITORE"
-     * (QUESTO È IL METODO CHE TI MANCAVA!)
      */
     public List<Utente> findVenditori() throws SQLException {
         List<Utente> venditori = new ArrayList<>();
-        // Assicurati che nel DB il ruolo sia scritto come 'VENDITORE' (maiuscolo/minuscolo)
         String sql = "SELECT * FROM UTENTE WHERE ruolo = 'VENDITORE'";
 
         try (Statement st = connection.createStatement();
@@ -80,20 +78,9 @@ public class UtenteDAO {
         }
     }
 
-    // --- Helper privato per mappare i risultati ---
-    private Utente mapRowToUtente(ResultSet rs) throws SQLException {
-        return new Utente(
-                rs.getInt("idUtente"),
-                rs.getString("nome"),
-                rs.getString("cognome"),
-                rs.getString("email"),
-                rs.getString("password"),
-                rs.getString("telefono"),
-                rs.getString("ruolo")
-        );
-    }
-
-    // (Opzionale) Metodo getAll generico se ti serve altrove
+    /**
+     * Ottiene tutti gli utenti (Opzionale, usato per statistiche o liste admin)
+     */
     public List<Utente> getAll() throws SQLException {
         List<Utente> utenti = new ArrayList<>();
         String sql = "SELECT * FROM UTENTE";
@@ -106,16 +93,37 @@ public class UtenteDAO {
         return utenti;
     }
 
+    /**
+     * AGGIORNA I DATI PROFILO (Metodo Completo)
+     * Include anche l'aggiornamento della password.
+     */
+    public boolean updateProfilo(Utente u) throws SQLException {
+        // Aggiorniamo anche la password
+        String sql = "UPDATE UTENTE SET nome = ?, cognome = ?, email = ?, telefono = ?, password = ? WHERE idUtente = ?";
 
-    public void updateProfilo(Utente u) throws SQLException {
-        String sql = "UPDATE UTENTE SET nome=?, cognome=?, email=?, telefono=? WHERE idUtente=?";
         try (PreparedStatement ps = connection.prepareStatement(sql)) {
             ps.setString(1, u.getNome());
             ps.setString(2, u.getCognome());
             ps.setString(3, u.getEmail());
             ps.setString(4, u.getTelefono());
-            ps.setInt(5, u.getIdUtente());
-            ps.executeUpdate();
+            ps.setString(5, u.getPassword()); // Importante per il cambio password
+            ps.setInt(6, u.getIdUtente());
+
+            int rows = ps.executeUpdate();
+            return rows > 0; // Restituisce true se l'aggiornamento è andato a buon fine
         }
+    }
+
+    // --- Helper privato per mappare i risultati ---
+    private Utente mapRowToUtente(ResultSet rs) throws SQLException {
+        return new Utente(
+                rs.getInt("idUtente"),
+                rs.getString("nome"),
+                rs.getString("cognome"),
+                rs.getString("email"),
+                rs.getString("password"),
+                rs.getString("telefono"),
+                rs.getString("ruolo")
+        );
     }
 }

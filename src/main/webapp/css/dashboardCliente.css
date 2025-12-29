@@ -1,81 +1,160 @@
-/* --- LAYOUT HEADER --- */
-.dashboard-title {
-    font-size: 2.5rem;
-    margin-bottom: 5px;
+/* --- INTESTAZIONE A "CARD" (Header Card) --- */
+.dashboard-header-card {
+    background-color: #ffffff;
+    padding: 35px 45px;          /* Ampio spazio interno */
+    border-radius: 12px;         /* Angoli arrotondati */
+    box-shadow: 0 8px 30px rgba(0,0,0,0.04); /* Ombra morbida ed elegante */
+    border: 1px solid #f0f0f0;   /* Bordo quasi invisibile */
+    margin-bottom: 50px;         /* Distanza dalle tabelle */
+
+    display: flex;
+    justify-content: space-between; /* Spinge titolo a sx e bottone a dx */
+    align-items: center;            /* Allinea verticalmente */
 }
 
-.dashboard-subtitle {
+/* Testi Intestazione */
+.welcome-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.2rem;
+    color: #121212;
+    margin-bottom: 8px;
+    font-weight: 700;
+}
+
+.welcome-subtitle {
+    font-family: 'Inter', sans-serif;
     color: #666;
-    margin-bottom: 40px;
+    font-size: 1rem;
+    margin: 0;
 }
 
-/* --- TABELLE --- */
+/* Pulsante "Modifica Profilo" (Alto a Destra) */
+.btn-action {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background-color: #f8f9fa;   /* Sfondo grigio chiarissimo di base */
+    color: #121212;
+    border: 1px solid #e0e0e0;
+    padding: 12px 24px;          /* Pulsante comodo */
+    border-radius: 50px;         /* Pillola arrotondata */
+    font-size: 0.9rem;
+    font-weight: 600;
+    text-decoration: none;
+    transition: all 0.3s ease;   /* Animazione fluida */
+}
+
+.btn-action:hover {
+    background-color: #121212;   /* Diventa nero al passaggio */
+    color: #ffffff;
+    border-color: #121212;
+    transform: translateY(-2px); /* Si alza leggermente */
+    box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+}
+
+.btn-action i {
+    color: #555; /* Icona grigia di default */
+    font-size: 1.1em;
+    transition: color 0.3s;
+}
+
+.btn-action:hover i {
+    color: #ffffff; /* Icona bianca all'hover */
+}
+
+/* --- TITOLI SEZIONI --- */
+.section-title {
+    font-size: 1.1rem;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    font-weight: 700;
+    margin-bottom: 20px;
+    padding-left: 15px;
+    border-left: 4px solid #121212;
+    color: #333;
+}
+
+/* --- TABELLE PREMIUM --- */
 .table-container {
     background: white;
     border-radius: 12px;
-    box-shadow: 0 5px 20px rgba(0,0,0,0.05);
-    overflow: hidden; /* Arrotonda gli angoli della tabella */
-    margin-bottom: 50px;
-    border: 1px solid var(--border);
+    box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+    overflow: hidden; /* Fondamentale per i bordi arrotondati */
+    border: 1px solid #eaeaea;
 }
 
 .premium-table {
     width: 100%;
     border-collapse: collapse;
+    font-family: 'Inter', sans-serif;
 }
 
 .premium-table th {
-    background-color: #f8f9fa;
+    background-color: #f9f9f9;
     text-align: left;
-    padding: 18px;
-    font-size: 0.85rem;
+    padding: 20px;
+    font-size: 0.8rem;
     text-transform: uppercase;
     letter-spacing: 1px;
     color: #555;
-    border-bottom: 2px solid var(--border);
+    font-weight: 600;
+    border-bottom: 2px solid #eee;
 }
 
 .premium-table td {
-    padding: 20px 18px;
-    border-bottom: 1px solid #eee;
+    padding: 22px 20px;
+    border-bottom: 1px solid #f0f0f0;
     vertical-align: middle;
+    color: #333;
+    font-size: 0.95rem;
 }
 
 .premium-table tr:hover {
     background-color: #fafafa;
 }
 
-/* --- BADGE STATO --- */
+/* --- BADGE STATO (Pillole Colorate) --- */
 .status-badge {
-    padding: 6px 12px;
+    padding: 6px 14px;
     border-radius: 50px;
     font-size: 0.75rem;
     font-weight: 700;
     text-transform: uppercase;
+    letter-spacing: 0.5px;
     display: inline-block;
 }
 
-.status-approvato { background-color: #d1e7dd; color: #0f5132; }
-.status-rifiutato { background-color: #f8d7da; color: #842029; }
-.status-attesa,
-.status-in_valutazione { background-color: #fff3cd; color: #664d03; }
+.status-approvato,
+.status-inviato { background-color: #e8f5e9; color: #2e7d32; border: 1px solid #c8e6c9; }
 
-/* --- AZIONI --- */
+.status-rifiutato { background-color: #ffebee; color: #c62828; border: 1px solid #ffcdd2; }
+
+.status-attesa,
+.status-nuova,
+.status-in_lavorazione,
+.status-in_valutazione { background-color: #fff8e1; color: #f57f17; border: 1px solid #ffecb3; }
+
+/* --- AZIONI TABELLA --- */
 .btn-view {
-    border: 1px solid var(--border);
-    padding: 8px 16px;
+    border: 1px solid #ddd;
+    padding: 8px 18px;
     border-radius: 30px;
     font-size: 0.85rem;
     font-weight: 600;
     display: inline-flex;
     align-items: center;
     gap: 8px;
+    color: #333;
+    text-decoration: none;
+    transition: all 0.2s;
+    background: white;
 }
 
 .btn-view:hover {
-    background-color: var(--black);
+    background-color: #121212;
     color: white;
-    border-color: var(--black);
+    border-color: #121212;
+    transform: translateY(-2px);
 }
 
 .waiting-status {
@@ -84,15 +163,16 @@
     font-size: 0.9rem;
     display: flex;
     align-items: center;
-    gap: 6px;
+    gap: 8px;
 }
 
 /* --- EMPTY STATE --- */
 .empty-state {
     text-align: center;
-    padding: 40px;
-    border: 2px dashed var(--border);
+    padding: 50px;
+    border: 2px dashed #e0e0e0;
     border-radius: 12px;
     color: #888;
     background: white;
+    font-size: 1rem;
 }

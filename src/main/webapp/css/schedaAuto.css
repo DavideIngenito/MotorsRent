@@ -131,8 +131,39 @@
     text-align: center;
 }
 
+/* --- ALERT NON DISPONIBILE --- */
+.unavailable-alert {
+    background-color: #ffebee; /* Sfondo rosso chiaro */
+    border: 1px solid #ffcdd2; /* Bordo rosso */
+    color: #c62828;            /* Testo rosso scuro */
+    padding: 20px;
+    border-radius: 8px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+}
+
+.unavailable-alert i {
+    font-size: 1.5rem;
+    margin-bottom: 5px;
+}
+
+.unavailable-alert strong {
+    font-size: 1rem;
+    font-weight: 700;
+}
+
+.unavailable-alert p {
+    font-size: 0.9rem;
+    margin: 0;
+    color: #b71c1c;
+}
+
 @media (max-width: 900px) {
     .product-layout {
         grid-template-columns: 1fr;
     }
 }
+
