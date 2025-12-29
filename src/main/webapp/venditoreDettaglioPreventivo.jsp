@@ -4,14 +4,16 @@
 <!DOCTYPE html>
 <html lang="it">
 <head>
-    <title>Dettaglio Preventivo - MotorsRent</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+    <title>Valutazione Preventivo - MotorsRent</title>
     <link rel="stylesheet" href="css/header.css">
-     </head>
+    <link rel="stylesheet" href="css/dettaglio.css">
+</head>
 
 <body>
 
-<jsp:include page="header.jsp"/>
+<div class="no-print">
+    <jsp:include page="header.jsp"/>
+</div>
 
 <div class="sheet-wrapper">
     <div class="detail-sheet">
@@ -44,16 +46,18 @@
             </div>
         </div>
 
-        <div class="info-section">
-            <h4>Note dal Cliente</h4>
-            <div class="notes-box">
-                "${preventivo.note}"
+        <c:if test="${not empty preventivo.note}">
+            <div class="info-section">
+                <h4>Note dal Cliente</h4>
+                <div class="notes-box">
+                    "${preventivo.note}"
+                </div>
             </div>
-        </div>
+        </c:if>
 
         <hr style="margin: 40px 0; border: 0; border-top: 1px solid #eee;">
 
-        <div class="info-section" style="background: #f9f9f9; padding: 30px; border-radius: 8px;">
+        <div class="info-section offer-box">
             <h2 style="font-family:'Playfair Display'; margin-bottom: 20px;">Invia Risposta Commerciale</h2>
 
             <form action="gestisciPreventivo" method="post">
@@ -62,14 +66,14 @@
                 <div style="display:grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 20px;">
                     <div>
                         <label style="font-weight:bold; display:block; margin-bottom:5px;">Prezzo Finale Offerto (€)</label>
-                        <input type="number" name="importo" required style="width:100%; padding:10px; border:1px solid #ccc; border-radius:4px;">
+                        <input type="number" name="importo" required style="width:100%; padding:10px; border:1px solid #ccc; border-radius:4px;" placeholder="Es. 14500">
                     </div>
                     <div>
                         <label style="font-weight:bold; display:block; margin-bottom:5px;">Stato Pratica</label>
                         <select name="stato" style="width:100%; padding:10px; border:1px solid #ccc; border-radius:4px;">
-                            <option value="INVIATO">Inviato (Offerta Pronta)</option>
-                            <option value="RIFIUTATO">Rifiuta Richiesta</option>
-                            <option value="IN_LAVORAZIONE" selected>In Lavorazione</option>
+                            <option value="INVIATO" ${preventivo.stato == 'INVIATO' ? 'selected' : ''}>Inviato (Offerta Pronta)</option>
+                            <option value="RIFIUTATO" ${preventivo.stato == 'RIFIUTATO' ? 'selected' : ''}>Rifiuta Richiesta</option>
+                            <option value="IN_LAVORAZIONE" ${preventivo.stato == 'IN_LAVORAZIONE' ? 'selected' : ''}>In Lavorazione</option>
                         </select>
                     </div>
                 </div>
@@ -84,7 +88,9 @@
     </div>
 </div>
 
-<jsp:include page="footer.jsp"/>
+<div class="no-print">
+    <jsp:include page="footer.jsp"/>
+</div>
 
 </body>
 </html>

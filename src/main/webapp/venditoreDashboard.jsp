@@ -4,7 +4,8 @@
 <html>
 <head>
   <title>Dashboard Venditore - MotorsRent</title>
-  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/header.css">
+  <link rel="stylesheet" href="css/dashboardVenditore.css">
 </head>
 
 <body>

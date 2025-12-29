@@ -4,15 +4,16 @@
 <!DOCTYPE html>
 <html lang="it">
 <head>
-  <title>Dettaglio Leasing - MotorsRent</title>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+  <title>Analisi Leasing - MotorsRent</title>
   <link rel="stylesheet" href="css/header.css">
-  >
+  <link rel="stylesheet" href="css/dettaglio.css">
 </head>
 
 <body>
 
-<jsp:include page="header.jsp"/>
+<div class="no-print">
+  <jsp:include page="header.jsp"/>
+</div>
 
 <div class="sheet-wrapper">
   <div class="detail-sheet">
@@ -62,9 +63,18 @@
       </div>
     </div>
 
+    <c:if test="${not empty leasing.note}">
+      <div class="info-section" style="margin-top: 30px;">
+        <h4>Note dal Cliente</h4>
+        <div class="notes-box">
+          "${leasing.note}"
+        </div>
+      </div>
+    </c:if>
+
     <hr style="margin: 40px 0; border: 0; border-top: 1px solid #eee;">
 
-    <div class="info-section" style="background: #f9f9f9; padding: 30px; border-radius: 8px;">
+    <div class="info-section offer-box">
       <h2 style="font-family:'Playfair Display'; margin-bottom: 20px;">Esito Valutazione</h2>
 
       <form action="gestisciLeasing" method="post">
@@ -78,15 +88,15 @@
           <div>
             <label style="font-weight:bold; display:block; margin-bottom:5px;">Esito Pratica</label>
             <select name="stato" style="width:100%; padding:10px; border:1px solid #ccc; border-radius:4px;">
-              <option value="APPROVATO">Approva Richiesta</option>
-              <option value="RIFIUTATO">Rifiuta Richiesta</option>
-              <option value="IN_VALUTAZIONE" selected>In Valutazione</option>
+              <option value="APPROVATO" ${leasing.stato == 'APPROVATO' ? 'selected' : ''}>Approva Richiesta</option>
+              <option value="RIFIUTATO" ${leasing.stato == 'RIFIUTATO' ? 'selected' : ''}>Rifiuta Richiesta</option>
+              <option value="IN_VALUTAZIONE" ${leasing.stato == 'IN_VALUTAZIONE' ? 'selected' : ''}>In Valutazione</option>
             </select>
           </div>
         </div>
 
         <label style="font-weight:bold; display:block; margin-bottom:5px;">Note Interne / Messaggio al Cliente</label>
-        <textarea name="messaggio" rows="4" style="width:100%; padding:10px; border:1px solid #ccc; border-radius:4px;"></textarea>
+        <textarea name="messaggio" rows="4" style="width:100%; padding:10px; border:1px solid #ccc; border-radius:4px;" placeholder="Comunicazione ufficiale al cliente..."></textarea>
 
         <button type="submit" class="btn" style="margin-top: 20px; width: 100%;">Registra Esito</button>
       </form>
@@ -95,7 +105,9 @@
   </div>
 </div>
 
-<jsp:include page="footer.jsp"/>
+<div class="no-print">
+  <jsp:include page="footer.jsp"/>
+</div>
 
 </body>
 </html>
