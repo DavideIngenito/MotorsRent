@@ -18,28 +18,19 @@
 
 <jsp:include page="header.jsp" />
 
-<header class="hero-section fade-in">
-    <div class="container text-center">
-        <span class="eyebrow">Benvenuto in MotorsRent</span>
-        <h1 class="hero-title">Guidare non è mai stato così semplice.</h1>
-        <p class="hero-subtitle">
-            Vendita e Noleggio premium. Scegli la tua prossima auto con la sicurezza di un servizio trasparente e digitale.
+<div class="hero-section">
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+        <h1 class="main-title">MotorsRent</h1>
+        <p class="main-subtitle">
+            Il tuo viaggio inizia qui. Scegli l'auto perfetta per le tue esigenze <br>
+            e parti alla scoperta di nuove emozioni.
         </p>
-
-        <div class="actions">
-            <a class="btn btn-primary" href="catalogo">
-                <i class="fa-solid fa-car-side"></i> Vai al Catalogo
-            </a>
-
-            <c:if test="${empty sessionScope.utente}">
-                <a class="btn btn-outline" href="login.jsp">Area Clienti</a>
-                <a class="btn btn-text" href="registrazione.jsp">Non hai un account? Registrati &rarr;</a>
-            </c:if>
-        </div>
+        <a href="catalogo" class="btn-hero">Vai al Catalogo</a>
     </div>
-</header>
+</div>
 
-<section class="features-section container fade-in delay-1">
+<section class="features-section container fade-in delay-1" style="margin-top: 10px; margin-bottom: 60px;">
     <div class="feature-card">
         <div class="icon-box"><i class="fa-solid fa-check-to-slot"></i></div>
         <h3>Prenotazione Online</h3>
@@ -57,7 +48,50 @@
     </div>
 </section>
 
-<main class="container content-grid fade-in delay-2">
+<section class="section-novita fade-in delay-2" style="background-color: #f9f9f9;">
+    <div class="container">
+        <div class="section-header">
+            <h2 class="section-title">Le Nostre Novità</h2>
+            <p class="section-desc">Scopri gli ultimi arrivi nel nostro parco auto.</p>
+        </div>
+
+        <div class="cars-grid">
+            <c:forEach var="auto" items="${listaNovita}">
+                <div class="car-card">
+                    <div class="car-img-wrapper">
+                        <img src="${auto.immagine}" alt="${auto.modello}">
+
+                        <span class="badge-status status-${auto.stato.toLowerCase()}">
+                                ${auto.stato}
+                        </span>
+                    </div>
+                    <div class="car-info">
+                        <span class="car-brand">${auto.marca}</span>
+                        <h3 class="car-model">${auto.modello}</h3>
+                        <div class="car-footer">
+                            <span class="car-price">€ ${auto.prezzo}</span>
+                            <a href="schedaAuto?idAuto=${auto.idAuto}" class="btn-details">
+                                <i class="fa-solid fa-arrow-right"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </c:forEach>
+        </div>
+
+        <c:if test="${empty listaNovita}">
+            <div style="text-align:center; padding: 20px; color: #666;">
+                Nessuna novità disponibile al momento.
+            </div>
+        </c:if>
+
+        <div style="text-align: center; margin-top: 30px;">
+            <a href="catalogo" class="btn-view-all">Visualizza tutto il catalogo</a>
+        </div>
+    </div>
+</section>
+
+<main class="container content-grid fade-in delay-2" style="margin-top: 60px; margin-bottom: 60px;">
     <div class="info-text">
         <h2>Chi Siamo</h2>
         <p>

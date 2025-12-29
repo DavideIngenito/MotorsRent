@@ -1,231 +1,362 @@
-/* --- RESET & TYPOGRAPHY --- */
-* { box-sizing: border-box; margin: 0; padding: 0; }
-
-/* --- PALETTE --- */
-:root {
-    --black: #121212;
-    --bg-page: #EBEBEB;
-    --silver: #C0C0C0;
-    --grey-medium: #919191;
-    --grey-dark: #545454;
-    --white: #FFFFFF;
-
-    --radius: 12px; /* Angoli più morbidi */
-    --shadow-sm: 0 4px 6px rgba(0,0,0,0.05);
-    --shadow-lg: 0 20px 25px -5px rgba(0,0,0,0.1), 0 10px 10px -5px rgba(0,0,0,0.04);
+/* =========================================
+   1. HERO BANNER
+   ========================================= */
+.hero-section {
+    position: relative;
+    width: 100%;
+    height: 600px;
+    background-image: url('../img/homepage.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: white;
 }
 
-body {
-    font-family: 'Inter', sans-serif; /* Font pulito per il corpo */
-    background-color: var(--bg-page);
-    color: var(--black);
-    line-height: 1.7;
-    -webkit-font-smoothing: antialiased;
+.hero-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 1;
 }
 
-h1, h2, h3 {
-    font-family: 'Playfair Display', serif; /* Font elegante per i titoli */
-    color: var(--black);
+.hero-content {
+    position: relative;
+    z-index: 2;
+    max-width: 900px;
+    padding: 20px;
+    animation: fadeIn 1s ease-out;
+}
+
+.main-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 4rem;
     font-weight: 700;
+    margin-bottom: 20px;
+    text-shadow: 0 4px 15px rgba(0,0,0,0.4);
 }
 
-a { text-decoration: none; color: inherit; transition: 0.3s; }
-ul { list-style: none; }
+.main-subtitle {
+    font-family: 'Inter', sans-serif;
+    font-size: 1.25rem;
+    line-height: 1.6;
+    margin-bottom: 40px;
+    color: #f0f0f0;
+    text-shadow: 0 2px 10px rgba(0,0,0,0.4);
+}
 
-.container {
-    max-width: 1000px;
+.btn-hero {
+    display: inline-block;
+    background-color: white;
+    color: #121212;
+    padding: 15px 40px;
+    border-radius: 50px;
+    font-weight: 700;
+    text-transform: uppercase;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+}
+
+.btn-hero:hover {
+    background-color: #f2f2f2;
+    transform: translateY(-3px);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+}
+
+/* =========================================
+   2. FEATURES SECTION
+   ========================================= */
+.features-section {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 40px;
+    padding: 60px 20px;
+    max-width: 1200px;
     margin: 0 auto;
-    padding: 0 24px;
 }
 
-/* --- ANIMAZIONI --- */
+.feature-card {
+    background: white;
+    padding: 40px 30px;
+    border-radius: 12px;
+    text-align: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border: 1px solid #f0f0f0;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.03);
+}
+
+.feature-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 30px rgba(0,0,0,0.08);
+}
+
+.icon-box {
+    font-size: 2.5rem;
+    color: #121212;
+    margin-bottom: 20px;
+    height: 70px;
+    width: 70px;
+    line-height: 70px;
+    background-color: #f8f9fa;
+    border-radius: 50%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.feature-card h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.5rem;
+    margin-bottom: 15px;
+    color: #121212;
+}
+
+.feature-card p {
+    color: #666;
+    font-size: 0.95rem;
+    line-height: 1.6;
+}
+
+/* =========================================
+   3. SEZIONE NOVITÀ (Modificato)
+   ========================================= */
+.section-novita {
+    padding: 50px 20px; /* Ridotto da 80px a 50px */
+}
+
+.section-header {
+    text-align: center;
+    margin-bottom: 40px; /* Ridotto margine inferiore */
+}
+
+.section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.5rem;
+    margin-bottom: 10px;
+    color: #121212;
+}
+
+.section-desc {
+    color: #666;
+    font-size: 1.1rem;
+}
+
+/* Griglia Auto */
+.cars-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 30px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/* Card Auto */
+.car-card {
+    background: white;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border: 1px solid #eee;
+}
+
+.car-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+}
+
+.car-img-wrapper {
+    position: relative;
+    height: 220px;
+    overflow: hidden;
+}
+
+.car-img-wrapper img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+}
+
+.car-card:hover .car-img-wrapper img {
+    transform: scale(1.05);
+}
+
+/* Badge Stato (Nuova / Usata) */
+.badge-status {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    padding: 6px 14px;
+    border-radius: 50px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    z-index: 10;
+}
+
+/* Colori specifici per lo stato */
+.status-nuova {
+    background-color: #121212; /* Nero o Blu scuro per "Nuova" */
+    color: white;
+    border: 1px solid rgba(255,255,255,0.2);
+}
+
+.status-usata {
+    background-color: #7f8c8d; /* Grigio per "Usata" */
+    color: white;
+}
+
+.car-info {
+    padding: 25px;
+}
+
+.car-brand {
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    color: #999;
+    font-weight: 600;
+    letter-spacing: 1px;
+    display: block;
+    margin-bottom: 5px;
+}
+
+.car-model {
+    margin: 0 0 15px 0;
+    /* MODIFICA FONT: Cambiato da Playfair Display a Inter */
+    font-family: 'Inter', sans-serif;
+    font-weight: 600;
+    font-size: 1.25rem;
+    color: #121212;
+}
+
+.car-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top: 1px solid #f0f0f0;
+    padding-top: 15px;
+    margin-top: 15px;
+}
+
+.car-price {
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: #121212;
+}
+
+.btn-details {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: #f8f9fa;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #121212;
+    text-decoration: none;
+    transition: all 0.2s;
+}
+
+.btn-details:hover {
+    background-color: #121212;
+    color: white;
+}
+
+.btn-view-all {
+    display: inline-block;
+    padding: 12px 35px;
+    border: 1px solid #121212;
+    color: #121212;
+    text-decoration: none;
+    border-radius: 50px;
+    font-weight: 600;
+    transition: all 0.3s;
+}
+
+.btn-view-all:hover {
+    background-color: #121212;
+    color: white;
+}
+
+/* =========================================
+   4. CONTENT GRID
+   ========================================= */
+.content-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+    align-items: center;
+    max-width: 1200px;
+    margin: 60px auto; /* Ridotto leggermente il margine verticale */
+    padding: 0 20px;
+}
+
+.info-text h2, .info-contact h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 2rem;
+    margin-bottom: 20px;
+}
+
+.info-text p {
+    color: #555;
+    margin-bottom: 25px;
+    line-height: 1.7;
+}
+
+.read-more {
+    color: #121212;
+    font-weight: 600;
+    text-decoration: none;
+    border-bottom: 1px solid #121212;
+    padding-bottom: 2px;
+}
+
+.contact-list {
+    list-style: none;
+    padding: 0;
+}
+
+.contact-list li {
+    margin-bottom: 15px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    color: #555;
+}
+
+.contact-list i {
+    color: #121212;
+    font-size: 1.1rem;
+}
+
+/* Animations */
 .fade-in {
+    animation: fadeIn 0.8s ease-out forwards;
     opacity: 0;
-    transform: translateY(20px);
-    animation: fadeInUp 0.8s ease-out forwards;
 }
 
 .delay-1 { animation-delay: 0.2s; }
 .delay-2 { animation-delay: 0.4s; }
 
-@keyframes fadeInUp {
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
     to { opacity: 1; transform: translateY(0); }
 }
 
-/* --- HERO SECTION --- */
-.hero-section {
-    padding: 100px 0 60px;
-    text-align: center;
-}
-
-.eyebrow {
-    text-transform: uppercase;
-    font-size: 0.85rem;
-    letter-spacing: 2px;
-    color: var(--grey-medium); /* #919191 */
-    font-weight: 600;
-    display: block;
-    margin-bottom: 16px;
-}
-
-.hero-title {
-    font-size: 3.5rem;
-    line-height: 1.1;
-    margin-bottom: 24px;
-}
-
-.hero-subtitle {
-    font-size: 1.25rem;
-    color: var(--grey-dark); /* #545454 */
-    max-width: 600px;
-    margin: 0 auto 40px;
-}
-
-/* --- BOTTONI --- */
-.actions {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 16px;
-    flex-wrap: wrap;
-}
-
-.btn {
-    display: inline-flex;
-    align-items: center;
-    gap: 10px;
-    padding: 14px 32px;
-    border-radius: 50px; /* Pill shape - molto moderno */
-    font-weight: 600;
-    font-size: 0.95rem;
-    cursor: pointer;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-/* Primario: Nero, ombra scura */
-.btn-primary {
-    background-color: var(--black);
-    color: var(--white);
-    border: 1px solid var(--black);
-    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-}
-
-.btn-primary:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 8px 25px rgba(0,0,0,0.3);
-}
-
-/* Outline: Trasparente con bordo */
-.btn-outline {
-    background-color: transparent;
-    color: var(--black);
-    border: 1px solid var(--silver); /* #C0C0C0 */
-}
-
-.btn-outline:hover {
-    border-color: var(--black);
-    background-color: var(--white);
-}
-
-/* Link semplice */
-.btn-text {
-    font-size: 0.9rem;
-    color: var(--grey-dark);
-    font-weight: 500;
-    border-bottom: 1px solid transparent;
-}
-.btn-text:hover { color: var(--black); border-bottom-color: var(--black); }
-
-/* --- FEATURES CARDS (Grid a 3 colonne) --- */
-.features-section {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 24px;
-    margin-top: 60px;
-    margin-bottom: 80px;
-}
-
-.feature-card {
-    background: var(--white);
-    padding: 32px;
-    border-radius: var(--radius);
-    border: 1px solid rgba(0,0,0,0.05);
-    box-shadow: var(--shadow-sm);
-    transition: all 0.3s ease;
-    text-align: center;
-}
-
-.feature-card:hover {
-    transform: translateY(-5px);
-    box-shadow: var(--shadow-lg);
-    border-color: var(--silver);
-}
-
-.icon-box {
-    font-size: 2rem;
-    color: var(--black);
-    margin-bottom: 20px;
-}
-
-.feature-card h3 {
-    font-family: 'Inter', sans-serif;
-    font-size: 1.1rem;
-    margin-bottom: 10px;
-}
-
-.feature-card p {
-    color: var(--grey-dark);
-    font-size: 0.95rem;
-}
-
-/* --- INFO GRID (Chi siamo / Contatti) --- */
-.content-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 60px;
-    padding-bottom: 80px;
-    border-top: 1px solid var(--silver);
-    padding-top: 60px;
-}
-
-.info-text h2, .info-contact h2 {
-    font-size: 2rem;
-    margin-bottom: 24px;
-}
-
-.info-text p {
-    color: var(--grey-dark);
-    margin-bottom: 24px;
-    font-size: 1.1rem;
-}
-
-.read-more {
-    color: var(--black);
-    font-weight: 600;
-    border-bottom: 2px solid var(--silver);
-    padding-bottom: 2px;
-}
-.read-more:hover { border-bottom-color: var(--black); }
-
-.contact-list li {
-    display: flex;
-    align-items: center;
-    gap: 15px;
-    margin-bottom: 16px;
-    color: var(--grey-dark);
-    font-size: 1.05rem;
-}
-
-.contact-list i {
-    color: var(--black);
-    width: 20px;
-    text-align: center;
-}
-
-/* --- RESPONSIVE --- */
+/* Responsive */
 @media (max-width: 768px) {
-    .hero-title { font-size: 2.5rem; }
-    .content-grid { grid-template-columns: 1fr; gap: 40px; }
-    .actions { flex-direction: column; width: 100%; }
-    .btn { width: 100%; justify-content: center; }
+    .content-grid {
+        grid-template-columns: 1fr;
+        gap: 40px;
+    }
+    .main-title { font-size: 2.5rem; }
+    .hero-section { height: 70vh; }
 }
