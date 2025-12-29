@@ -5,7 +5,6 @@
 <head>
     <title>Dashboard Cliente - MotorsRent</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="css/main.css">
     <link rel="stylesheet" href="css/dashboardCliente.css">
 
     <style>
