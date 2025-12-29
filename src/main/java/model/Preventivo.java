@@ -7,17 +7,26 @@ public class Preventivo {
     private int idUtente;
     private int idAuto;
     private Timestamp dataRichiesta;
+
+    // Questo campo conterrà la nota del cliente (in lettura)
+    // O la risposta del venditore (dopo l'update, se usi la stessa colonna)
     private String note;
+
     private String stato;
 
-    // OGGETTI ANNIDATI (Fondamentali per il dettaglio)
-    private Utente utente;      // <--- Deve chiamarsi 'utente' per funzionare con ${richiesta.utente}
-    private Automobile auto;    // <--- Deve chiamarsi 'auto'
+    // --- NUOVI CAMPI PER LA RISPOSTA ---
+    private double prezzoProposto; // Era 'prezzoFinale', ora è come nel tuo DB
+    // Usiamo una variabile 'messaggioVenditore' in Java per chiarezza,
+    // ma nel DAO la mapperemo sulla colonna 'note' come hai chiesto.
+    private String messaggioVenditore;
 
-    // Costruttori
+    // Oggetti annidati
+    private Utente utente;
+    private Automobile auto;
+
     public Preventivo() {}
 
-    // Getter e Setter standard
+    // Getter e Setter
     public int getIdPreventivo() { return idPreventivo; }
     public void setIdPreventivo(int idPreventivo) { this.idPreventivo = idPreventivo; }
 
@@ -36,8 +45,15 @@ public class Preventivo {
     public String getStato() { return stato; }
     public void setStato(String stato) { this.stato = stato; }
 
-    // GETTER E SETTER OGGETTI COMPLESSI
-    public Utente getUtente() { return utente; }  // <--- Questo è il metodo che cercava la JSP!
+    // --- GETTER/SETTER NUOVI ---
+    public double getPrezzoProposto() { return prezzoProposto; }
+    public void setPrezzoProposto(double prezzoProposto) { this.prezzoProposto = prezzoProposto; }
+
+    public String getMessaggioVenditore() { return messaggioVenditore; }
+    public void setMessaggioVenditore(String messaggioVenditore) { this.messaggioVenditore = messaggioVenditore; }
+
+    // Oggetti complessi
+    public Utente getUtente() { return utente; }
     public void setUtente(Utente utente) { this.utente = utente; }
 
     public Automobile getAuto() { return auto; }

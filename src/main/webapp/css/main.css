@@ -1,0 +1,79 @@
+/* --- CONFIGURAZIONE BASE --- */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Playfair+Display:wght@700&display=swap');
+
+:root {
+    --black: #121212;
+    --dark-grey: #333;
+    --light-grey: #f4f4f4;
+    --border: #e0e0e0;
+    --accent: #0056b3; /* Blu istituzionale */
+    --white: #ffffff;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: #f9f9f9;
+    color: var(--dark-grey);
+    line-height: 1.6;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+/* --- TIPOGRAFIA --- */
+h1, h2, h3, h4 {
+    font-family: 'Playfair Display', serif;
+    color: var(--black);
+    margin-bottom: 15px;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+    transition: 0.2s;
+}
+
+/* --- CONTAINER CENTRALE --- */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 40px 20px;
+    width: 100%;
+    flex: 1; /* Spinge il footer in basso */
+}
+
+/* --- BOTTONI GENERICI --- */
+.btn {
+    display: inline-block;
+    padding: 12px 24px;
+    background-color: var(--black);
+    color: var(--white);
+    border-radius: 6px;
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 0.9rem;
+    cursor: pointer;
+    border: none;
+}
+
+.btn:hover {
+    background-color: var(--dark-grey);
+    transform: translateY(-2px);
+}
+
+/* --- ERROR & SUCCESS BOX --- */
+.error-box {
+    background-color: #ffebee;
+    color: #c62828;
+    padding: 15px;
+    border: 1px solid #ffcdd2;
+    border-radius: 6px;
+    margin-bottom: 20px;
+    text-align: center;
+}

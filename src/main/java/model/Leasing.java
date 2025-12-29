@@ -10,15 +10,21 @@ public class Leasing {
     private double anticipo;
     private int kmAnnui;
     private Timestamp dataRichiesta;
+
+    private String note;    // <-- Note inserite dal cliente alla richiesta
     private String stato;
 
-    // OGGETTI ANNIDATI
-    private Utente utente;      // <--- Importante
+    // Campi risposta venditore
+    private double rataMensile;
+    private String messaggioVenditore;
+
+    // Oggetti complessi
+    private Utente utente;
     private Automobile auto;
 
     public Leasing() {}
 
-    // Getter e Setter campi semplici...
+    // Getter e Setter
     public int getIdLeasing() { return idLeasing; }
     public void setIdLeasing(int idLeasing) { this.idLeasing = idLeasing; }
 
@@ -40,11 +46,19 @@ public class Leasing {
     public Timestamp getDataRichiesta() { return dataRichiesta; }
     public void setDataRichiesta(Timestamp dataRichiesta) { this.dataRichiesta = dataRichiesta; }
 
+    public String getNote() { return note; }
+    public void setNote(String note) { this.note = note; }
+
     public String getStato() { return stato; }
     public void setStato(String stato) { this.stato = stato; }
 
-    // GETTER E SETTER OGGETTI COMPLESSI
-    public Utente getUtente() { return utente; } // <--- Fondamentale
+    public double getRataMensile() { return rataMensile; }
+    public void setRataMensile(double rataMensile) { this.rataMensile = rataMensile; }
+
+    public String getMessaggioVenditore() { return messaggioVenditore; }
+    public void setMessaggioVenditore(String messaggioVenditore) { this.messaggioVenditore = messaggioVenditore; }
+
+    public Utente getUtente() { return utente; }
     public void setUtente(Utente utente) { this.utente = utente; }
 
     public Automobile getAuto() { return auto; }

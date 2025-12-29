@@ -2,43 +2,57 @@ package controller;
 
 import dao.DbConnection;
 import dao.LeasingDAO;
-import jakarta.servlet.*;
-import jakarta.servlet.http.*;
-import jakarta.servlet.annotation.*;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import model.Leasing;
 import model.Utente;
 
 import java.io.IOException;
 import java.sql.Connection;
-import java.sql.SQLException;
 import java.sql.Timestamp;
 
 @WebServlet("/richiestaLeasing")
 public class RichiestaLeasingServlet extends HttpServlet {
 
+    /**
+     * GESTISCE LA RICHIESTA GET (Click sul link "Simula Leasing")
+     * Mostra la pagina del form.
+     */
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        // 1. Controllo Login
+        HttpSession session = request.getSession(false);
+        Utente utente = (session != null) ? (Utente) session.getAttribute("utente") : null;
 
-        // Controllo Login
-        HttpSession session = request.getSession();
-        if (session.getAttribute("utente") == null) {
-            response.sendRedirect("login.jsp?msg=Effettua il login per richiedere un leasing");
+        if (utente == null) {
+            response.sendRedirect("login.jsp");
             return;
         }
 
+        // 2. Controllo ID Auto (opzionale ma consigliato)
         String idAuto = request.getParameter("idAuto");
-        request.setAttribute("idAuto", idAuto);
+        if (idAuto == null || idAuto.isEmpty()) {
+            response.sendRedirect("catalogo");
+            return;
+        }
 
+        // 3. Mostra la JSP (il form)
+        // I parametri URL (come idAuto) vengono passati automaticamente alla JSP
         request.getRequestDispatcher("richiestaLeasing.jsp").forward(request, response);
     }
 
+    /**
+     * GESTISCE LA RICHIESTA POST (Click su "Invia Richiesta Leasing")
+     * Salva i dati nel DB.
+     */
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-
-        HttpSession session = request.getSession();
-        Utente utente = (Utente) session.getAttribute("utente");
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        HttpSession session = request.getSession(false);
+        Utente utente = (session != null) ? (Utente) session.getAttribute("utente") : null;
 
         if (utente == null) {
             response.sendRedirect("login.jsp");
@@ -46,33 +60,34 @@ public class RichiestaLeasingServlet extends HttpServlet {
         }
 
         try {
-            // Recupero parametri
-            int idAuto = Integer.parseInt(request.getParameter("idAuto")); // Assicurati di averlo nel form hidden!
-            int durata = Integer.parseInt(request.getParameter("durata"));
-            double anticipo = Double.parseDouble(request.getParameter("anticipo"));
-            int kmAnnui = Integer.parseInt(request.getParameter("kmAnnui"));
+            // Controllo idAuto anche qui
+            String idAutoParam = request.getParameter("idAuto");
+            if (idAutoParam == null || idAutoParam.isEmpty()) {
+                response.sendRedirect("catalogo");
+                return;
+            }
 
-            // Creazione Model
             Leasing l = new Leasing();
             l.setIdUtente(utente.getIdUtente());
-            l.setIdAuto(idAuto);
-            l.setDurataMesi(durata);
-            l.setAnticipo(anticipo);
-            l.setKmAnnui(kmAnnui);
+            l.setIdAuto(Integer.parseInt(idAutoParam));
+            l.setDurataMesi(Integer.parseInt(request.getParameter("durata")));
+            l.setAnticipo(Double.parseDouble(request.getParameter("anticipo")));
+            l.setKmAnnui(Integer.parseInt(request.getParameter("kmAnnui")));
             l.setDataRichiesta(new Timestamp(System.currentTimeMillis()));
+
+            // Cattura Note e Stato
+            l.setNote(request.getParameter("note"));
             l.setStato("IN VALUTAZIONE");
 
-            // Salvataggio
             Connection conn = DbConnection.getInstance().getConnection();
-            LeasingDAO dao = new LeasingDAO(conn);
-            dao.insert(l);
+            LeasingDAO leasingDAO = new LeasingDAO(conn);
+            leasingDAO.insert(l);
 
-            response.sendRedirect("dashboardCliente?msg=Richiesta inviata");
+            response.sendRedirect("dashboardCliente");
 
-        } catch (NumberFormatException | SQLException e) {
+        } catch (Exception e) {
             e.printStackTrace();
-            request.setAttribute("errore", "Errore nella compilazione della richiesta.");
-            request.getRequestDispatcher("richiestaLeasing.jsp").forward(request, response);
+            response.sendError(500, "Errore durante la creazione della richiesta di leasing.");
         }
     }
 }

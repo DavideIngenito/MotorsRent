@@ -1,0 +1,178 @@
+/* --- LAYOUT DASHBOARD --- */
+.dashboard-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: end;
+    margin-bottom: 30px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid #eaeaea;
+}
+
+.dashboard-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.2rem;
+    font-weight: 700;
+    color: #1a1a1a;
+    margin: 0;
+}
+
+.dashboard-subtitle {
+    font-family: 'Inter', sans-serif;
+    color: #666;
+    font-size: 0.95rem;
+    margin-top: 5px;
+}
+
+/* --- TABELLA "CARD" --- */
+.table-container {
+    background: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.04); /* Ombra molto morbida */
+    border: 1px solid #f0f0f0;
+    overflow: hidden;
+}
+
+.vendor-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-family: 'Inter', sans-serif;
+    text-align: left;
+}
+
+/* Intestazione Tabella */
+.vendor-table thead th {
+    background-color: #fafafa;
+    color: #555;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: 700;
+    padding: 18px 24px;
+    border-bottom: 2px solid #eee;
+}
+
+/* Corpo Tabella */
+.vendor-table tbody tr {
+    transition: background-color 0.2s ease;
+}
+
+.vendor-table tbody tr:hover {
+    background-color: #f8f9fa; /* Highlight riga al passaggio del mouse */
+}
+
+.vendor-table td {
+    padding: 20px 24px;
+    border-bottom: 1px solid #f0f0f0;
+    color: #333;
+    vertical-align: middle;
+    font-size: 0.95rem;
+}
+
+.vendor-table tbody tr:last-child td {
+    border-bottom: none;
+}
+
+/* --- FORMATTAZIONE CELLE --- */
+/* ID grigio e monospace per sembrare tecnico */
+.id-cell {
+    font-family: 'Courier New', monospace;
+    font-weight: 700;
+    color: #888;
+    background: #f5f5f5;
+    padding: 4px 8px !important; /* Padding interno alla pillola ID */
+    border-radius: 4px;
+    font-size: 0.85rem !important;
+}
+
+/* Info Cliente (Nome sopra, email sotto) */
+.client-info {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.client-name {
+    font-weight: 600;
+    color: #111;
+}
+
+.client-email {
+    font-size: 0.85rem;
+    color: #777;
+}
+
+/* Info Auto */
+.auto-info {
+    font-weight: 600;
+    color: #222;
+}
+
+/* --- BADGE STATO (Stile "Pillola" delicato) --- */
+.status-badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    white-space: nowrap;
+}
+
+/* Colori Stati - Sfondi chiari e testi scuri per eleganza */
+.status-nuova, .status-in_valutazione {
+    background-color: #fff8e1; /* Giallo chiarissimo */
+    color: #b76e00;            /* Ocra */
+    border: 1px solid #ffecb3;
+}
+
+.status-in_lavorazione {
+    background-color: #e3f2fd; /* Blu chiarissimo */
+    color: #1565c0;            /* Blu scuro */
+    border: 1px solid #bbdefb;
+}
+
+.status-approvato, .status-inviato {
+    background-color: #e8f5e9; /* Verde chiarissimo */
+    color: #2e7d32;            /* Verde foresta */
+    border: 1px solid #c8e6c9;
+}
+
+.status-rifiutato {
+    background-color: #ffebee; /* Rosso chiarissimo */
+    color: #c62828;            /* Rosso scuro */
+    border: 1px solid #ffcdd2;
+}
+
+/* --- BOTTONE GESTISCI (Stile "Ghost" o "Solid") --- */
+.btn-manage {
+    text-decoration: none;
+    background-color: #121212; /* Nero assoluto */
+    color: #ffffff;
+    padding: 10px 20px;
+    border-radius: 6px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    transition: all 0.2s ease;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.btn-manage:hover {
+    background-color: #333;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 15px rgba(0,0,0,0.15);
+}
+
+/* --- EMPTY STATE --- */
+.empty-state {
+    text-align: center;
+    padding: 60px;
+    background: #fff;
+    border: 2px dashed #ddd;
+    border-radius: 12px;
+    color: #999;
+}

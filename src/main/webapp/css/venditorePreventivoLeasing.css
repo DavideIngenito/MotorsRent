@@ -1,0 +1,135 @@
+/* --- LAYOUT HEADER DASHBOARD --- */
+.dashboard-header {
+    margin-bottom: 30px;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 15px;
+}
+
+.dashboard-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.2rem;
+    color: #121212;
+    margin-bottom: 5px;
+}
+
+.dashboard-subtitle {
+    font-family: 'Inter', sans-serif;
+    color: #666;
+    font-size: 1rem;
+}
+
+/* --- TABELLA VENDITORE (Stile Gestionale) --- */
+.table-container {
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+    overflow: hidden; /* Fondamentale per i bordi arrotondati */
+    margin-bottom: 40px;
+}
+
+.vendor-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-family: 'Inter', sans-serif;
+}
+
+/* Header tabella scuro per distinguere l'area admin */
+.vendor-table th {
+    background-color: #1a1a1a;
+    color: #ffffff;
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 0.8rem;
+    padding: 18px 20px;
+    text-align: left;
+    letter-spacing: 0.5px;
+}
+
+.vendor-table td {
+    padding: 16px 20px;
+    border-bottom: 1px solid #f0f0f0;
+    color: #333;
+    vertical-align: middle;
+    font-size: 0.95rem;
+}
+
+.vendor-table tr:hover {
+    background-color: #f8f9fa; /* Highlight riga al passaggio del mouse */
+}
+
+/* --- INFO CLIENTE (Nome in grassetto, email piccola) --- */
+.client-name {
+    display: block;
+    font-weight: 700;
+    color: #121212;
+    margin-bottom: 2px;
+}
+
+.client-email {
+    font-size: 0.8rem;
+    color: #777;
+}
+
+/* --- INFO AUTO --- */
+.auto-info {
+    font-weight: 600;
+}
+
+/* --- BADGE STATO --- */
+.status-badge {
+    padding: 5px 12px;
+    border-radius: 50px;
+    font-size: 0.7rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    display: inline-block;
+    letter-spacing: 0.5px;
+}
+
+/* Colori specifici per lo stato */
+.status-nuova, .status-in_valutazione {
+    background-color: #fff3cd; color: #856404; /* Giallo */
+}
+.status-in_lavorazione {
+    background-color: #cff4fc; color: #055160; /* Azzurro */
+}
+.status-approvato, .status-inviato {
+    background-color: #d1e7dd; color: #0f5132; /* Verde */
+}
+.status-rifiutato {
+    background-color: #f8d7da; color: #842029; /* Rosso */
+}
+
+/* --- BOTTONE GESTISCI --- */
+.btn-manage {
+    background-color: #0056b3; /* Blu istituzionale */
+    color: white;
+    padding: 8px 20px;
+    border-radius: 4px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    transition: all 0.2s ease;
+    box-shadow: 0 2px 5px rgba(0,86,179,0.2);
+}
+
+.btn-manage:hover {
+    background-color: #003d80;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px rgba(0,86,179,0.3);
+    color: white;
+}
+
+/* --- EMPTY STATE (Se non ci sono richieste) --- */
+.empty-state {
+    text-align: center;
+    padding: 60px;
+    background: white;
+    border: 2px dashed #ddd;
+    border-radius: 8px;
+    color: #888;
+}

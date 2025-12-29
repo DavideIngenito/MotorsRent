@@ -18,6 +18,7 @@ public class PreventivoDAO {
 
     // 1. INSERIMENTO (Lato Cliente)
     public void insert(Preventivo p) throws SQLException {
+        // Qui salviamo le note del CLIENTE nella colonna 'note'
         String sql = "INSERT INTO PREVENTIVO (idUtente, idAuto, dataRichiesta, note, stato) VALUES (?, ?, ?, ?, ?)";
         try (PreparedStatement ps = connection.prepareStatement(sql)) {
             ps.setInt(1, p.getIdUtente());
@@ -29,10 +30,10 @@ public class PreventivoDAO {
         }
     }
 
-    // 2. LISTA COMPLETA (Dashboard Admin/Venditore)
+    // 2. LISTA COMPLETA
     public List<Preventivo> getAllCompleti() throws SQLException {
         List<Preventivo> list = new ArrayList<>();
-        // Query completa con i campi aggiunti (telefono, immagine, anno)
+        // Includiamo rispostaVenditore e prezzoProposto
         String sql = "SELECT p.*, u.nome, u.cognome, u.email, u.telefono, a.marca, a.modello, a.prezzo, a.immagine, a.anno " +
                 "FROM PREVENTIVO p " +
                 "JOIN UTENTE u ON p.idUtente = u.idUtente " +
@@ -48,7 +49,7 @@ public class PreventivoDAO {
         return list;
     }
 
-    // 3. LISTA UTENTE (Dashboard Cliente)
+    // 3. LISTA UTENTE
     public List<Preventivo> getByUser(int idUtente) throws SQLException {
         String sql = "SELECT p.*, u.nome, u.cognome, u.email, u.telefono, a.marca, a.modello, a.prezzo, a.immagine, a.anno " +
                 "FROM PREVENTIVO p " +
@@ -69,7 +70,7 @@ public class PreventivoDAO {
         return list;
     }
 
-    // 4. DETTAGLIO SINGOLO (Per Servlet DettaglioRichiesta)
+    // 4. DETTAGLIO SINGOLO
     public Preventivo getById(int id) throws SQLException {
         String sql = "SELECT p.*, u.nome, u.cognome, u.email, u.telefono, a.marca, a.modello, a.prezzo, a.immagine, a.anno " +
                 "FROM PREVENTIVO p " +
@@ -88,45 +89,58 @@ public class PreventivoDAO {
         return null;
     }
 
-    // 5. UPDATE STATO
-    public void updateStato(int idPreventivo, String nuovoStato) throws SQLException {
-        String sql = "UPDATE PREVENTIVO SET stato = ? WHERE idPreventivo = ?";
+    // 5. GESTIONE RISPOSTA VENDITORE (MODIFICATO)
+    public void gestisciRisposta(int id, String stato, double importo, String messaggio) throws SQLException {
+        // ORA SALVIAMO SU 'rispostaVenditore', NON SU 'note'
+        String sql = "UPDATE PREVENTIVO SET stato = ?, prezzoProposto = ?, rispostaVenditore = ? WHERE idPreventivo = ?";
+
         try (PreparedStatement ps = connection.prepareStatement(sql)) {
-            ps.setString(1, nuovoStato);
-            ps.setInt(2, idPreventivo);
+            ps.setString(1, stato);
+            ps.setDouble(2, importo);
+            ps.setString(3, messaggio);
+            ps.setInt(4, id);
             ps.executeUpdate();
         }
     }
 
-    // --- HELPER MAPPING (Corretto con setUtente) ---
+    // Helper Mapping (MODIFICATO)
     private Preventivo mapRowToPreventivoCompleto(ResultSet rs) throws SQLException {
         Preventivo p = new Preventivo();
         p.setIdPreventivo(rs.getInt("idPreventivo"));
         p.setIdUtente(rs.getInt("idUtente"));
         p.setIdAuto(rs.getInt("idAuto"));
         p.setDataRichiesta(rs.getTimestamp("dataRichiesta"));
-        p.setNote(rs.getString("note"));
         p.setStato(rs.getString("stato"));
 
-        // Popola Utente
+        // 1. Leggiamo la nota del cliente
+        p.setNote(rs.getString("note"));
+
+        // 2. Leggiamo il prezzo proposto (gestione errore se colonna manca)
+        try {
+            p.setPrezzoProposto(rs.getDouble("prezzoProposto"));
+        } catch (SQLException e) { p.setPrezzoProposto(0.0); }
+
+        // 3. Leggiamo la risposta del venditore dalla NUOVA colonna
+        try {
+            p.setMessaggioVenditore(rs.getString("rispostaVenditore"));
+        } catch (SQLException e) { p.setMessaggioVenditore(""); }
+
+        // Utente e Auto
         Utente u = new Utente();
         u.setIdUtente(rs.getInt("idUtente"));
         u.setNome(rs.getString("nome"));
         u.setCognome(rs.getString("cognome"));
         u.setEmail(rs.getString("email"));
-        u.setTelefono(rs.getString("telefono")); // Campo nuovo
+        u.setTelefono(rs.getString("telefono"));
+        p.setUtente(u);
 
-        // CORREZIONE FONDAMENTALE PER LA JSP:
-        p.setUtente(u); // Prima era setCliente(u)
-
-        // Popola Auto
         Automobile a = new Automobile();
         a.setIdAuto(rs.getInt("idAuto"));
         a.setMarca(rs.getString("marca"));
         a.setModello(rs.getString("modello"));
         a.setPrezzo(rs.getDouble("prezzo"));
-        a.setImmagine(rs.getString("immagine")); // Campo nuovo
-        a.setAnno(rs.getInt("anno"));            // Campo nuovo
+        a.setImmagine(rs.getString("immagine"));
+        a.setAnno(rs.getInt("anno"));
         p.setAuto(a);
 
         return p;

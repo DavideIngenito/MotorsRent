@@ -16,9 +16,10 @@ public class LeasingDAO {
         this.connection = connection;
     }
 
-    // 1. INSERIMENTO
+    // 1. INSERIMENTO (AGGIORNATO: Ora salva anche le note!)
     public void insert(Leasing l) throws SQLException {
-        String sql = "INSERT INTO LEASING (idUtente, idAuto, durataMesi, anticipo, kmAnnui, dataRichiesta, stato) VALUES (?, ?, ?, ?, ?, ?, ?)";
+        // Nota: ho aggiunto 'note' alla lista delle colonne e un ? in più
+        String sql = "INSERT INTO LEASING (idUtente, idAuto, durataMesi, anticipo, kmAnnui, dataRichiesta, stato, note) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
         try (PreparedStatement ps = connection.prepareStatement(sql)) {
             ps.setInt(1, l.getIdUtente());
             ps.setInt(2, l.getIdAuto());
@@ -27,6 +28,7 @@ public class LeasingDAO {
             ps.setInt(5, l.getKmAnnui());
             ps.setTimestamp(6, l.getDataRichiesta());
             ps.setString(7, l.getStato());
+            ps.setString(8, l.getNote()); // <-- ECCO IL PEZZO MANCANTE
             ps.executeUpdate();
         }
     }
@@ -49,7 +51,7 @@ public class LeasingDAO {
         return list;
     }
 
-    // 3. DETTAGLIO SINGOLO (getById)
+    // 3. DETTAGLIO SINGOLO
     public Leasing getById(int id) throws SQLException {
         String sql = "SELECT l.*, u.nome, u.cognome, u.email, u.telefono, a.marca, a.modello, a.prezzo, a.immagine, a.anno " +
                 "FROM LEASING l " +
@@ -88,7 +90,19 @@ public class LeasingDAO {
         return list;
     }
 
-    // 5. UPDATE STATO
+    // 5. GESTIONE RISPOSTA VENDITORE (Metodo che mancava nel tuo file)
+    public void gestisciRisposta(int id, String stato, double rata, String messaggio) throws SQLException {
+        String sql = "UPDATE LEASING SET stato = ?, rataMensile = ?, rispostaVenditore = ? WHERE idLeasing = ?";
+        try (PreparedStatement ps = connection.prepareStatement(sql)) {
+            ps.setString(1, stato);
+            ps.setDouble(2, rata);
+            ps.setString(3, messaggio);
+            ps.setInt(4, id);
+            ps.executeUpdate();
+        }
+    }
+
+    // 6. UPDATE STATO SEMPLICE
     public void updateStato(int idLeasing, String stato) throws SQLException {
         String sql = "UPDATE LEASING SET stato = ? WHERE idLeasing = ?";
         try (PreparedStatement ps = connection.prepareStatement(sql)) {
@@ -98,7 +112,7 @@ public class LeasingDAO {
         }
     }
 
-    // --- HELPER MAPPING (Corretto con setUtente) ---
+    // --- HELPER MAPPING (Aggiornato per leggere Note e Risposte) ---
     private Leasing mapRowToLeasingCompleto(ResultSet rs) throws SQLException {
         Leasing l = new Leasing();
         l.setIdLeasing(rs.getInt("idLeasing"));
@@ -110,25 +124,30 @@ public class LeasingDAO {
         l.setDataRichiesta(rs.getTimestamp("dataRichiesta"));
         l.setStato(rs.getString("stato"));
 
-        // Popola Utente
+        // Lettura Note Cliente
+        try { l.setNote(rs.getString("note")); } catch (SQLException e) { l.setNote(""); }
+
+        // Lettura Risposta Venditore
+        try { l.setRataMensile(rs.getDouble("rataMensile")); } catch (SQLException e) { l.setRataMensile(0.0); }
+        try { l.setMessaggioVenditore(rs.getString("rispostaVenditore")); } catch (SQLException e) { l.setMessaggioVenditore(""); }
+
+        // Utente
         Utente u = new Utente();
         u.setIdUtente(rs.getInt("idUtente"));
         u.setNome(rs.getString("nome"));
         u.setCognome(rs.getString("cognome"));
         u.setEmail(rs.getString("email"));
-        u.setTelefono(rs.getString("telefono")); // Campo nuovo
+        u.setTelefono(rs.getString("telefono"));
+        l.setUtente(u);
 
-        // CORREZIONE FONDAMENTALE:
-        l.setUtente(u); // Prima era setCliente(u)
-
-        // Popola Auto
+        // Auto
         Automobile a = new Automobile();
         a.setIdAuto(rs.getInt("idAuto"));
         a.setMarca(rs.getString("marca"));
         a.setModello(rs.getString("modello"));
         a.setPrezzo(rs.getDouble("prezzo"));
-        a.setImmagine(rs.getString("immagine")); // Campo nuovo
-        a.setAnno(rs.getInt("anno"));            // Campo nuovo
+        a.setImmagine(rs.getString("immagine"));
+        a.setAnno(rs.getInt("anno"));
         l.setAuto(a);
 
         return l;
