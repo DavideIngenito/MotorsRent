@@ -116,4 +116,3 @@ public class RegistrazioneServlet extends HttpServlet {
             request.getRequestDispatcher("registrazione.jsp").forward(request, response);
         }
     }
-}
