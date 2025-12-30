@@ -14,17 +14,10 @@ import java.sql.SQLException;
 @WebServlet("/login")
 public class LoginServlet extends HttpServlet {
 
-    // NON istanziare qui il DAO se richiede la connessione,
-    // perché la connessione potrebbe essere chiusa o null all'avvio della servlet.
-    // Lo facciamo dentro i metodi.
-
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
-        // Semplice reindirizzamento alla JSP
-        RequestDispatcher dispatcher = request.getRequestDispatcher("login.jsp");
-        dispatcher.forward(request, response);
+        request.getRequestDispatcher("login.jsp").forward(request, response);
     }
 
     @Override
@@ -34,47 +27,65 @@ public class LoginServlet extends HttpServlet {
         String email = request.getParameter("email");
         String password = request.getParameter("password");
 
+        // --------------------------------------------------------
+        // VALIDAZIONE INPUT (Soddisfa TC_2.1, TC_2.2, TC_2.3)
+        // --------------------------------------------------------
+
+        // 1. Validazione Formato Email
+        // Regex: controlla la presenza di @ e del dominio (es. g.nappo89libero.it fallisce)
+        if (email == null || !email.matches("^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$")) {
+            request.setAttribute("errore", "L’accesso non va a buon fine perché l’e-mail non è in un formato valido.");
+            request.getRequestDispatcher("login.jsp").forward(request, response);
+            return;
+        }
+
+        // 2. Validazione Formato Password
+        // Regex: Almeno 8 caratteri, almeno una lettera e un numero.
+        // TC_2.1_2 (0099m9 -> fallisce), TC_2.2_2 (giovanni4 -> fallisce)
+        if (password == null || !password.matches("^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d@$!%*?&.]{8,}$")) {
+            request.setAttribute("errore", "L’accesso non va a buon fine perché la password non è in un formato valido.");
+            request.getRequestDispatcher("login.jsp").forward(request, response);
+            return;
+        }
+
+        // --------------------------------------------------------
+        // LOGICA DI BUSINESS (Accesso al DB)
+        // --------------------------------------------------------
+
         try {
-            // 1. Recupero la connessione dal Singleton (Come da ODD)
             Connection conn = DbConnection.getInstance().getConnection();
-
-            // 2. Istanzio il DAO passando la connessione
             UtenteDAO utenteDAO = new UtenteDAO(conn);
-
-            // 3. Chiamo il metodo (nota: si chiamava checkLogin nel DAO precedente)
             Utente utente = utenteDAO.checkLogin(email, password);
 
             if (utente != null) {
-                // Login Riuscito
+                // Login Riuscito (TC_2.1_3, TC_2.2_3, TC_2.3_3)
                 HttpSession session = request.getSession();
                 session.setAttribute("utente", utente);
 
-                // Normalizzo il ruolo in maiuscolo per evitare problemi (CLIENTE vs cliente)
                 String ruolo = utente.getRuolo().toUpperCase();
 
                 switch (ruolo) {
                     case "CLIENTE":
-                        response.sendRedirect("home");
+                        response.sendRedirect("index.jsp");
                         break;
                     case "VENDITORE":
-                        response.sendRedirect("home");
+                        response.sendRedirect("venditoreDashboard");
                         break;
-                    case "AMMINISTRATORE": // Gestisco entrambi i casi per sicurezza
-                        response.sendRedirect("home");
+                    case "AMMINISTRATORE":
+                        response.sendRedirect("dashboardAdmin");
                         break;
                     default:
-                        response.sendRedirect("home"); // Fallback
+                        response.sendRedirect("index.jsp");
                 }
             } else {
-                // Login Fallito
+                // Login Fallito (Credenziali errate ma formato valido)
                 request.setAttribute("errore", "Credenziali non valide");
                 request.getRequestDispatcher("login.jsp").forward(request, response);
             }
 
         } catch (SQLException e) {
             e.printStackTrace();
-            // In caso di errore DB, non lasciare l'utente appeso
-            request.setAttribute("errore", "Errore di connessione al database");
+            request.setAttribute("errore", "Errore DB: " + e.getMessage());
             request.getRequestDispatcher("login.jsp").forward(request, response);
         }
     }
