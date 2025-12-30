@@ -79,7 +79,7 @@
             </div>
 
             <div class="form-actions">
-                <a href="adminGestioneAuto.jsp" class="btn btn-secondary">Annulla</a>
+                <a href="AdminAutoController" class="btn btn-secondary">Annulla</a>
                 <button type="submit" class="btn btn-primary">
                     <i class="fa-solid fa-plus"></i> Pubblica Auto
                 </button>
