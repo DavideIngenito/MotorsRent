@@ -7,8 +7,8 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
-    <link rel="stylesheet" href="css/adminAggiungiAuto.css">
-
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/adminAggiungiAuto.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/main.css">
 </head>
 <body>
 
@@ -21,6 +21,13 @@
             <h1 class="form-title">Aggiungi Nuova Auto</h1>
             <p class="form-subtitle">Inserisci i dettagli del veicolo per pubblicarlo nel catalogo.</p>
         </div>
+
+        <% if (request.getAttribute("errore") != null) { %>
+        <div style="background-color: #f8d7da; color: #721c24; padding: 15px; margin-bottom: 20px; border-radius: 5px; border: 1px solid #f5c6cb;">
+            <i class="fa-solid fa-triangle-exclamation"></i>
+            <%= request.getAttribute("errore") %>
+        </div>
+        <% } %>
 
         <form action="AdminAutoController?action=add" method="post">
             <div class="form-grid">
@@ -37,7 +44,7 @@
 
                 <div class="form-group">
                     <label>Anno Immatricolazione</label>
-                    <input type="number" name="anno" class="form-control" placeholder="2023" required min="1990" max="2025">
+                    <input type="number" name="anno" class="form-control" placeholder="2023" required>
                 </div>
 
                 <div class="form-group">
@@ -79,7 +86,7 @@
             </div>
 
             <div class="form-actions">
-                <a href="AdminAutoController" class="btn btn-secondary">Annulla</a>
+                <a href="AdminAutoController?action=list" class="btn btn-secondary">Annulla</a>
                 <button type="submit" class="btn btn-primary">
                     <i class="fa-solid fa-plus"></i> Pubblica Auto
                 </button>

@@ -66,10 +66,10 @@ public class LoginServlet extends HttpServlet {
 
                 switch (ruolo) {
                     case "CLIENTE":
-                        response.sendRedirect("index.jsp");
+                        response.sendRedirect("home");
                         break;
                     case "VENDITORE":
-                        response.sendRedirect("venditoreDashboard");
+                        response.sendRedirect("home");
                         break;
                     case "AMMINISTRATORE":
                         response.sendRedirect("dashboardAdmin");
