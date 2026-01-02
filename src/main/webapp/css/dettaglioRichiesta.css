@@ -1,172 +1,185 @@
-/* --- SFONDO E LAYOUT --- */
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Lato:wght@300;400;700&display=swap');
+
+/* --- LAYOUT GENERALE --- */
 body {
-    background-color: #EBEBEB; /* Sfondo scuro per far risaltare il foglio bianco */
+    background-color: #eef2f5;
+    font-family: 'Lato', sans-serif;
+    color: #444;
+    margin: 0;
+    -webkit-print-color-adjust: exact;
 }
 
 .sheet-wrapper {
     display: flex;
     justify-content: center;
-    padding: 40px 20px;
+    padding: 60px 20px;
 }
 
-/* --- IL "FOGLIO" DEL DOCUMENTO --- */
+/* --- IL FOGLIO "PREMIUM" (STRUTTURA FLEX) --- */
 .detail-sheet {
-    background-color: #FFFFFF;
-    width: 100%;
-    max-width: 850px; /* Larghezza simile a un A4 */
+    background-color: white;
+    width: 210mm;
+    min-height: 297mm; /* Altezza minima A4 */
     padding: 60px;
-    border-radius: 4px; /* Angoli poco arrotondati, è un foglio */
-    box-shadow: 0 15px 50px rgba(0,0,0,0.1); /* Ombra profonda per effetto "sollevato" */
+    box-sizing: border-box;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.08);
     position: relative;
+    border-top: 8px solid #0a2e36;
+
+    /* MODIFICA FONDAMENTALE: Flexbox Verticale */
+    display: flex;
+    flex-direction: column;
 }
 
-/* --- HEADER DOCUMENTO (Simile carta intestata) --- */
-.sheet-header {
-    border-bottom: 2px solid #121212;
-    padding-bottom: 30px;
-    margin-bottom: 40px;
+/* --- CONTENITORE PRINCIPALE (Spinge il footer giù) --- */
+.sheet-body {
+    flex: 1; /* Occupa tutto lo spazio disponibile */
+}
+
+/* --- INTESTAZIONE --- */
+.doc-header {
     display: flex;
     justify-content: space-between;
-    align-items: flex-end;
-}
-
-.doc-title {
-    font-family: 'Playfair Display', serif;
-    font-size: 2.2rem;
-    color: #121212;
-    margin: 0;
-    line-height: 1;
-}
-
-.doc-meta {
-    font-family: 'Inter', sans-serif;
-    color: #919191;
-    font-size: 0.9rem;
-    margin-top: 10px;
-}
-
-.company-logo {
-    width: 150px;
-    opacity: 0.8;
-}
-
-/* --- GRIGLIA INFORMAZIONI --- */
-.info-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr; /* Due colonne uguali */
-    gap: 60px;
+    align-items: center;
+    border-bottom: 1px solid #ddd;
+    padding-bottom: 40px;
     margin-bottom: 50px;
 }
 
-.info-section h4 {
-    font-size: 0.8rem;
+.brand-area h1 {
+    font-family: 'Cinzel', serif;
+    font-size: 2.2rem;
+    color: #0a2e36;
+    margin: 0;
+    letter-spacing: 2px;
     text-transform: uppercase;
+}
+
+.brand-area p {
+    font-size: 0.75rem;
+    color: #888;
+    margin-top: 5px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.doc-info { text-align: right; }
+.doc-title { font-size: 1.5rem; color: #0a2e36; font-weight: 700; margin-bottom: 5px; }
+.doc-number { font-size: 0.9rem; color: #666; font-family: 'Courier New', monospace; }
+
+/* --- GRIGLIA CLIENTI & VEICOLO --- */
+.info-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 50px;
+    margin-bottom: 50px;
+}
+
+.info-box h3 {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    color: #aaa;
     letter-spacing: 1.5px;
-    color: #919191;
-    border-bottom: 1px solid #EEEEEE;
+    border-bottom: 1px solid #eee;
     padding-bottom: 10px;
     margin-bottom: 20px;
 }
 
-.data-row {
+.info-row {
     margin-bottom: 12px;
     font-size: 1rem;
-    color: #333;
     display: flex;
+    justify-content: space-between;
 }
+.info-row span.label { font-weight: 700; color: #0a2e36; }
+.info-row span.value { color: #555; }
 
-.data-label {
-    width: 120px;
-    font-weight: 600;
-    color: #121212;
-}
-
-/* --- PREVIEW AUTO --- */
-.car-preview-box {
+/* --- CARD AUTO --- */
+.car-card {
     display: flex;
     align-items: center;
     gap: 20px;
-    background: #FAFAFA;
-    padding: 15px;
-    border-radius: 8px;
-    border: 1px solid #EEEEEE;
+    background: #f9fbfb;
+    padding: 20px;
+    border: 1px solid #edf2f2;
+    border-radius: 4px;
 }
-
-.car-thumb {
+.car-img {
     width: 100px;
     height: 70px;
     object-fit: cover;
-    border-radius: 4px;
+    border-radius: 2px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
 }
+.car-details strong { display: block; font-size: 1.1rem; color: #0a2e36; margin-bottom: 4px; }
+.car-details span { font-size: 0.9rem; color: #777; }
 
-.car-details-text {
-    font-family: 'Playfair Display', serif;
-    font-size: 1.2rem;
-    font-weight: 700;
-}
+/* --- TABELLA FINANZIARIA --- */
+.financial-section { margin-top: 40px; }
+.financial-table { width: 100%; border-collapse: collapse; }
+.financial-table th { text-align: left; font-size: 0.75rem; text-transform: uppercase; color: #888; border-bottom: 2px solid #0a2e36; padding: 15px 10px; }
+.financial-table td { padding: 18px 10px; border-bottom: 1px solid #eee; font-size: 1rem; color: #333; }
+.financial-table td.amount { text-align: right; font-family: 'Courier New', monospace; font-weight: 600; }
+.total-row td { border-top: 2px solid #ddd; border-bottom: none; font-size: 1.2rem; font-weight: 700; color: #0a2e36; padding-top: 25px; }
+.total-label { text-transform: uppercase; letter-spacing: 1px; }
 
-/* --- NOTE BOX --- */
-.notes-box {
-    background-color: #fffae6; /* Giallino post-it molto chiaro */
-    border-left: 4px solid #f1c40f;
-    padding: 20px;
+/* --- MESSAGGI / NOTE --- */
+.notes-container {
+    margin-top: 40px;
+    margin-bottom: 20px; /* Spazio sotto la nota */
+    background-color: #fffdf5;
+    border-left: 4px solid #d4af37;
+    padding: 20px 30px;
     font-style: italic;
     color: #555;
-    margin-top: 20px;
+    font-size: 0.95rem;
 }
 
-/* --- TIMBRO STATO --- */
-.stamp-box {
+/* --- FOOTER (Posizionato con Flexbox) --- */
+.doc-footer {
+    margin-top: auto; /* Spinge il footer in fondo al container flex */
+    padding-top: 30px;
+    border-top: 1px solid #e0e0e0;
     text-align: center;
-    margin-top: 60px;
-    padding-top: 40px;
-    border-top: 1px dashed #CCC;
 }
 
-.stamp {
+.footer-company {
+    font-weight: 700;
+    color: #0a2e36;
+    font-size: 0.85rem;
+    margin-bottom: 5px;
+}
+
+.footer-legal {
+    font-size: 0.7rem;
+    color: #999;
+    line-height: 1.4;
+}
+
+/* --- BADGE STATO --- */
+.status-badge {
     display: inline-block;
-    padding: 10px 30px;
-    border: 3px solid;
-    font-size: 1.5rem;
+    padding: 6px 15px;
+    border-radius: 50px;
+    font-size: 0.75rem;
     font-weight: 700;
     text-transform: uppercase;
-    transform: rotate(-5deg); /* Effetto timbro storto */
-    opacity: 0.8;
-    border-radius: 8px;
+    letter-spacing: 1px;
+    margin-bottom: 10px;
 }
+.status-badge.APPROVATO { background: #e6f4ea; color: #1e7e34; }
+.status-badge.RIFIUTATO { background: #fce8e6; color: #c0392b; }
+.status-badge.ATTESA { background: #fff3e0; color: #e67e22; }
 
-.stamp.APPROVATO { color: #27ae60; border-color: #27ae60; }
-.stamp.RIFIUTATO { color: #c0392b; border-color: #c0392b; }
-.stamp.ATTESA { color: #e67e22; border-color: #e67e22; }
-
-/* --- AZIONI DI STAMPA --- */
-.print-actions {
-    text-align: center;
-    margin-top: 40px;
-}
-
-.btn-print {
-    background-color: #121212;
-    color: white;
-    padding: 15px 40px;
-    border: none;
-    font-size: 1rem;
-    text-transform: uppercase;
-    font-weight: 600;
-    cursor: pointer;
-    border-radius: 50px;
-    transition: transform 0.2s;
-}
-
-.btn-print:hover {
-    transform: scale(1.05);
-    background-color: #333;
-}
-
-/* --- MEDIA QUERY PER LA STAMPA REALE --- */
+/* --- STAMPA --- */
 @media print {
-    body { background-color: white; }
+    body { background: white; }
     .sheet-wrapper { padding: 0; }
-    .detail-sheet { box-shadow: none; border: none; padding: 0; max-width: 100%; }
-    .no-print, header, footer, .btn-print, .back-link { display: none !important; }
+    .detail-sheet { width: 100%; box-shadow: none; border: none; margin: 0; padding: 0; min-height: 100vh; }
+    .no-print, .actions { display: none !important; }
 }
+
+/* --- BOTTONE --- */
+.actions { position: fixed; bottom: 30px; right: 30px; }
+.btn-print { background: #0a2e36; color: white; padding: 15px 35px; border-radius: 4px; border: none; font-family: 'Cinzel', serif; font-weight: 700; cursor: pointer; box-shadow: 0 5px 15px rgba(10,46,54,0.3); transition: all 0.3s; }
+.btn-print:hover { background: #0f424d; transform: translateY(-2px); }
