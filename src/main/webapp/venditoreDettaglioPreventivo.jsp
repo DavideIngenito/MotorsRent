@@ -1,29 +1,37 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="jakarta.tags.core" prefix="c" %>
+<%@ taglib prefix="fmt" uri="jakarta.tags.fmt" %>
 
 <!DOCTYPE html>
 <html lang="it">
 <head>
     <title>Valutazione Preventivo - MotorsRent</title>
-    <link rel="stylesheet" href="css/header.css">
-    <link rel="stylesheet" href="css/dettaglio.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/header.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/dettaglio.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .alert-error {
+            background-color: #f8d7da; color: #721c24; padding: 15px; border-radius: 4px;
+            margin-bottom: 20px; border: 1px solid #f5c6cb; display: flex; align-items: center; gap: 10px; font-weight: bold;
+        }
+    </style>
 </head>
-
 <body>
 
-<div class="no-print">
-    <jsp:include page="header.jsp"/>
-</div>
+<div class="no-print"><jsp:include page="header.jsp"/></div>
 
 <div class="sheet-wrapper">
     <div class="detail-sheet">
-
         <div class="sheet-header">
             <div>
                 <h1 class="doc-title">Valutazione Preventivo</h1>
-                <div class="doc-meta">Rif: #${preventivo.idPreventivo} | Data: ${preventivo.dataRichiesta}</div>
+                <div class="doc-meta">Rif: #${preventivo.idPreventivo} | Data: <fmt:formatDate value="${preventivo.dataRichiesta}" pattern="dd/MM/yyyy"/></div>
             </div>
         </div>
+
+        <c:if test="${not empty errore}">
+            <div class="alert-error"><i class="fa-solid fa-circle-exclamation"></i> <span>${errore}</span></div>
+        </c:if>
 
         <div class="info-grid">
             <div class="info-section">
@@ -32,7 +40,6 @@
                 <div class="data-row"><span class="data-label">Email:</span> ${preventivo.utente.email}</div>
                 <div class="data-row"><span class="data-label">Telefono:</span> ${preventivo.utente.telefono}</div>
             </div>
-
             <div class="info-section">
                 <h4>Veicolo Oggetto della Richiesta</h4>
                 <div class="car-preview-box">
@@ -40,7 +47,7 @@
                     <div>
                         <div class="car-details-text">${preventivo.auto.marca} ${preventivo.auto.modello}</div>
                         <div>Anno: ${preventivo.auto.anno}</div>
-                        <div style="font-weight:bold; margin-top:5px;">Listino: € ${preventivo.auto.prezzo}</div>
+                        <div style="font-weight:bold; margin-top:5px;">Listino: € <fmt:formatNumber value="${preventivo.auto.prezzo}" type="number"/></div>
                     </div>
                 </div>
             </div>
@@ -49,9 +56,7 @@
         <c:if test="${not empty preventivo.note}">
             <div class="info-section">
                 <h4>Note dal Cliente</h4>
-                <div class="notes-box">
-                    "${preventivo.note}"
-                </div>
+                <div class="notes-box">"${preventivo.note}"</div>
             </div>
         </c:if>
 
@@ -66,31 +71,30 @@
                 <div style="display:grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 20px;">
                     <div>
                         <label style="font-weight:bold; display:block; margin-bottom:5px;">Prezzo Finale Offerto (€)</label>
-                        <input type="number" name="importo" required style="width:100%; padding:10px; border:1px solid #ccc; border-radius:4px;" placeholder="Es. 14500">
+                        <input type="number" step="0.01" name="prezzo" required style="width:100%; padding:10px; border:1px solid #ccc; border-radius:4px;"
+                               placeholder="Es. 14500" min="0"
+                               value="${param.prezzo != null ? param.prezzo : preventivo.prezzoProposto}">
                     </div>
                     <div>
                         <label style="font-weight:bold; display:block; margin-bottom:5px;">Stato Pratica</label>
                         <select name="stato" style="width:100%; padding:10px; border:1px solid #ccc; border-radius:4px;">
-                            <option value="INVIATO" ${preventivo.stato == 'INVIATO' ? 'selected' : ''}>Inviato (Offerta Pronta)</option>
+                            <option value="INVIATO" ${preventivo.stato == 'OFFERTA INVIATA' ? 'selected' : ''}>Inviato (Offerta Pronta)</option>
                             <option value="RIFIUTATO" ${preventivo.stato == 'RIFIUTATO' ? 'selected' : ''}>Rifiuta Richiesta</option>
-                            <option value="IN_LAVORAZIONE" ${preventivo.stato == 'IN_LAVORAZIONE' ? 'selected' : ''}>In Lavorazione</option>
+                            <option value="IN_LAVORAZIONE" ${preventivo.stato == 'IN VALUTAZIONE' ? 'selected' : ''}>In Lavorazione</option>
                         </select>
                     </div>
                 </div>
 
                 <label style="font-weight:bold; display:block; margin-bottom:5px;">Messaggio per il Cliente</label>
-                <textarea name="messaggio" rows="4" required style="width:100%; padding:10px; border:1px solid #ccc; border-radius:4px;" placeholder="Gentile cliente, ecco la nostra migliore offerta..."></textarea>
+                <textarea name="messaggio" rows="4" required style="width:100%; padding:10px; border:1px solid #ccc; border-radius:4px;"
+                          placeholder="Gentile cliente..."
+                          oninput="this.value = this.value.replace(/[^a-zA-Z0-9\s.,!?'-]/g, '')">${param.messaggio != null ? param.messaggio : preventivo.messaggioVenditore}</textarea>
 
                 <button type="submit" class="btn" style="margin-top: 20px; width: 100%;">Conferma e Invia</button>
             </form>
         </div>
-
     </div>
 </div>
-
-<div class="no-print">
-    <jsp:include page="footer.jsp"/>
-</div>
-
+<div class="no-print"><jsp:include page="footer.jsp"/></div>
 </body>
 </html>

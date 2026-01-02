@@ -45,17 +45,19 @@
 
             <div class="form-group">
                 <label for="anticipo">Anticipo (€)</label>
-                <input type="number" id="anticipo" name="anticipo" min="0" step="100" required>
+                <input type="number" id="anticipo" name="anticipo" min="0" step="100" required
+                       title="Inserisci un valore positivo">
             </div>
 
             <div class="form-group">
                 <label for="kmAnnui">Km annui previsti</label>
-                <input type="number" id="kmAnnui" name="kmAnnui" min="5000" step="1000" required>
+                <input type="number" id="kmAnnui" name="kmAnnui" min="1" step="1000" required>
             </div>
 
             <div class="form-group">
                 <label for="note">Note aggiuntive (Opzionale)</label>
-                <textarea id="note" name="note" rows="4" placeholder="Es. Esigenze particolari, domande sulla rata..."></textarea>
+                <textarea id="note" name="note" rows="4" placeholder="Es. Esigenze particolari..."
+                          oninput="this.value = this.value.replace(/[^a-zA-Z0-9\s.,!?'-]/g, '')"></textarea>
             </div>
 
             <button type="submit" class="btn-submit">Invia Richiesta Leasing</button>

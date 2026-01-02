@@ -7,64 +7,14 @@
     <link rel="stylesheet" href="css/style.css">
 
     <style>
-        /* Stile specifico per replicare il Mockup */
-        .preventivo-container {
-            max-width: 800px;
-            margin: 40px auto;
-            padding: 20px;
-            font-family: 'Arial', sans-serif;
-        }
-
-        .preventivo-title {
-            font-size: 2.5rem;
-            color: #333;
-            margin-bottom: 10px;
-            font-weight: normal; /* Il mockup ha un font sottile */
-        }
-
-        .preventivo-subtitle {
-            font-size: 1.1rem;
-            color: #666;
-            margin-bottom: 30px;
-            line-height: 1.5;
-        }
-
-        .input-group {
-            margin-bottom: 20px;
-        }
-
-        /* Stile delle label come da mockup (dentro o sopra il box) */
-        .custom-label {
-            display: block;
-            font-weight: bold;
-            margin-bottom: 8px;
-            color: #333;
-            font-size: 0.9rem;
-        }
-
-        /* Input box grigio chiaro/bianco con bordo sottile */
-        .custom-input {
-            width: 100%;
-            padding: 15px;
-            border: 1px solid #ccc;
-            background-color: #f9f9f9; /* Leggermente grigio come mockup */
-            font-size: 1rem;
-            border-radius: 4px;
-            box-sizing: border-box; /* Assicura che il padding non sballi la larghezza */
-        }
-
-        .custom-input:focus {
-            outline: none;
-            border-color: #555;
-            background-color: #fff;
-        }
-
-        /* Sezione Note (necessaria per la tua Servlet, anche se non nel mockup) */
-        .note-section {
-            margin-top: 30px;
-            padding-top: 20px;
-            border-top: 1px solid #eee;
-        }
+        .preventivo-container { max-width: 800px; margin: 40px auto; padding: 20px; font-family: 'Arial', sans-serif; }
+        .preventivo-title { font-size: 2.5rem; color: #333; margin-bottom: 10px; font-weight: normal; }
+        .preventivo-subtitle { font-size: 1.1rem; color: #666; margin-bottom: 30px; line-height: 1.5; }
+        .input-group { margin-bottom: 20px; }
+        .custom-label { display: block; font-weight: bold; margin-bottom: 8px; color: #333; font-size: 0.9rem; }
+        .custom-input { width: 100%; padding: 15px; border: 1px solid #ccc; background-color: #f9f9f9; font-size: 1rem; border-radius: 4px; box-sizing: border-box; }
+        .custom-input:focus { outline: none; border-color: #555; background-color: #fff; }
+        .note-section { margin-top: 30px; padding-top: 20px; border-top: 1px solid #eee; }
     </style>
 </head>
 
@@ -75,7 +25,6 @@
 <div class="preventivo-container">
 
     <h1 class="preventivo-title">Dettagli Contatto</h1>
-
     <p class="preventivo-subtitle">
         Inserisci i tuoi dati in modo che il Concessionario possa inviarti un'offerta personalizzata
     </p>
@@ -112,7 +61,9 @@
 
         <div class="note-section">
             <label class="custom-label">Messaggio per il concessionario (Opzionale)</label>
-            <textarea name="note" class="custom-input" rows="4" placeholder="Scrivi qui eventuali richieste specifiche..."></textarea>
+            <textarea name="note" class="custom-input" rows="4"
+                      placeholder="Scrivi qui eventuali richieste specifiche..."
+                      oninput="this.value = this.value.replace(/[^a-zA-Z0-9\s.,!?'-]/g, '')"></textarea>
         </div>
 
         <div style="margin-top: 30px; text-align: right;">
