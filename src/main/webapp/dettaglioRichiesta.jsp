@@ -76,14 +76,16 @@
                             <td>Prezzo Listino Veicolo</td>
                             <td class="amount"><fmt:formatNumber value="${richiesta.auto.prezzo}" minFractionDigits="2"/></td>
                         </tr>
-
                         <c:if test="${richiesta.prezzoProposto > 0}">
+                            <tr>
+                                <td>Sconto Commerciale Applicato</td>
+                                <td class="amount" style="color: #c0392b;">- <fmt:formatNumber value="${richiesta.auto.prezzo - richiesta.prezzoProposto}" minFractionDigits="2"/></td>
+                            </tr>
                             <tr class="total-row">
                                 <td class="total-label">Totale Offerta</td>
                                 <td class="amount"><fmt:formatNumber value="${richiesta.prezzoProposto}" minFractionDigits="2"/></td>
                             </tr>
                         </c:if>
-
                         <c:if test="${richiesta.prezzoProposto <= 0}">
                             <tr><td colspan="2" style="text-align:center; padding:30px; color:#999;"><em>In attesa di elaborazione...</em></td></tr>
                         </c:if>
