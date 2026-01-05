@@ -26,6 +26,10 @@ public class DbConnection {
     }
 
     // Pattern Singleton
+
+    /**
+     * @return L'istanza condivisa di DbConnection
+     */
     public static DbConnection getInstance() {
         try {
             if (instance == null || instance.getConnection().isClosed()) {

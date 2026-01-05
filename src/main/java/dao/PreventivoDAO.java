@@ -12,11 +12,17 @@ public class PreventivoDAO {
 
     private Connection connection;
 
+    /**
+     * @param connection Connessione al database
+     */
     public PreventivoDAO(Connection connection) {
         this.connection = connection;
     }
 
-
+    /**
+     * @param p Preventivo da inserire
+     * @throws SQLException Se si verifica un errore durante l'inserimento
+     */
     public void insert(Preventivo p) throws SQLException {
 
         String sql = "INSERT INTO PREVENTIVO (idUtente, idAuto, dataRichiesta, note, stato) VALUES (?, ?, ?, ?, ?)";
@@ -30,7 +36,10 @@ public class PreventivoDAO {
         }
     }
 
-
+    /**
+     * @return Lista di preventivi completi
+     * @throws SQLException Se si verifica un errore durante l'accesso al database
+     */
     public List<Preventivo> getAllCompleti() throws SQLException {
         List<Preventivo> list = new ArrayList<>();
 
@@ -49,7 +58,11 @@ public class PreventivoDAO {
         return list;
     }
 
-
+    /**
+     * @param idUtente id dell'utente
+     * @return Lista di preventivi dell'utente
+     * @throws SQLException Se si verifica un errore durante l'accesso al database
+     */
     public List<Preventivo> getByUser(int idUtente) throws SQLException {
         String sql = "SELECT p.*, u.nome, u.cognome, u.email, u.telefono, a.marca, a.modello, a.prezzo, a.immagine, a.anno " +
                 "FROM PREVENTIVO p " +
@@ -71,6 +84,11 @@ public class PreventivoDAO {
     }
 
 
+    /**
+     * @param id ID del preventivo
+     * @return Preventivo completo, oppure null se non esiste
+     * @throws SQLException Se si verifica un errore durante l'accesso al database
+     */
     public Preventivo getById(int id) throws SQLException {
         String sql = "SELECT p.*, u.nome, u.cognome, u.email, u.telefono, a.marca, a.modello, a.prezzo, a.immagine, a.anno " +
                 "FROM PREVENTIVO p " +
@@ -89,6 +107,13 @@ public class PreventivoDAO {
         return null;
     }
 
+    /**
+     * @param id        ID del preventivo
+     * @param stato     Nuovo stato del preventivo
+     * @param importo   Prezzo proposto dal venditore
+     * @param messaggio Messaggio del venditore
+     * @throws SQLException Se si verifica un errore durante l'accesso al database
+     */
 
     public void gestisciRisposta(int id, String stato, double importo, String messaggio) throws SQLException {
 
@@ -104,6 +129,12 @@ public class PreventivoDAO {
     }
 
 
+    /**
+     * @param rs ResultSet corrente
+     * @return Preventivo completo
+     * @throws SQLException Se si verifica un errore nell'accesso ai dati
+     */
+
     private Preventivo mapRowToPreventivoCompleto(ResultSet rs) throws SQLException {
         Preventivo p = new Preventivo();
         p.setIdPreventivo(rs.getInt("idPreventivo"));
@@ -116,12 +147,16 @@ public class PreventivoDAO {
 
         try {
             p.setPrezzoProposto(rs.getDouble("prezzoProposto"));
-        } catch (SQLException e) { p.setPrezzoProposto(0.0); }
+        } catch (SQLException e) {
+            p.setPrezzoProposto(0.0);
+        }
 
 
         try {
             p.setMessaggioVenditore(rs.getString("rispostaVenditore"));
-        } catch (SQLException e) { p.setMessaggioVenditore(""); }
+        } catch (SQLException e) {
+            p.setMessaggioVenditore("");
+        }
 
         // Utente e Auto
         Utente u = new Utente();

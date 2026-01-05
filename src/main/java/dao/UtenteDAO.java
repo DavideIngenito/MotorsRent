@@ -10,12 +10,17 @@ public class UtenteDAO {
     private Connection connection;
 
     // Costruttore che riceve il Singleton
+
+    /**
+     *@param connection Connessione al database
+     */
     public UtenteDAO(Connection connection) {
         this.connection = connection;
     }
 
     /**
-     * Inserisce un nuovo utente
+      * @param u Utente da inserire
+      * @throws SQLException Se si verifica un errore durante l'inserimento
      */
     public void insert(Utente u) throws SQLException {
         String sql = "INSERT INTO UTENTE (nome, cognome, email, password, telefono, ruolo) VALUES (?, ?, ?, ?, ?, ?)";
@@ -32,7 +37,10 @@ public class UtenteDAO {
     }
 
     /**
-     * Verifica email e password
+     * @param email Email dell'utente
+     * @param password Password dell'utente
+     * @return Utente corrispondente se login corretto, altrimenti null
+     * @throws SQLException Se si verifica un errore durante l'accesso al database
      */
     public Utente checkLogin(String email, String password) throws SQLException {
         String sql = "SELECT * FROM UTENTE WHERE email = ? AND password = ?";
@@ -51,7 +59,8 @@ public class UtenteDAO {
     }
 
     /**
-     * Trova tutti gli utenti che hanno ruolo "VENDITORE"
+     * @return Lista di utenti con ruolo "VENDITORE"
+     * @throws SQLException Se si verifica un errore durante l'accesso al database
      */
     public List<Utente> findVenditori() throws SQLException {
         List<Utente> venditori = new ArrayList<>();
@@ -68,7 +77,8 @@ public class UtenteDAO {
     }
 
     /**
-     * Elimina un utente per ID
+     * @param id ID dell'utente da eliminare
+     * @throws SQLException Se si verifica un errore durante l'eliminazione
      */
     public void delete(int id) throws SQLException {
         String sql = "DELETE FROM UTENTE WHERE idUtente = ?";
@@ -79,7 +89,8 @@ public class UtenteDAO {
     }
 
     /**
-     * Ottiene tutti gli utenti
+     * @return Lista di tutti gli utenti
+     * @throws SQLException Se si verifica un errore durante l'accesso al database
      */
     public List<Utente> getAll() throws SQLException {
         List<Utente> utenti = new ArrayList<>();
@@ -94,8 +105,9 @@ public class UtenteDAO {
     }
 
     /**
-     * AGGIORNA I DATI PROFILO (Metodo Completo)
-     * Include anche l'aggiornamento della password.
+     * @param u Utente con dati aggiornati
+     * @return true se l'aggiornamento ha avuto successo, false altrimenti
+     * @throws SQLException Se si verifica un errore durante l'aggiornamento
      */
     public boolean updateProfilo(Utente u) throws SQLException {
         // Aggiorniamo anche la password
@@ -114,6 +126,11 @@ public class UtenteDAO {
         }
     }
 
+    /**
+     * @param rs ResultSet corrente
+     * @return Utente corrispondente alla riga
+     * @throws SQLException Se si verifica un errore nell'accesso ai dati
+     */
     private Utente mapRowToUtente(ResultSet rs) throws SQLException {
         return new Utente(
                 rs.getInt("idUtente"),

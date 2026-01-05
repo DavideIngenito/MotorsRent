@@ -12,10 +12,19 @@ public class LeasingDAO {
 
     private Connection connection;
 
+    /**
+     *
+     * @param connection Connessione al database
+     */
     public LeasingDAO(Connection connection) {
         this.connection = connection;
     }
 
+    /**
+     *
+     *@param l Leasing da inserire
+      * @throws SQLException Se si verifica un errore durante l'inserimento
+     */
     public void insert(Leasing l) throws SQLException {
 
         String sql = "INSERT INTO LEASING (idUtente, idAuto, durataMesi, anticipo, kmAnnui, dataRichiesta, stato, note) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
@@ -32,7 +41,11 @@ public class LeasingDAO {
         }
     }
 
-
+    /**
+     *
+     * @return Lista di leasing completi
+     * @throws SQLException Se si verifica un errore durante l'accesso al database
+     */
     public List<Leasing> getAllCompleti() throws SQLException {
         List<Leasing> list = new ArrayList<>();
         String sql = "SELECT l.*, u.nome, u.cognome, u.email, u.telefono, a.marca, a.modello, a.prezzo, a.immagine, a.anno " +
@@ -50,7 +63,12 @@ public class LeasingDAO {
         return list;
     }
 
-
+    /**
+     *
+     * @param id ID del leasing
+     * @return Leasing completo, oppure null se non esiste
+     * @throws SQLException Se si verifica un errore durante l'accesso al database
+     */
     public Leasing getById(int id) throws SQLException {
         String sql = "SELECT l.*, u.nome, u.cognome, u.email, u.telefono, a.marca, a.modello, a.prezzo, a.immagine, a.anno " +
                 "FROM LEASING l " +
@@ -69,7 +87,12 @@ public class LeasingDAO {
         return null;
     }
 
-
+    /**
+     *
+     * @param idUtente ID dell'utente
+     * @return Lista di leasing dell'utente
+     * @throws SQLException Se si verifica un errore durante l'accesso al database
+     */
     public List<Leasing> getByUser(int idUtente) throws SQLException {
         String sql = "SELECT l.*, u.nome, u.cognome, u.email, u.telefono, a.marca, a.modello, a.prezzo, a.immagine, a.anno " +
                 "FROM LEASING l " +
@@ -89,7 +112,14 @@ public class LeasingDAO {
         return list;
     }
 
-
+    /**
+     *
+     * @param id ID del leasing
+     * @param stato Nuovo stato del leasing
+     * @param rata Rata mensile proposta dal venditore
+     * @param messaggio Messaggio del venditore
+     * @throws SQLException Se si verifica un errore durante l'aggiornamento
+     */
     public void gestisciRisposta(int id, String stato, double rata, String messaggio) throws SQLException {
         String sql = "UPDATE LEASING SET stato = ?, rataMensile = ?, rispostaVenditore = ? WHERE idLeasing = ?";
         try (PreparedStatement ps = connection.prepareStatement(sql)) {
@@ -101,7 +131,12 @@ public class LeasingDAO {
         }
     }
 
-
+    /**
+     *
+     * @param rs ResultSet corrente
+     * @return Leasing completo
+     * @throws SQLException Se si verifica un errore nell'accesso ai dati
+     */
     private Leasing mapRowToLeasingCompleto(ResultSet rs) throws SQLException {
         Leasing l = new Leasing();
         l.setIdLeasing(rs.getInt("idLeasing"));

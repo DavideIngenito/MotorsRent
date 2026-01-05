@@ -1,6 +1,7 @@
 package dao;
 
 import model.Automobile;
+
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -36,6 +37,10 @@ public class AutomobileDAO {
 
     /**
      * Recupera un'auto tramite il suo ID.
+     *
+     * @param id ID dell'auto da recuperare
+     * @return L'automobile corrispondente all'ID, oppure null se non esiste
+     * @throws SQLException Se si verifica un errore durante l'accesso al database
      */
     public Automobile getById(int id) throws SQLException {
         String sql = "SELECT * FROM AUTOMOBILE WHERE idAuto = ?";
@@ -54,6 +59,8 @@ public class AutomobileDAO {
 
     /**
      * Recupera tutte le auto presenti nel database (senza filtri).
+     * @return Lista di tutte le automobili presenti nel database
+     *  @throws SQLException Se si verifica un errore durante l'accesso al database
      */
     public List<Automobile> getAll() throws SQLException {
         List<Automobile> list = new ArrayList<>();
@@ -71,6 +78,8 @@ public class AutomobileDAO {
 
     /**
      * Aggiorna i dati di un'auto esistente.
+     * @param a Auto con dati aggiornati
+     * @throws SQLException Se si verifica un errore durante l'accesso al database
      */
     public void update(Automobile a) throws SQLException {
         String sql = "UPDATE AUTOMOBILE SET modello=?, marca=?, anno=?, prezzo=?, chilometraggio=?, stato=?, descrizione=?, immagine=?, disponibilita=? WHERE idAuto=?";
@@ -93,6 +102,8 @@ public class AutomobileDAO {
 
     /**
      * Elimina un'auto dal database tramite ID.
+     * @param id ID dell'auto da eliminare
+     * @throws SQLException Se si verifica un errore durante l'accesso al database
      */
     public void delete(int id) throws SQLException {
         String sql = "DELETE FROM AUTOMOBILE WHERE idAuto = ?";
@@ -107,11 +118,14 @@ public class AutomobileDAO {
      * Metodo flessibile per filtrare le auto nel catalogo.
      * Gestisce filtri multipli (es. più anni selezionati) e opzionali (null se non selezionati).
      * * @param marca        Testo parziale per la marca (LIKE)
-     * @param prezzoMax    Prezzo massimo
-     * @param anni         Lista di anni da includere (es. 2023 e 2024)
-     * @param kmMax        Chilometraggio massimo
-     * @param stato        "Nuova" o "Usata"
+     *
+     * @param prezzoMax     Prezzo massimo
+     * @param anni          Lista di anni da includere (es. 2023 e 2024)
+     * @param kmMax         Chilometraggio massimo
+     * @param stato         "Nuova" o "Usata"
      * @param disponibilita True per vedere solo quelle disponibili
+     * @return Lista di auto che soddisfano i criteri di filtro
+     * @throws SQLException Se si verifica un errore durante l'accesso al database
      */
     public List<Automobile> ricercaAvanzata(String marca, Double prezzoMax, List<Integer> anni, Integer kmMax, String stato, Boolean disponibilita) throws SQLException {
         List<Automobile> list = new ArrayList<>();
@@ -182,6 +196,13 @@ public class AutomobileDAO {
     }
 
 
+    /**
+     * Mappa una riga del ResultSet a un oggetto Automobile.
+     *
+     * @param rs ResultSet corrente
+     * @return Oggetto Automobile corrispondente alla riga
+     * @throws SQLException Se si verifica un errore nell'accesso ai dati del ResultSet
+     */
     private Automobile mapRowToAutomobile(ResultSet rs) throws SQLException {
         return new Automobile(
                 rs.getInt("idAuto"),
