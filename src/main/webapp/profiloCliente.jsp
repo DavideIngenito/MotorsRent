@@ -9,7 +9,6 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
     <style>
-        /* CSS Specifico per questa pagina, integrato con main.css */
         .profile-container {
             max-width: 800px;
             margin: 40px auto;
@@ -51,7 +50,7 @@
             grid-column: span 2;
         }
 
-        /* Stile Input (uguale a dashboardVenditore/Richieste) */
+        /* Stile Input */
         .form-group label {
             display: block;
             margin-bottom: 8px;

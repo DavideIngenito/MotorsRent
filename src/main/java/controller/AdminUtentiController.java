@@ -66,7 +66,6 @@ public class AdminUtentiController extends HttpServlet {
 
                 case "listVenditori":
                 default:
-                    // Assicurati di avere il metodo findVenditori() nel DAO!
                     List<Utente> list = utenteDAO.findVenditori();
                     request.setAttribute("listaVenditori", list);
                     request.getRequestDispatcher("adminGestioneUtenti.jsp").forward(request, response);

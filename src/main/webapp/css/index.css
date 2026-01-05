@@ -1,5 +1,5 @@
 /* =========================================
-   1. HERO BANNER
+    HERO BANNER
    ========================================= */
 .hero-section {
     position: relative;
@@ -71,7 +71,7 @@
 }
 
 /* =========================================
-   2. FEATURES SECTION
+    FEATURES SECTION
    ========================================= */
 .features-section {
     display: grid;
@@ -124,15 +124,15 @@
 }
 
 /* =========================================
-   3. SEZIONE NOVITÀ (Modificato)
+    SEZIONE NOVITÀ
    ========================================= */
 .section-novita {
-    padding: 50px 20px; /* Ridotto da 80px a 50px */
+    padding: 50px 20px;
 }
 
 .section-header {
     text-align: center;
-    margin-bottom: 40px; /* Ridotto margine inferiore */
+    margin-bottom: 40px;
 }
 
 .section-title {
@@ -188,7 +188,7 @@
     transform: scale(1.05);
 }
 
-/* Badge Stato (Nuova / Usata) */
+/* Badge Stato */
 .badge-status {
     position: absolute;
     top: 15px;
@@ -204,13 +204,13 @@
 
 /* Colori specifici per lo stato */
 .status-nuova {
-    background-color: #121212; /* Nero o Blu scuro per "Nuova" */
+    background-color: #121212;
     color: white;
     border: 1px solid rgba(255,255,255,0.2);
 }
 
 .status-usata {
-    background-color: #7f8c8d; /* Grigio per "Usata" */
+    background-color: #7f8c8d;
     color: white;
 }
 
@@ -230,7 +230,6 @@
 
 .car-model {
     margin: 0 0 15px 0;
-    /* MODIFICA FONT: Cambiato da Playfair Display a Inter */
     font-family: 'Inter', sans-serif;
     font-weight: 600;
     font-size: 1.25rem;
@@ -287,7 +286,7 @@
 }
 
 /* =========================================
-   4. CONTENT GRID
+    CONTENT GRID
    ========================================= */
 .content-grid {
     display: grid;
@@ -295,7 +294,7 @@
     gap: 60px;
     align-items: center;
     max-width: 1200px;
-    margin: 60px auto; /* Ridotto leggermente il margine verticale */
+    margin: 60px auto;
     padding: 0 20px;
 }
 

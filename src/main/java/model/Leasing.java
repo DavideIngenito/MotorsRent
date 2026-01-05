@@ -10,21 +10,15 @@ public class Leasing {
     private double anticipo;
     private int kmAnnui;
     private Timestamp dataRichiesta;
-
-    private String note;    // <-- Note inserite dal cliente alla richiesta
+    private String note;
     private String stato;
-
-    // Campi risposta venditore
     private double rataMensile;
     private String messaggioVenditore;
-
-    // Oggetti complessi
     private Utente utente;
     private Automobile auto;
 
     public Leasing() {}
 
-    // Getter e Setter
     public int getIdLeasing() { return idLeasing; }
     public void setIdLeasing(int idLeasing) { this.idLeasing = idLeasing; }
 

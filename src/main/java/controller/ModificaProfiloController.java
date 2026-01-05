@@ -27,17 +27,15 @@ public class ModificaProfiloController extends HttpServlet {
         }
 
         try {
-            // 1. Recupera i nuovi dati dal form
             String nome = request.getParameter("nome");
             String cognome = request.getParameter("cognome");
             String email = request.getParameter("email");
             String telefono = request.getParameter("telefono");
             String password = request.getParameter("password");
 
-            // 2. Crea un oggetto Utente aggiornato (mantenendo l'ID originale)
             Utente utenteAggiornato = new Utente();
             utenteAggiornato.setIdUtente(utenteSessione.getIdUtente());
-            utenteAggiornato.setRuolo(utenteSessione.getRuolo()); // Il ruolo non cambia
+            utenteAggiornato.setRuolo(utenteSessione.getRuolo());
 
             utenteAggiornato.setNome(nome);
             utenteAggiornato.setCognome(cognome);
@@ -45,17 +43,14 @@ public class ModificaProfiloController extends HttpServlet {
             utenteAggiornato.setTelefono(telefono);
             utenteAggiornato.setPassword(password);
 
-            // 3. Salva nel Database
             Connection conn = DbConnection.getInstance().getConnection();
             UtenteDAO utenteDAO = new UtenteDAO(conn);
 
             boolean successo = utenteDAO.updateProfilo(utenteAggiornato);
 
             if (successo) {
-                // 4. IMPORTANTE: Aggiorna l'utente in sessione per vedere subito le modifiche
                 session.setAttribute("utente", utenteAggiornato);
 
-                // Redirect con messaggio di successo
                 response.sendRedirect("profiloCliente.jsp?msg=Profilo aggiornato con successo");
             } else {
                 response.sendRedirect("profiloCliente.jsp?error=Errore durante l'aggiornamento");

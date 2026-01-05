@@ -124,8 +124,7 @@ body {
 }
 
 /* ===============================
-   VARIANTE SECONDARIA (Statistiche)
-   (sovrascrive inline style)
+   VARIANTE SECONDARIA
 ================================ */
 .card a.btn[style] {
     background-color: transparent !important;

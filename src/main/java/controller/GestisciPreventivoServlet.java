@@ -19,7 +19,6 @@ public class GestisciPreventivoServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        // Controllo sicurezza
         if (!isVenditore(request, response)) return;
 
         String idStr = request.getParameter("id");
@@ -48,19 +47,14 @@ public class GestisciPreventivoServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        // Controllo sicurezza
         if (!isVenditore(request, response)) return;
 
         try {
             String idStr = request.getParameter("idPreventivo");
-
-            // CORREZIONE FONDAMENTALE: Leggiamo "prezzo" (come nella JSP), non "importo"
             String prezzoStr = request.getParameter("prezzo");
-
             String stato = request.getParameter("stato");
             String messaggio = request.getParameter("messaggio");
 
-            // Parsing sicuro
             int id = Integer.parseInt(idStr);
             double prezzo = 0;
             if (prezzoStr != null && !prezzoStr.isEmpty()) {
@@ -70,21 +64,18 @@ public class GestisciPreventivoServlet extends HttpServlet {
             Connection conn = DbConnection.getInstance().getConnection();
             PreventivoDAO dao = new PreventivoDAO(conn);
 
-            // Salvataggio nel DB
             dao.gestisciRisposta(id, stato, prezzo, messaggio);
 
-            // Reindirizzamento corretto alla dashboard
             response.sendRedirect("dashboardVenditore?msg=PreventivoGestito");
 
         } catch (Exception e) {
             e.printStackTrace();
-            // Stampa l'errore specifico in console per debugging
             System.out.println("Errore in GestisciPreventivoServlet: " + e.getMessage());
             response.sendError(500, "Errore salvataggio risposta: " + e.getMessage());
         }
     }
 
-    // Metodo helper per controllare se l'utente è un venditore
+
     private boolean isVenditore(HttpServletRequest request, HttpServletResponse response) throws IOException {
         HttpSession session = request.getSession(false);
         Utente u = (session != null) ? (Utente) session.getAttribute("utente") : null;

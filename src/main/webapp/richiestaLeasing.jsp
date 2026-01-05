@@ -51,7 +51,7 @@
 
             <div class="form-group">
                 <label for="kmAnnui">Km annui previsti</label>
-                <input type="number" id="kmAnnui" name="kmAnnui" min="1" step="1000" required>
+                <input type="number" id="kmAnnui" name="kmAnnui" min="0" step="1000" required>
             </div>
 
             <div class="form-group">

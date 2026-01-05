@@ -21,7 +21,6 @@ public class DashboardClienteServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        // 1. Controllo Login
         HttpSession session = request.getSession(false);
         Utente u = (session != null) ? (Utente) session.getAttribute("utente") : null;
 
@@ -31,16 +30,14 @@ public class DashboardClienteServlet extends HttpServlet {
         }
 
         try {
-            // 2. Connessione
+            // Connessione
             Connection conn = DbConnection.getInstance().getConnection();
             PreventivoDAO preventivoDAO = new PreventivoDAO(conn);
             LeasingDAO leasingDAO = new LeasingDAO(conn);
 
-            // 3. Recupero le liste (Il metodo getByUser ora popola anche l'Auto!)
             List<Preventivo> iMieiPreventivi = preventivoDAO.getByUser(u.getIdUtente());
             List<Leasing> iMieiLeasing = leasingDAO.getByUser(u.getIdUtente());
 
-            // 4. Passo gli attributi con i nomi ESATTI usati nella JSP
             request.setAttribute("listaPreventivi", iMieiPreventivi);
             request.setAttribute("listaLeasing", iMieiLeasing);
 

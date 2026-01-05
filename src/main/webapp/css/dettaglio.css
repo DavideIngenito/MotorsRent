@@ -1,6 +1,6 @@
 /* --- SFONDO SCURO PER CONTRASTO --- */
 body {
-    background-color: #e9ecef; /* Leggermente più scuro del main.css per far risaltare il foglio */
+    background-color: #e9ecef;
 }
 
 .sheet-wrapper {
@@ -12,8 +12,8 @@ body {
 /* --- FOGLIO CARTA --- */
 .detail-sheet {
     background: white;
-    width: 210mm; /* Larghezza A4 */
-    min-height: 297mm; /* Altezza A4 */
+    width: 210mm;
+    min-height: 297mm;
     padding: 60px;
     box-shadow: 0 10px 30px rgba(0,0,0,0.15);
     position: relative;

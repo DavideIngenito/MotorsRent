@@ -16,9 +16,8 @@ public class LeasingDAO {
         this.connection = connection;
     }
 
-    // 1. INSERIMENTO (AGGIORNATO: Ora salva anche le note!)
     public void insert(Leasing l) throws SQLException {
-        // Nota: ho aggiunto 'note' alla lista delle colonne e un ? in più
+
         String sql = "INSERT INTO LEASING (idUtente, idAuto, durataMesi, anticipo, kmAnnui, dataRichiesta, stato, note) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
         try (PreparedStatement ps = connection.prepareStatement(sql)) {
             ps.setInt(1, l.getIdUtente());
@@ -33,7 +32,7 @@ public class LeasingDAO {
         }
     }
 
-    // 2. LISTA COMPLETA
+
     public List<Leasing> getAllCompleti() throws SQLException {
         List<Leasing> list = new ArrayList<>();
         String sql = "SELECT l.*, u.nome, u.cognome, u.email, u.telefono, a.marca, a.modello, a.prezzo, a.immagine, a.anno " +
@@ -51,7 +50,7 @@ public class LeasingDAO {
         return list;
     }
 
-    // 3. DETTAGLIO SINGOLO
+
     public Leasing getById(int id) throws SQLException {
         String sql = "SELECT l.*, u.nome, u.cognome, u.email, u.telefono, a.marca, a.modello, a.prezzo, a.immagine, a.anno " +
                 "FROM LEASING l " +
@@ -70,7 +69,7 @@ public class LeasingDAO {
         return null;
     }
 
-    // 4. LISTA UTENTE
+
     public List<Leasing> getByUser(int idUtente) throws SQLException {
         String sql = "SELECT l.*, u.nome, u.cognome, u.email, u.telefono, a.marca, a.modello, a.prezzo, a.immagine, a.anno " +
                 "FROM LEASING l " +
@@ -90,7 +89,7 @@ public class LeasingDAO {
         return list;
     }
 
-    // 5. GESTIONE RISPOSTA VENDITORE (Metodo che mancava nel tuo file)
+
     public void gestisciRisposta(int id, String stato, double rata, String messaggio) throws SQLException {
         String sql = "UPDATE LEASING SET stato = ?, rataMensile = ?, rispostaVenditore = ? WHERE idLeasing = ?";
         try (PreparedStatement ps = connection.prepareStatement(sql)) {
@@ -102,17 +101,7 @@ public class LeasingDAO {
         }
     }
 
-    // 6. UPDATE STATO SEMPLICE
-    public void updateStato(int idLeasing, String stato) throws SQLException {
-        String sql = "UPDATE LEASING SET stato = ? WHERE idLeasing = ?";
-        try (PreparedStatement ps = connection.prepareStatement(sql)) {
-            ps.setString(1, stato);
-            ps.setInt(2, idLeasing);
-            ps.executeUpdate();
-        }
-    }
 
-    // --- HELPER MAPPING (Aggiornato per leggere Note e Risposte) ---
     private Leasing mapRowToLeasingCompleto(ResultSet rs) throws SQLException {
         Leasing l = new Leasing();
         l.setIdLeasing(rs.getInt("idLeasing"));

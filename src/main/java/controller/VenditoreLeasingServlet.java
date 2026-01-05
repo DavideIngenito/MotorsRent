@@ -20,7 +20,6 @@ public class VenditoreLeasingServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        // 1. SICUREZZA: Solo i venditori possono vedere questa lista
         HttpSession session = request.getSession();
         Utente u = (Utente) session.getAttribute("utente");
 
@@ -30,16 +29,11 @@ public class VenditoreLeasingServlet extends HttpServlet {
         }
 
         try {
-            // 2. ISTANZIAZIONE DAO
             Connection conn = DbConnection.getInstance().getConnection();
             LeasingDAO leasingDAO = new LeasingDAO(conn);
 
-            // 3. RECUPERO DATI
-            // Usiamo il metodo con le JOIN che abbiamo aggiunto al DAO
             List<Leasing> lista = leasingDAO.getAllCompleti();
 
-            // 4. PASSAGGIO DATI ALLA JSP
-            // Il nome "listaLeasing" deve coincidere con quello nel <c:forEach> della JSP
             request.setAttribute("listaLeasing", lista);
 
             RequestDispatcher dispatcher = request.getRequestDispatcher("venditoreLeasing.jsp");

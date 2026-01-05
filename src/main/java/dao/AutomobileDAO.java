@@ -14,10 +14,6 @@ public class AutomobileDAO {
         this.connection = connection;
     }
 
-    // =================================================================================
-    //  SEZIONE 1: OPERAZIONI CRUD STANDARD (Create, Read, Update, Delete)
-    // =================================================================================
-
     /**
      * Inserisce una nuova auto nel database.
      */
@@ -106,9 +102,6 @@ public class AutomobileDAO {
         }
     }
 
-    // =================================================================================
-    //  SEZIONE 2: RICERCA AVANZATA E FILTRI
-    // =================================================================================
 
     /**
      * Metodo flessibile per filtrare le auto nel catalogo.
@@ -188,14 +181,7 @@ public class AutomobileDAO {
         return list;
     }
 
-    // =================================================================================
-    //  SEZIONE 3: METODI DI SUPPORTO (HELPER)
-    // =================================================================================
 
-    /**
-     * Metodo privato per mappare una riga del ResultSet in un oggetto Automobile.
-     * Evita di ripetere questo codice in ogni metodo query.
-     */
     private Automobile mapRowToAutomobile(ResultSet rs) throws SQLException {
         return new Automobile(
                 rs.getInt("idAuto"),

@@ -31,13 +31,10 @@ public class StatoLeasingServlet extends HttpServlet {
             Connection conn = DbConnection.getInstance().getConnection();
             LeasingDAO dao = new LeasingDAO(conn);
 
-            // Recupera lista leasing dell'utente
             List<Leasing> lista = dao.getByUser(utente.getIdUtente());
 
-            // Passa l'attributo con il nome che usi nella JSP
             request.setAttribute("leasingList", lista);
 
-            // Assicurati che questa JSP esista e faccia il c:forEach su "leasingList"
             RequestDispatcher dispatcher = request.getRequestDispatcher("statoLeasing.jsp");
             dispatcher.forward(request, response);
 

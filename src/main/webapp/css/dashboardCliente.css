@@ -1,15 +1,15 @@
-/* --- INTESTAZIONE A "CARD" (Header Card) --- */
+/* --- INTESTAZIONE A "CARD" --- */
 .dashboard-header-card {
     background-color: #ffffff;
-    padding: 35px 45px;          /* Ampio spazio interno */
-    border-radius: 12px;         /* Angoli arrotondati */
-    box-shadow: 0 8px 30px rgba(0,0,0,0.04); /* Ombra morbida ed elegante */
-    border: 1px solid #f0f0f0;   /* Bordo quasi invisibile */
-    margin-bottom: 50px;         /* Distanza dalle tabelle */
+    padding: 35px 45px;
+    border-radius: 12px;
+    box-shadow: 0 8px 30px rgba(0,0,0,0.04);
+    border: 1px solid #f0f0f0;
+    margin-bottom: 50px;
 
     display: flex;
-    justify-content: space-between; /* Spinge titolo a sx e bottone a dx */
-    align-items: center;            /* Allinea verticalmente */
+    justify-content: space-between;
+    align-items: center;
 }
 
 /* Testi Intestazione */
@@ -28,38 +28,38 @@
     margin: 0;
 }
 
-/* Pulsante "Modifica Profilo" (Alto a Destra) */
+/* Pulsante "Modifica Profilo" */
 .btn-action {
     display: inline-flex;
     align-items: center;
     gap: 10px;
-    background-color: #f8f9fa;   /* Sfondo grigio chiarissimo di base */
+    background-color: #f8f9fa;
     color: #121212;
     border: 1px solid #e0e0e0;
-    padding: 12px 24px;          /* Pulsante comodo */
-    border-radius: 50px;         /* Pillola arrotondata */
+    padding: 12px 24px;
+    border-radius: 50px;
     font-size: 0.9rem;
     font-weight: 600;
     text-decoration: none;
-    transition: all 0.3s ease;   /* Animazione fluida */
+    transition: all 0.3s ease;
 }
 
 .btn-action:hover {
-    background-color: #121212;   /* Diventa nero al passaggio */
+    background-color: #121212;
     color: #ffffff;
     border-color: #121212;
-    transform: translateY(-2px); /* Si alza leggermente */
+    transform: translateY(-2px);
     box-shadow: 0 4px 15px rgba(0,0,0,0.15);
 }
 
 .btn-action i {
-    color: #555; /* Icona grigia di default */
+    color: #555;
     font-size: 1.1em;
     transition: color 0.3s;
 }
 
 .btn-action:hover i {
-    color: #ffffff; /* Icona bianca all'hover */
+    color: #ffffff;
 }
 
 /* --- TITOLI SEZIONI --- */
@@ -113,7 +113,7 @@
     background-color: #fafafa;
 }
 
-/* --- BADGE STATO (Pillole Colorate) --- */
+/* --- BADGE STATO --- */
 .status-badge {
     padding: 6px 14px;
     border-radius: 50px;

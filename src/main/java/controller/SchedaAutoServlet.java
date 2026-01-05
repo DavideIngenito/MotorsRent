@@ -18,7 +18,6 @@ public class SchedaAutoServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        // 1. Validazione parametro ID
         String idParam = request.getParameter("id");
         if (idParam == null || idParam.isEmpty()) {
             response.sendRedirect("catalogo"); // Se manca l'ID, torna al catalogo
@@ -28,20 +27,16 @@ public class SchedaAutoServlet extends HttpServlet {
         try {
             int idAuto = Integer.parseInt(idParam);
 
-            // 2. Connessione e DAO
             Connection conn = DbConnection.getInstance().getConnection();
             AutomobileDAO autoDAO = new AutomobileDAO(conn);
 
-            // 3. Recupero auto (CORRETTO: passiamo la variabile, non il tipo)
             Automobile auto = autoDAO.getById(idAuto);
 
             if (auto == null) {
-                // Auto non trovata nel DB
                 response.sendError(404, "Automobile non trovata.");
                 return;
             }
 
-            // 4. Invio alla JSP
             request.setAttribute("auto", auto);
             RequestDispatcher dispatcher = request.getRequestDispatcher("schedaAuto.jsp");
             dispatcher.forward(request, response);

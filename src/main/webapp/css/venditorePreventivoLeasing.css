@@ -18,12 +18,12 @@
     font-size: 1rem;
 }
 
-/* --- TABELLA VENDITORE (Stile Gestionale) --- */
+/* --- TABELLA VENDITORE --- */
 .table-container {
     background: white;
     border-radius: 8px;
     box-shadow: 0 4px 20px rgba(0,0,0,0.06);
-    overflow: hidden; /* Fondamentale per i bordi arrotondati */
+    overflow: hidden;
     margin-bottom: 40px;
 }
 
@@ -33,7 +33,6 @@
     font-family: 'Inter', sans-serif;
 }
 
-/* Header tabella scuro per distinguere l'area admin */
 .vendor-table th {
     background-color: #1a1a1a;
     color: #ffffff;
@@ -57,7 +56,7 @@
     background-color: #f8f9fa; /* Highlight riga al passaggio del mouse */
 }
 
-/* --- INFO CLIENTE (Nome in grassetto, email piccola) --- */
+/* --- INFO CLIENTE --- */
 .client-name {
     display: block;
     font-weight: 700;
@@ -88,21 +87,21 @@
 
 /* Colori specifici per lo stato */
 .status-nuova, .status-in_valutazione {
-    background-color: #fff3cd; color: #856404; /* Giallo */
+    background-color: #fff3cd; color: #856404;
 }
 .status-in_lavorazione {
-    background-color: #cff4fc; color: #055160; /* Azzurro */
+    background-color: #cff4fc; color: #055160;
 }
 .status-approvato, .status-inviato {
-    background-color: #d1e7dd; color: #0f5132; /* Verde */
+    background-color: #d1e7dd; color: #0f5132;
 }
 .status-rifiutato {
-    background-color: #f8d7da; color: #842029; /* Rosso */
+    background-color: #f8d7da; color: #842029;
 }
 
 /* --- BOTTONE GESTISCI --- */
 .btn-manage {
-    background-color: #0056b3; /* Blu istituzionale */
+    background-color: #0056b3;
     color: white;
     padding: 8px 20px;
     border-radius: 4px;
@@ -124,7 +123,7 @@
     color: white;
 }
 
-/* --- EMPTY STATE (Se non ci sono richieste) --- */
+/* --- EMPTY STATE --- */
 .empty-state {
     text-align: center;
     padding: 60px;

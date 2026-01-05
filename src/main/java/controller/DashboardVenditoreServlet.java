@@ -21,7 +21,6 @@ public class DashboardVenditoreServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        // 1. Controllo Sicurezza (Solo VENDITORE può entrare)
         HttpSession session = request.getSession();
         Utente u = (Utente) session.getAttribute("utente");
 
@@ -32,25 +31,25 @@ public class DashboardVenditoreServlet extends HttpServlet {
         try {
             Connection conn = DbConnection.getInstance().getConnection();
             PreventivoDAO preventivoDAO = new PreventivoDAO(conn);
-            LeasingDAO leasingDAO = new LeasingDAO(conn); // Ora attiviamo il DAO
+            LeasingDAO leasingDAO = new LeasingDAO(conn);
 
-            // 2. Recupero Liste Complete
+
             List<Preventivo> tuttiPreventivi = preventivoDAO.getAllCompleti();
-            List<Leasing> tuttiLeasing = leasingDAO.getAllCompleti(); // Carichiamo i leasing
+            List<Leasing> tuttiLeasing = leasingDAO.getAllCompleti();
 
-            // 3. Calcolo i numeri per la Dashboard
+
             long preventiviInAttesa = tuttiPreventivi.stream()
                     .filter(p -> "NUOVA".equalsIgnoreCase(p.getStato()))
                     .count();
 
-            // Calcoliamo i leasing in attesa (Stato: "IN VALUTAZIONE")
+
             long leasingInAttesa = tuttiLeasing.stream()
                     .filter(l -> "IN VALUTAZIONE".equalsIgnoreCase(l.getStato()))
                     .count();
 
-            // 4. Invio i dati alla JSP
+
             request.setAttribute("numPreventiviInAttesa", preventiviInAttesa);
-            request.setAttribute("numLeasingInAttesa", leasingInAttesa); // Mettiamo il numero vero!
+            request.setAttribute("numLeasingInAttesa", leasingInAttesa);
 
             RequestDispatcher dispatcher = request.getRequestDispatcher("venditoreDashboard.jsp");
             dispatcher.forward(request, response);

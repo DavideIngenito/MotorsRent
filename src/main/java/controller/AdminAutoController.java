@@ -32,7 +32,6 @@ public class AdminAutoController extends HttpServlet {
     private void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        // 1. SICUREZZA
         HttpSession session = request.getSession();
         Utente u = (Utente) session.getAttribute("utente");
 
@@ -75,7 +74,6 @@ public class AdminAutoController extends HttpServlet {
         }
     }
 
-    // --- METODI DI SUPPORTO ---
 
     private void listAuto(HttpServletRequest request, HttpServletResponse response, AutomobileDAO dao)
             throws SQLException, ServletException, IOException {
@@ -89,9 +87,7 @@ public class AdminAutoController extends HttpServlet {
         request.getRequestDispatcher("adminAggiungiAuto.jsp").forward(request, response);
     }
 
-    // =================================================================================
-    //  SEZIONE VALIDAZIONE PER TEST CASE 3.1 (Aggiunta Veicolo)
-    // =================================================================================
+
     private void insertAuto(HttpServletRequest request, HttpServletResponse response, AutomobileDAO dao)
             throws SQLException, IOException, ServletException {
 
@@ -168,7 +164,7 @@ public class AdminAutoController extends HttpServlet {
             return;
         }
 
-        // --- Se arriviamo qui, l'input è valido (TC_3.1_7) ---
+        // Se arriviamo qui, l'input è valido
 
         Automobile a = new Automobile();
         a.setMarca(marca);
@@ -187,7 +183,7 @@ public class AdminAutoController extends HttpServlet {
         response.sendRedirect("AdminAutoController?action=list");
     }
 
-    // Nota: Dovresti applicare una logica simile anche a updateAuto per la Sezione 3.2 del TCS
+
     private void showEditForm(HttpServletRequest request, HttpServletResponse response, AutomobileDAO dao)
             throws SQLException, ServletException, IOException {
         String idStr = request.getParameter("id");
@@ -203,7 +199,7 @@ public class AdminAutoController extends HttpServlet {
 
     private void updateAuto(HttpServletRequest request, HttpServletResponse response, AutomobileDAO dao)
             throws SQLException, IOException {
-        // Implementazione base (migliorabile con validazione simile a insertAuto)
+
         Automobile a = new Automobile();
         a.setIdAuto(Integer.parseInt(request.getParameter("idAuto")));
         a.setMarca(request.getParameter("marca"));

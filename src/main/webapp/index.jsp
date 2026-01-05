@@ -99,7 +99,7 @@
             MotorsRent nasce con l’obiettivo di digitalizzare il concetto di concessionaria.
             Abbandona la burocrazia cartacea: offriamo trasparenza, velocità e un catalogo aggiornato in tempo reale.
         </p>
-        <a href="#" class="read-more">Scopri la nostra storia</a>
+        <a>Scopri la nostra storia</a>
     </div>
 
     <div class="info-contact">

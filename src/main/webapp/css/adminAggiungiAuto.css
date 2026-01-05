@@ -101,7 +101,7 @@ body {
     border: 1px solid var(--silver);
     transition: all 0.25s ease;
     font-family: 'Inter', sans-serif;
-    width: 100%; /* Assicura che riempia la colonna */
+    width: 100%;
 }
 
 .form-control:focus {

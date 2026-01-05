@@ -21,23 +21,20 @@ public class HomeServlet extends HttpServlet {
             Connection conn = DbConnection.getInstance().getConnection();
             AutomobileDAO autoDAO = new AutomobileDAO(conn);
 
-            // Recuperiamo tutte le auto
+
             List<Automobile> allCars = autoDAO.getAll();
 
-            // FILTRO: Prendiamo solo le auto DISPONIBILI e limitiamo a 6
             List<Automobile> novita = allCars.stream()
-                    .filter(Automobile::getDisponibilita) // Usa il metodo corretto getDisponibilita
+                    .filter(Automobile::getDisponibilita)
                     .limit(6)
                     .collect(Collectors.toList());
 
-            // Passiamo la lista alla JSP
             request.setAttribute("listaNovita", novita);
 
         } catch (Exception e) {
             e.printStackTrace();
         }
 
-        // Inoltriamo alla index.jsp
         request.getRequestDispatcher("index.jsp").forward(request, response);
     }
 }

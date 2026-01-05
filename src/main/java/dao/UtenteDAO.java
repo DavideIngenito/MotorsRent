@@ -15,7 +15,7 @@ public class UtenteDAO {
     }
 
     /**
-     * Inserisce un nuovo utente (Usato per Registrazione e creazione Venditori)
+     * Inserisce un nuovo utente
      */
     public void insert(Utente u) throws SQLException {
         String sql = "INSERT INTO UTENTE (nome, cognome, email, password, telefono, ruolo) VALUES (?, ?, ?, ?, ?, ?)";
@@ -32,7 +32,7 @@ public class UtenteDAO {
     }
 
     /**
-     * Verifica email e password (Usato per il Login)
+     * Verifica email e password
      */
     public Utente checkLogin(String email, String password) throws SQLException {
         String sql = "SELECT * FROM UTENTE WHERE email = ? AND password = ?";
@@ -68,7 +68,7 @@ public class UtenteDAO {
     }
 
     /**
-     * Elimina un utente per ID (Usato dall'Admin)
+     * Elimina un utente per ID
      */
     public void delete(int id) throws SQLException {
         String sql = "DELETE FROM UTENTE WHERE idUtente = ?";
@@ -79,7 +79,7 @@ public class UtenteDAO {
     }
 
     /**
-     * Ottiene tutti gli utenti (Opzionale, usato per statistiche o liste admin)
+     * Ottiene tutti gli utenti
      */
     public List<Utente> getAll() throws SQLException {
         List<Utente> utenti = new ArrayList<>();
@@ -110,11 +110,10 @@ public class UtenteDAO {
             ps.setInt(6, u.getIdUtente());
 
             int rows = ps.executeUpdate();
-            return rows > 0; // Restituisce true se l'aggiornamento è andato a buon fine
+            return rows > 0;
         }
     }
 
-    // --- Helper privato per mappare i risultati ---
     private Utente mapRowToUtente(ResultSet rs) throws SQLException {
         return new Utente(
                 rs.getInt("idUtente"),
