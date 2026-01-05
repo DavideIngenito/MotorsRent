@@ -61,7 +61,7 @@ public class LoginServlet extends HttpServlet {
                         response.sendRedirect("home");
                         break;
                     case "AMMINISTRATORE":
-                        response.sendRedirect("dashboardAdmin");
+                        response.sendRedirect("home");
                         break;
                     default:
                         response.sendRedirect("index.jsp");
