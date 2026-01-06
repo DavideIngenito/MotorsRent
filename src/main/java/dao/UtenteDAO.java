@@ -10,10 +10,17 @@ public class UtenteDAO {
 
     private Connection connection;
 
+    /**
+     *@param connection Connessione al database
+     */
     public UtenteDAO(Connection connection) {
         this.connection = connection;
     }
 
+    /**
+     * @param u Utente da inserire
+     * @throws SQLException Se si verifica un errore durante l'inserimento
+     */
     public void insert(Utente u) throws SQLException {
         String sql = "INSERT INTO UTENTE (nome, cognome, email, password, telefono, ruolo) VALUES (?, ?, ?, ?, ?, ?)";
         try (PreparedStatement ps = connection.prepareStatement(sql)) {
@@ -27,6 +34,12 @@ public class UtenteDAO {
         }
     }
 
+    /**
+     * @param email Email dell'utente
+     * @param password Password dell'utente
+     * @return Utente corrispondente se login corretto, altrimenti null
+     * @throws SQLException Se si verifica un errore durante l'accesso al database
+     */
     public Utente checkLogin(String email, String password) throws SQLException {
         String sql = "SELECT * FROM UTENTE WHERE email = ? AND password = ?";
         try (PreparedStatement ps = connection.prepareStatement(sql)) {
@@ -41,6 +54,10 @@ public class UtenteDAO {
         return null;
     }
 
+    /**
+     * @return Lista di utenti con ruolo "VENDITORE"
+     * @throws SQLException Se si verifica un errore durante l'accesso al database
+     */
     public List<Utente> findVenditori() throws SQLException {
         List<Utente> venditori = new ArrayList<>();
         String sql = "SELECT * FROM UTENTE WHERE ruolo = 'VENDITORE'";
@@ -53,6 +70,10 @@ public class UtenteDAO {
         return venditori;
     }
 
+    /**
+     * @param id ID dell'utente da eliminare
+     * @throws SQLException Se si verifica un errore durante l'eliminazione
+     */
     public void delete(int id) throws SQLException {
         String sql = "DELETE FROM UTENTE WHERE idUtente = ?";
         try (PreparedStatement ps = connection.prepareStatement(sql)) {
@@ -61,6 +82,10 @@ public class UtenteDAO {
         }
     }
 
+    /**
+     * @return Lista di tutti gli utenti
+     * @throws SQLException Se si verifica un errore durante l'accesso al database
+     */
     public List<Utente> getAll() throws SQLException {
         List<Utente> utenti = new ArrayList<>();
         String sql = "SELECT * FROM UTENTE";
@@ -73,6 +98,11 @@ public class UtenteDAO {
         return utenti;
     }
 
+    /**
+     * @param u Utente con dati aggiornati
+     * @return true se l'aggiornamento ha avuto successo, false altrimenti
+     * @throws SQLException Se si verifica un errore durante l'aggiornamento
+     */
     public boolean updateProfilo(Utente u) throws SQLException {
         String sql = "UPDATE UTENTE SET nome = ?, cognome = ?, email = ?, telefono = ?, password = ? WHERE idUtente = ?";
         try (PreparedStatement ps = connection.prepareStatement(sql)) {
@@ -87,7 +117,11 @@ public class UtenteDAO {
         }
     }
 
-    // --- INTEGRAZIONE FACTORY METHOD QUI ---
+    /**
+     * @param rs ResultSet corrente
+     * @return Utente corrispondente alla riga
+     * @throws SQLException Se si verifica un errore nell'accesso ai dati
+     */
     private Utente mapRowToUtente(ResultSet rs) throws SQLException {
         // Delega la creazione alla Factory invece di usare new Utente(...)
         return UtenteFactory.createUtente(

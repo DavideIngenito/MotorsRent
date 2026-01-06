@@ -4,7 +4,7 @@ public class Amministratore extends Utente {
 
     public Amministratore() {
         super();
-        this.setRuolo("ADMIN"); // Imposto il default
+        this.setRuolo("ADMIN");
     }
 
     public Amministratore(int idUtente, String nome, String cognome, String email,

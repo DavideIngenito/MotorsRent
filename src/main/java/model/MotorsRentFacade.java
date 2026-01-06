@@ -7,16 +7,12 @@ import java.sql.SQLException;
 import java.util.Collections;
 import java.util.List;
 
-/**
- * Facade Pattern
- * Fornisce un'interfaccia unificata per le operazioni sui dati (DAO),
- * nascondendo la complessità di connessione e gestione delle eccezioni.
- */
+
 public class MotorsRentFacade {
 
     private static MotorsRentFacade instance;
 
-    // Costruttore privato (Singleton)
+    // Costruttore privato
     private MotorsRentFacade() {}
 
     public static synchronized MotorsRentFacade getInstance() {
@@ -26,13 +22,7 @@ public class MotorsRentFacade {
         return instance;
     }
 
-    // =========================================================================
-    //  GESTIONE AUTOMOBILI
-    // =========================================================================
 
-    /**
-     * Restituisce l'intera lista di auto.
-     */
     public List<Automobile> getCatalogoAuto() {
         try {
             Connection conn = DbConnection.getInstance().getConnection();
@@ -44,9 +34,7 @@ public class MotorsRentFacade {
         }
     }
 
-    /**
-     * Recupera una singola auto per ID (Necessario per "editForm").
-     */
+
     public Automobile getAutoById(int id) {
         try {
             Connection conn = DbConnection.getInstance().getConnection();
@@ -58,9 +46,7 @@ public class MotorsRentFacade {
         }
     }
 
-    /**
-     * Aggiunge una nuova auto.
-     */
+
     public boolean aggiungiAuto(Automobile auto) {
         try {
             Connection conn = DbConnection.getInstance().getConnection();
@@ -73,14 +59,12 @@ public class MotorsRentFacade {
         }
     }
 
-    /**
-     * Aggiorna un'auto esistente (Necessario per "update").
-     */
+
     public boolean aggiornaAuto(Automobile auto) {
         try {
             Connection conn = DbConnection.getInstance().getConnection();
             AutomobileDAO dao = new AutomobileDAO(conn);
-            dao.update(auto); // Chiama il metodo del DAO
+            dao.update(auto);
             return true;
         } catch (SQLException e) {
             e.printStackTrace();
@@ -88,14 +72,12 @@ public class MotorsRentFacade {
         }
     }
 
-    /**
-     * Elimina un'auto (Necessario per "delete").
-     */
+
     public boolean eliminaAuto(int id) {
         try {
             Connection conn = DbConnection.getInstance().getConnection();
             AutomobileDAO dao = new AutomobileDAO(conn);
-            dao.delete(id); // Chiama il metodo del DAO
+            dao.delete(id);
             return true;
         } catch (SQLException e) {
             e.printStackTrace();
