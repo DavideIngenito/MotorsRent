@@ -27,7 +27,7 @@
 .table-container {
     background: #ffffff;
     border-radius: 12px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.04); /* Ombra molto morbida */
+    box-shadow: 0 10px 30px rgba(0,0,0,0.04);
     border: 1px solid #f0f0f0;
     overflow: hidden;
 }
@@ -57,7 +57,7 @@
 }
 
 .vendor-table tbody tr:hover {
-    background-color: #f8f9fa; /* Highlight riga al passaggio del mouse */
+    background-color: #f8f9fa;
 }
 
 .vendor-table td {
@@ -73,18 +73,17 @@
 }
 
 /* --- FORMATTAZIONE CELLE --- */
-/* ID grigio e monospace per sembrare tecnico */
 .id-cell {
     font-family: 'Courier New', monospace;
     font-weight: 700;
     color: #888;
     background: #f5f5f5;
-    padding: 4px 8px !important; /* Padding interno alla pillola ID */
+    padding: 4px 8px !important;
     border-radius: 4px;
     font-size: 0.85rem !important;
 }
 
-/* Info Cliente (Nome sopra, email sotto) */
+/* Info Cliente */
 .client-info {
     display: flex;
     flex-direction: column;
@@ -107,7 +106,7 @@
     color: #222;
 }
 
-/* --- BADGE STATO (Stile "Pillola" delicato) --- */
+/* --- BADGE STATO --- */
 .status-badge {
     display: inline-flex;
     align-items: center;
@@ -120,35 +119,34 @@
     white-space: nowrap;
 }
 
-/* Colori Stati - Sfondi chiari e testi scuri per eleganza */
 .status-nuova, .status-in_valutazione {
-    background-color: #fff8e1; /* Giallo chiarissimo */
-    color: #b76e00;            /* Ocra */
+    background-color: #fff8e1;
+    color: #b76e00;
     border: 1px solid #ffecb3;
 }
 
 .status-in_lavorazione {
-    background-color: #e3f2fd; /* Blu chiarissimo */
-    color: #1565c0;            /* Blu scuro */
+    background-color: #e3f2fd;
+    color: #1565c0;
     border: 1px solid #bbdefb;
 }
 
 .status-approvato, .status-inviato {
-    background-color: #e8f5e9; /* Verde chiarissimo */
-    color: #2e7d32;            /* Verde foresta */
+    background-color: #e8f5e9;
+    color: #2e7d32;
     border: 1px solid #c8e6c9;
 }
 
 .status-rifiutato {
-    background-color: #ffebee; /* Rosso chiarissimo */
-    color: #c62828;            /* Rosso scuro */
+    background-color: #ffebee;
+    color: #c62828;
     border: 1px solid #ffcdd2;
 }
 
-/* --- BOTTONE GESTISCI (Stile "Ghost" o "Solid") --- */
+/* --- BOTTONE GESTISCI --- */
 .btn-manage {
     text-decoration: none;
-    background-color: #121212; /* Nero assoluto */
+    background-color: #121212;
     color: #ffffff;
     padding: 10px 20px;
     border-radius: 6px;
@@ -167,7 +165,6 @@
     box-shadow: 0 6px 15px rgba(0,0,0,0.15);
 }
 
-/* --- EMPTY STATE --- */
 .empty-state {
     text-align: center;
     padding: 60px;

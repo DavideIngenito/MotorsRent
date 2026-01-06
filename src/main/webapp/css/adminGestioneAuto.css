@@ -1,11 +1,11 @@
-/* --- PALETTE & GLOBALS (Richiamiamo le variabili base) --- */
+/* --- PALETTE & GLOBALS --- */
 :root {
     --black: #121212;
     --bg-page: #EBEBEB;
     --white: #FFFFFF;
     --silver: #C0C0C0;
     --grey-text: #545454;
-    --danger: #cf2e2e; /* Un rosso elegante per l'elimina */
+    --danger: #cf2e2e;
 
     --radius: 12px;
     --shadow-card: 0 4px 12px rgba(0,0,0,0.08);
@@ -18,12 +18,11 @@ body {
     margin: 0;
 }
 
-/* Container specifico per l'admin per centrare e dare margine */
 .admin-container {
     max-width: 1200px;
     margin: 40px auto;
     padding: 0 20px;
-    min-height: 80vh; /* Assicura che il footer non salga troppo */
+    min-height: 80vh;
 }
 
 /* --- TITOLI --- */
@@ -33,11 +32,11 @@ h1 {
     font-weight: 700;
     margin-bottom: 30px;
     color: var(--black);
-    border-left: 5px solid var(--black); /* Dettaglio di design a sinistra */
+    border-left: 5px solid var(--black);
     padding-left: 20px;
 }
 
-/* --- BOTTONE AGGIUNGI (Floating o in evidenza) --- */
+/* --- BOTTONE AGGIUNGI --- */
 .btn.add-btn {
     display: inline-flex;
     align-items: center;
@@ -62,7 +61,7 @@ h1 {
     background: var(--white);
     border-radius: var(--radius);
     box-shadow: var(--shadow-card);
-    overflow: hidden; /* Fondamentale per i bordi arrotondati della tabella */
+    overflow: hidden;
     border: 1px solid rgba(0,0,0,0.05);
 }
 
@@ -101,15 +100,13 @@ h1 {
 }
 
 .table tbody tr:hover {
-    background-color: #fcfcfc; /* Highlight molto sottile al passaggio */
+    background-color: #fcfcfc;
 }
 
-/* Ultima riga senza bordo */
 .table tbody tr:last-child td {
     border-bottom: none;
 }
 
-/* Immagine Anteprima */
 .preview {
     width: 80px;
     height: 50px;
@@ -119,7 +116,7 @@ h1 {
     background-color: #ddd; /* Placeholder background */
 }
 
-/* --- BOTTONI AZIONI (Small) --- */
+/* --- BOTTONI AZIONI --- */
 .btn-small {
     display: inline-block;
     padding: 6px 14px;
@@ -131,7 +128,6 @@ h1 {
     margin-right: 5px;
 }
 
-/* Modifica: Outline Nero */
 .btn-small:not(.delete) {
     border: 1px solid var(--silver);
     color: var(--black);
@@ -143,7 +139,6 @@ h1 {
     color: var(--white);
 }
 
-/* Elimina: Rosso scuro elegante */
 .btn-small.delete {
     background-color: #fff0f0; /* Sfondo rossino chiarissimo */
     color: var(--danger);
@@ -155,7 +150,7 @@ h1 {
     color: var(--white);
 }
 
-/* --- NAVIGAZIONE SECONDARIA (Torna alla Dashboard) --- */
+/* --- NAVIGAZIONE SECONDARIA --- */
 .btn-secondary {
     display: inline-block;
     color: var(--grey-text);
@@ -175,24 +170,20 @@ h1 {
     color: #FFFFFF !important;
 }
 
-/* 2. Forza il colore del Brand (MotorsRent) a Bianco */
 .navbar .navbar-brand {
     color: #FFFFFF !important;
 }
 
-/* 3. Forza i Link di navigazione a Grigio Chiaro */
 .navbar .nav-link {
-    color: #C0C0C0 !important; /* Grigio argento */
+    color: #C0C0C0 !important;
 }
 
-/* 4. Hover sui link: Diventano Bianchi */
 .navbar .nav-link:hover,
 .navbar .nav-link.active,
 .navbar .nav-link:focus {
     color: #FFFFFF !important;
 }
 
-/* 5. Resetta il colore ereditato per eventuali altri testi nella navbar */
 .navbar-collapse,
 .navbar-text {
     color: #C0C0C0 !important;

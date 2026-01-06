@@ -100,14 +100,14 @@
     box-shadow: 0 0 0 4px rgba(18, 18, 18, 0.05);
 }
 
-/* --- BOTTONE ACCEDI (Pillola come index) --- */
+/* --- BOTTONE ACCEDI --- */
 .btn-login {
     width: 100%;
     background-color: var(--black);
     color: var(--white);
     padding: 16px;
     border: none;
-    border-radius: 50px; /* Pill shape */
+    border-radius: 50px;
     font-size: 1rem;
     font-weight: 600;
     cursor: pointer;

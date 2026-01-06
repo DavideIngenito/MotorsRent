@@ -15,25 +15,23 @@ body {
     padding: 60px 20px;
 }
 
-/* --- IL FOGLIO "PREMIUM" (STRUTTURA FLEX) --- */
+/* --- IL FOGLIO "PREMIUM" --- */
 .detail-sheet {
     background-color: white;
     width: 210mm;
-    min-height: 297mm; /* Altezza minima A4 */
+    min-height: 297mm;
     padding: 60px;
     box-sizing: border-box;
     box-shadow: 0 20px 60px rgba(0,0,0,0.08);
     position: relative;
     border-top: 8px solid #0a2e36;
-
-    /* MODIFICA FONDAMENTALE: Flexbox Verticale */
     display: flex;
     flex-direction: column;
 }
 
-/* --- CONTENITORE PRINCIPALE (Spinge il footer giù) --- */
+/* --- CONTENITORE PRINCIPALE -- */
 .sheet-body {
-    flex: 1; /* Occupa tutto lo spazio disponibile */
+    flex: 1;
 }
 
 /* --- INTESTAZIONE --- */
@@ -126,7 +124,7 @@ body {
 /* --- MESSAGGI / NOTE --- */
 .notes-container {
     margin-top: 40px;
-    margin-bottom: 20px; /* Spazio sotto la nota */
+    margin-bottom: 20px;
     background-color: #fffdf5;
     border-left: 4px solid #d4af37;
     padding: 20px 30px;
@@ -137,7 +135,7 @@ body {
 
 /* --- FOOTER (Posizionato con Flexbox) --- */
 .doc-footer {
-    margin-top: auto; /* Spinge il footer in fondo al container flex */
+    margin-top: auto;
     padding-top: 30px;
     border-top: 1px solid #e0e0e0;
     text-align: center;

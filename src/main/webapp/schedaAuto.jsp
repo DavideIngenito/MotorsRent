@@ -62,7 +62,6 @@
             <div class="actions-box">
                 <c:choose>
 
-                    <%-- CASO 1: CLIENTE LOGGATO --%>
                     <c:when test="${not empty sessionScope.utente && sessionScope.utente.ruolo == 'CLIENTE'}">
 
                         <c:choose>
@@ -81,19 +80,16 @@
 
                     </c:when>
 
-                    <%-- CASO 2: AMMINISTRATORE --%>
                     <c:when test="${sessionScope.utente.ruolo == 'AMMINISTRATORE'}">
                         <a class="btn btn-warning btn-full" href="AdminAutoController?action=editForm&id=${auto.idAuto}">
                             <i class="fa-solid fa-pen-to-square"></i> Modifica Auto
                         </a>
                     </c:when>
 
-                    <%-- CASO 3: VENDITORE (Nuova Condizione) --%>
                     <c:when test="${sessionScope.utente.ruolo == 'VENDITORE'}">
 
                     </c:when>
 
-                    <%-- CASO 4: UTENTE NON LOGGATO (Ospite) --%>
                     <c:otherwise>
                         <div class="login-alert">
                             <p>Accedi per richiedere un preventivo.</p>

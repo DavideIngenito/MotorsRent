@@ -12,13 +12,19 @@ public class PreventivoDAO {
 
     private Connection connection;
 
+    /**
+     * @param connection Connessione al database
+     */
     public PreventivoDAO(Connection connection) {
         this.connection = connection;
     }
 
-    // 1. INSERIMENTO (Lato Cliente)
+    /**
+     * @param p Preventivo da inserire
+     * @throws SQLException Se si verifica un errore durante l'inserimento
+     */
     public void insert(Preventivo p) throws SQLException {
-        // Qui salviamo le note del CLIENTE nella colonna 'note'
+
         String sql = "INSERT INTO PREVENTIVO (idUtente, idAuto, dataRichiesta, note, stato) VALUES (?, ?, ?, ?, ?)";
         try (PreparedStatement ps = connection.prepareStatement(sql)) {
             ps.setInt(1, p.getIdUtente());
@@ -30,10 +36,13 @@ public class PreventivoDAO {
         }
     }
 
-    // 2. LISTA COMPLETA
+    /**
+     * @return Lista di preventivi completi
+     * @throws SQLException Se si verifica un errore durante l'accesso al database
+     */
     public List<Preventivo> getAllCompleti() throws SQLException {
         List<Preventivo> list = new ArrayList<>();
-        // Includiamo rispostaVenditore e prezzoProposto
+
         String sql = "SELECT p.*, u.nome, u.cognome, u.email, u.telefono, a.marca, a.modello, a.prezzo, a.immagine, a.anno " +
                 "FROM PREVENTIVO p " +
                 "JOIN UTENTE u ON p.idUtente = u.idUtente " +
@@ -49,7 +58,11 @@ public class PreventivoDAO {
         return list;
     }
 
-    // 3. LISTA UTENTE
+    /**
+     * @param idUtente id dell'utente
+     * @return Lista di preventivi dell'utente
+     * @throws SQLException Se si verifica un errore durante l'accesso al database
+     */
     public List<Preventivo> getByUser(int idUtente) throws SQLException {
         String sql = "SELECT p.*, u.nome, u.cognome, u.email, u.telefono, a.marca, a.modello, a.prezzo, a.immagine, a.anno " +
                 "FROM PREVENTIVO p " +
@@ -70,7 +83,12 @@ public class PreventivoDAO {
         return list;
     }
 
-    // 4. DETTAGLIO SINGOLO
+
+    /**
+     * @param id ID del preventivo
+     * @return Preventivo completo, oppure null se non esiste
+     * @throws SQLException Se si verifica un errore durante l'accesso al database
+     */
     public Preventivo getById(int id) throws SQLException {
         String sql = "SELECT p.*, u.nome, u.cognome, u.email, u.telefono, a.marca, a.modello, a.prezzo, a.immagine, a.anno " +
                 "FROM PREVENTIVO p " +
@@ -89,9 +107,16 @@ public class PreventivoDAO {
         return null;
     }
 
-    // 5. GESTIONE RISPOSTA VENDITORE (MODIFICATO)
+    /**
+     * @param id        ID del preventivo
+     * @param stato     Nuovo stato del preventivo
+     * @param importo   Prezzo proposto dal venditore
+     * @param messaggio Messaggio del venditore
+     * @throws SQLException Se si verifica un errore durante l'accesso al database
+     */
+
     public void gestisciRisposta(int id, String stato, double importo, String messaggio) throws SQLException {
-        // ORA SALVIAMO SU 'rispostaVenditore', NON SU 'note'
+
         String sql = "UPDATE PREVENTIVO SET stato = ?, prezzoProposto = ?, rispostaVenditore = ? WHERE idPreventivo = ?";
 
         try (PreparedStatement ps = connection.prepareStatement(sql)) {
@@ -103,7 +128,13 @@ public class PreventivoDAO {
         }
     }
 
-    // Helper Mapping (MODIFICATO)
+
+    /**
+     * @param rs ResultSet corrente
+     * @return Preventivo completo
+     * @throws SQLException Se si verifica un errore nell'accesso ai dati
+     */
+
     private Preventivo mapRowToPreventivoCompleto(ResultSet rs) throws SQLException {
         Preventivo p = new Preventivo();
         p.setIdPreventivo(rs.getInt("idPreventivo"));
@@ -111,19 +142,21 @@ public class PreventivoDAO {
         p.setIdAuto(rs.getInt("idAuto"));
         p.setDataRichiesta(rs.getTimestamp("dataRichiesta"));
         p.setStato(rs.getString("stato"));
-
-        // 1. Leggiamo la nota del cliente
         p.setNote(rs.getString("note"));
 
-        // 2. Leggiamo il prezzo proposto (gestione errore se colonna manca)
+
         try {
             p.setPrezzoProposto(rs.getDouble("prezzoProposto"));
-        } catch (SQLException e) { p.setPrezzoProposto(0.0); }
+        } catch (SQLException e) {
+            p.setPrezzoProposto(0.0);
+        }
 
-        // 3. Leggiamo la risposta del venditore dalla NUOVA colonna
+
         try {
             p.setMessaggioVenditore(rs.getString("rispostaVenditore"));
-        } catch (SQLException e) { p.setMessaggioVenditore(""); }
+        } catch (SQLException e) {
+            p.setMessaggioVenditore("");
+        }
 
         // Utente e Auto
         Utente u = new Utente();

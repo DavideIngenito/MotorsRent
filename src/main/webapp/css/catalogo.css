@@ -56,7 +56,6 @@
     display: block;
 }
 
-/* --- INPUT TEXT (Per la Marca) --- */
 .search-input-wrapper {
     position: relative;
 }
@@ -77,7 +76,7 @@
     border-color: var(--black);
 }
 
-/* --- CHECKBOX & RADIO STYLE (Anno, Stato) --- */
+/* --- CHECKBOX & RADIO STYLE --- */
 .checkbox-list {
     display: flex;
     flex-direction: column;
@@ -97,12 +96,10 @@
     color: var(--black);
 }
 
-/* Nascondiamo l'input nativo */
 .custom-checkbox-label input {
     display: none;
 }
 
-/* La spunta personalizzata (Quadrato a destra) */
 .checkmark {
     width: 20px;
     height: 20px;
@@ -115,7 +112,6 @@
     transition: all 0.2s;
 }
 
-/* Stato Checked */
 .custom-checkbox-label input:checked + .checkmark {
     background-color: var(--black);
     border-color: var(--black);
@@ -127,7 +123,7 @@
     color: var(--black);
 }
 
-/* --- RANGE SLIDER (Prezzo & Km) --- */
+/* --- RANGE SLIDER --- */
 .range-container {
     padding: 10px 0;
 }

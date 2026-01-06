@@ -20,7 +20,7 @@ public class DettaglioRichiestaServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-        String tipo = request.getParameter("tipo"); // "preventivo" o "leasing"
+        String tipo = request.getParameter("tipo");
         String idStr = request.getParameter("id");
 
         if (tipo == null || idStr == null) {
@@ -35,7 +35,6 @@ public class DettaglioRichiestaServlet extends HttpServlet {
             if ("preventivo".equals(tipo)) {
                 PreventivoDAO preventivoDAO = new PreventivoDAO(conn);
                 Preventivo p = preventivoDAO.getById(id);
-                // Assicurati che p.getAuto() e p.getUtente() siano popolati nel DAO!
 
                 request.setAttribute("richiesta", p);
                 request.setAttribute("tipoRichiesta", "Preventivo");
@@ -43,7 +42,6 @@ public class DettaglioRichiestaServlet extends HttpServlet {
             else if ("leasing".equals(tipo)) {
                 LeasingDAO leasingDAO = new LeasingDAO(conn);
                 Leasing l = leasingDAO.getById(id);
-                // Assicurati che l.getAuto() e l.getUtente() siano popolati nel DAO!
 
                 request.setAttribute("richiesta", l);
                 request.setAttribute("tipoRichiesta", "Leasing");

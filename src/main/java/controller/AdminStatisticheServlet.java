@@ -18,7 +18,7 @@ public class AdminStatisticheServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        // 1. Sicurezza: Solo Admin
+        // Solo Admin
         HttpSession session = request.getSession(false);
         Utente u = (session != null) ? (Utente) session.getAttribute("utente") : null;
         if (u == null || (!"ADMIN".equalsIgnoreCase(u.getRuolo()) && !"AMMINISTRATORE".equalsIgnoreCase(u.getRuolo()))) {
@@ -29,7 +29,6 @@ public class AdminStatisticheServlet extends HttpServlet {
         try {
             Connection conn = DbConnection.getInstance().getConnection();
 
-            // 2. Calcolo Statistiche Semplici (Conteggi)
             int numAuto = count(conn, "SELECT COUNT(*) FROM AUTOMOBILE");
             int numAutoDisponibili = count(conn, "SELECT COUNT(*) FROM AUTOMOBILE WHERE disponibilita = 1");
             int numVenditori = count(conn, "SELECT COUNT(*) FROM UTENTE WHERE ruolo = 'VENDITORE'");
@@ -37,7 +36,7 @@ public class AdminStatisticheServlet extends HttpServlet {
             int numPreventivi = count(conn, "SELECT COUNT(*) FROM PREVENTIVO");
             int numLeasing = count(conn, "SELECT COUNT(*) FROM LEASING");
 
-            // 3. Invio dati alla JSP
+            // Invio dati alla JSP
             request.setAttribute("numAuto", numAuto);
             request.setAttribute("numAutoDisponibili", numAutoDisponibili);
             request.setAttribute("numVenditori", numVenditori);
@@ -53,7 +52,7 @@ public class AdminStatisticheServlet extends HttpServlet {
         }
     }
 
-    // Metodo helper per fare le count veloci
+
     private int count(Connection conn, String sql) {
         try (PreparedStatement ps = conn.prepareStatement(sql);
              ResultSet rs = ps.executeQuery()) {

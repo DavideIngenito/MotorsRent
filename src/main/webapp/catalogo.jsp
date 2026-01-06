@@ -203,17 +203,14 @@
 <jsp:include page="footer.jsp" />
 
 <script>
-    // Logica per aprire/chiudere i filtri (Accordion)
     function toggleFilter(header) {
         header.parentElement.classList.toggle('active');
     }
 
-    // Aggiornamento visuale Prezzo
     function updatePriceLabel(val) {
         document.getElementById('priceLabel').innerText = '€ ' + parseInt(val).toLocaleString('it-IT');
     }
 
-    // Aggiornamento visuale KM
     function updateKmLabel(val) {
         document.getElementById('kmLabel').innerText = parseInt(val).toLocaleString('it-IT') + ' km';
     }

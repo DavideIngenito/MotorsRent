@@ -1,4 +1,4 @@
-/* --- VARIABILI PALETTE (Uguali al Login) --- */
+/* --- VARIABILI PALETTE --- */
 :root {
     --black: #121212;
     --bg-page: #EBEBEB;
@@ -27,7 +27,7 @@
     padding: 60px 20px; /* Un po' più di padding verticale visto che il form è lungo */
 }
 
-/* --- CARD BIANCA (Specifico Registrazione) --- */
+/* --- CARD BIANCA --- */
 .login-card {
     background-color: var(--white);
     width: 100%;
@@ -37,7 +37,6 @@
     padding: 50px 40px;
 }
 
-/* La rendiamo leggermente più larga del login per far stare nome/cognome */
 .registration-card {
     max-width: 500px;
 }
@@ -76,14 +75,13 @@
     text-align: left;
 }
 
-/* Nuova classe per mettere Nome e Cognome sulla stessa riga */
 .row-inputs {
     display: flex;
     gap: 15px;
 }
 
 .row-inputs .input-group {
-    flex: 1; /* Dividono lo spazio al 50% */
+    flex: 1;
 }
 
 /* --- INPUTS --- */
@@ -109,7 +107,7 @@
     font-size: 1rem;
     transition: all 0.3s ease;
     background-color: #fafafa;
-    box-sizing: border-box; /* Importante per il padding */
+    box-sizing: border-box;
 }
 
 .form-box input:focus {
@@ -170,10 +168,10 @@
     to { opacity: 1; transform: translateY(0); }
 }
 
-/* --- RESPONSIVE (Per cellulari) --- */
+/* --- RESPONSIVE --- */
 @media (max-width: 600px) {
     .row-inputs {
-        flex-direction: column; /* Su mobile Nome e Cognome vanno uno sotto l'altro */
+        flex-direction: column;
         gap: 0;
     }
 }

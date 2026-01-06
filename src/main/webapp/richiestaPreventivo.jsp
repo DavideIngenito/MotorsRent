@@ -4,7 +4,6 @@
 <html>
 <head>
     <title>Richiesta Preventivo - MotorsRent</title>
-    <link rel="stylesheet" href="css/style.css">
 
     <style>
         .preventivo-container { max-width: 800px; margin: 40px auto; padding: 20px; font-family: 'Arial', sans-serif; }

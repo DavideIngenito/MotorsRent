@@ -18,13 +18,8 @@ import java.sql.Timestamp;
 @WebServlet("/richiestaPreventivo")
 public class RichiestaPreventivoServlet extends HttpServlet {
 
-    /**
-     * GESTISCE LA RICHIESTA GET (Click sul link "Richiedi Preventivo")
-     * Mostra la pagina del form.
-     */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        // 1. Controllo Login
         HttpSession session = request.getSession(false);
         Utente utente = (session != null) ? (Utente) session.getAttribute("utente") : null;
 
@@ -33,21 +28,15 @@ public class RichiestaPreventivoServlet extends HttpServlet {
             return;
         }
 
-        // 2. Controllo ID Auto
         String idAuto = request.getParameter("idAuto");
         if (idAuto == null || idAuto.isEmpty()) {
             response.sendRedirect("catalogo");
             return;
         }
 
-        // 3. Mostra la JSP (il form)
         request.getRequestDispatcher("richiestaPreventivo.jsp").forward(request, response);
     }
 
-    /**
-     * GESTISCE LA RICHIESTA POST (Click su "Invia Richiesta")
-     * Salva i dati nel DB.
-     */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession(false);
@@ -59,7 +48,6 @@ public class RichiestaPreventivoServlet extends HttpServlet {
         }
 
         try {
-            // Controllo parametro
             String idAutoParam = request.getParameter("idAuto");
             if (idAutoParam == null || idAutoParam.isEmpty()) {
                 response.sendRedirect("catalogo");
@@ -71,8 +59,6 @@ public class RichiestaPreventivoServlet extends HttpServlet {
             p.setIdAuto(Integer.parseInt(idAutoParam));
             p.setDataRichiesta(new Timestamp(System.currentTimeMillis()));
             p.setNote(request.getParameter("note"));
-
-            // IMPOSTA STATO INIZIALE
             p.setStato("IN VALUTAZIONE");
 
             Connection conn = DbConnection.getInstance().getConnection();

@@ -13,9 +13,6 @@
 
 <jsp:include page="/header.jsp"/>
 
-<!-- =======================
-     WRAPPER PAGINA
-======================= -->
 <div class="admin-users-page">
   <div class="admin-users-container">
 
@@ -25,7 +22,6 @@
       <p>Gestisci i venditori attivi del sistema</p>
     </div>
 
-    <!-- ===== SEZIONE FORM ===== -->
     <section class="admin-users-section">
       <h2>Aggiungi Nuovo Venditore</h2>
 
@@ -62,7 +58,6 @@
       </form>
     </section>
 
-    <!-- ===== SEZIONE TABELLA ===== -->
     <section class="admin-users-section">
       <h2>Venditori Attivi</h2>
 
@@ -98,7 +93,6 @@
       </div>
     </section>
 
-    <!-- ===== FOOTER LINK ===== -->
     <div class="admin-users-footer">
       <a href="dashboardAdmin" class="btn btn-secondary">
         Vai alla Dashboard

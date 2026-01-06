@@ -1,4 +1,4 @@
-/* --- VARIABILI GLOBALI (Richiamo alla tua palette) --- */
+/* --- VARIABILI GLOBALI --- */
 :root {
     --black: #121212;
     --bg-page: #EBEBEB;
@@ -33,7 +33,6 @@ body {
 /* --- GRIGLIA DASHBOARD --- */
 .stat-grid {
     display: grid;
-    /* Crea colonne automatiche che non scendono sotto i 250px */
     grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
     gap: 30px;
     margin-bottom: 40px;
@@ -52,17 +51,16 @@ body {
     overflow: hidden;
 }
 
-/* Effetto Hover: la card si alza leggermente */
 .stat-card:hover {
     transform: translateY(-5px);
     box-shadow: 0 15px 35px rgba(0,0,0,0.12);
 }
 
-/* --- ICONE (Cerchio sfumato dietro l'icona) --- */
+/* --- ICONE --- */
 .icon-wrapper {
     width: 60px;
     height: 60px;
-    background-color: #F4F4F4; /* Grigio chiarissimo */
+    background-color: #F4F4F4;
     border-radius: 50%;
     display: flex;
     align-items: center;
@@ -85,7 +83,7 @@ body {
 
 .stat-number {
     font-family: 'Inter', sans-serif;
-    font-size: 3rem; /* Numero molto grande */
+    font-size: 3rem;
     font-weight: 700;
     color: var(--black);
     line-height: 1;
@@ -101,7 +99,6 @@ body {
     width: 100%;
 }
 
-/* Colore specifico per i numeri "verdi" (Attività) reso più elegante */
 .text-success {
-    color: #2e7d32 !important; /* Verde foresta, meno "neon" del verde standard */
+    color: #2e7d32 !important;
 }

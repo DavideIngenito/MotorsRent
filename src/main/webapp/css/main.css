@@ -6,7 +6,7 @@
     --dark-grey: #333;
     --light-grey: #f4f4f4;
     --border: #e0e0e0;
-    --accent: #0056b3; /* Blu istituzionale */
+    --accent: #0056b3;
     --white: #ffffff;
 }
 
@@ -45,7 +45,7 @@ a {
     margin: 0 auto;
     padding: 40px 20px;
     width: 100%;
-    flex: 1; /* Spinge il footer in basso */
+    flex: 1;
 }
 
 /* --- BOTTONI GENERICI --- */

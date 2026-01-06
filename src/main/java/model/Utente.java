@@ -7,8 +7,8 @@ public class Utente {
     private String cognome;
     private String email;
     private String password;
-    private String telefono; // Aggiorna SDD: da Int a Varchar
-    private String ruolo;    // Aggiorna SDD: da Boolean a Varchar ("admin", "cliente", ecc.)
+    private String telefono;
+    private String ruolo;
 
     public Utente() {}
 
@@ -23,7 +23,6 @@ public class Utente {
         this.ruolo = ruolo;
     }
 
-    // Getters e Setters
     public int getIdUtente() { return idUtente; }
     public void setIdUtente(int idUtente) { this.idUtente = idUtente; }
 

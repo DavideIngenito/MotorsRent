@@ -142,7 +142,7 @@
         <div class="footer-company">MotorsRent S.r.l. &middot; Sede Legale: Via Roma 123, Milano (MI)</div>
         <div class="footer-legal">
             P.IVA 12345678901 &middot; Capitale Sociale € 100.000 i.v. &middot; Iscritta al Registro Imprese di Milano<br>
-            Documento generato digitalmente. Valido ai fini di legge secondo le normative vigenti.
+             Valido ai fini di legge secondo le normative vigenti.
         </div>
     </div>
 

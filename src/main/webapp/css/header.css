@@ -1,5 +1,5 @@
 /* =========================================
-   1. DEFINIZIONE COLORI (Essenziale per far funzionare le variabili)
+    DEFINIZIONE COLORI
    ========================================= */
 :root {
     --black: #121212;
@@ -10,27 +10,26 @@
 }
 
 /* =========================================
-   2. HEADER & NAVBAR (Il tuo codice)
+    HEADER & NAVBAR
    ========================================= */
 
-/* 1. Sfondo e Spaziatura della Navbar */
 .navbar {
-    background-color: var(--black) !important; /* Usa la variabile definita sopra */
+    background-color: var(--black) !important;
     padding: 1.2rem 1rem !important;
     border-bottom: 1px solid rgba(255, 255, 255, 0.1);
     box-shadow: 0 4px 20px rgba(0,0,0,0.5);
 }
 
-/* 2. Logo (Brand) */
+/* Logo */
 .navbar-brand {
-    font-family: 'Playfair Display', serif, 'Times New Roman'; /* Fallback aggiunto per sicurezza */
+    font-family: 'Playfair Display', serif, 'Times New Roman';
     font-size: 1.5rem !important;
     font-weight: 700;
     letter-spacing: 1px;
     color: var(--white) !important;
 }
 
-/* 3. Link di Navigazione Standard */
+/* Link di Navigazione Standard */
 .navbar-nav .nav-link {
     font-family: 'Inter', sans-serif, Arial;
     font-size: 0.95rem;
@@ -41,14 +40,13 @@
     position: relative;
 }
 
-/* Effetto Hover sui link: Diventano bianchi */
 .navbar-nav .nav-link:hover,
 .navbar-nav .nav-link.active {
     color: var(--white) !important;
     transform: translateY(-1px);
 }
 
-/* 4. Bottoni nell'Header (Login / Registrati) */
+/* Bottoni nell'Header */
 .navbar .btn {
     border-radius: 50px !important;
     padding: 8px 24px !important;
@@ -86,7 +84,7 @@
     transform: translateY(-2px);
 }
 
-/* 5. Link Logout */
+/* Link Logout */
 .navbar .text-danger {
     color: #ff6b6b !important;
     font-weight: 600;
@@ -96,7 +94,7 @@
     text-shadow: 0 0 8px rgba(255, 71, 87, 0.4);
 }
 
-/* 6. Mobile Toggler */
+/* Mobile Toggler */
 .navbar-toggler {
     border: none !important;
     outline: none !important;
